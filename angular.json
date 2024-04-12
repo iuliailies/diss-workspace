@@ -37,6 +37,9 @@
               "src/assets"
             ],
             "styles": ["src/styles/app.sass"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles", "./node_modules"]
+            },
             "scripts": [],
             "server": "src/main.server.ts",
             "prerender": true,
@@ -100,6 +103,9 @@
               "src/assets"
             ],
             "styles": ["src/styles/app.sass"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles", "./node_modules"]
+            },
             "scripts": []
           }
         }

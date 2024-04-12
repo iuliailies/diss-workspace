@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavComponent } from './nav/nav.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -8,8 +9,10 @@ import { NavComponent } from './nav/nav.component';
   declarations: [
     NavComponent
   ],
+  exports: [NavComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule 
   ]
 })
 export class CoreModule { }

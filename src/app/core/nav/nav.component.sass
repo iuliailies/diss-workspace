@@ -1,0 +1,43 @@
+@import 'colours'
+@import 'variables'
+
+.nav-container
+    width: 150px
+    height: 100%
+    margin: 0 20px
+    display: flex
+    flex-direction: column
+    box-sizing: content-box
+    z-index: 100
+    position: relative
+
+    .logo
+        margin: 20px 0 40px
+
+    .nav-link
+        height: 60px
+        margin: 20px 40px
+        display: flex
+        align-items: center
+        justify-content: center
+
+        img
+            height: 30px
+            filter: $filter-white
+            transition: all $transition-duration
+
+            &.arrow
+                height: 17.5px
+                position: absolute
+                right: 28px
+                opacity: 0 !important
+
+        &:hover
+            &:not(.is-active)
+                img
+                    &:not(.arrow)
+                        height: 33px
+
+        &.is-active
+           .arrow
+                opacity: 1 !important
