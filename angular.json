@@ -36,9 +36,7 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "src/styles.sass"
-            ],
+            "styles": ["src/styles/app.sass"],
             "scripts": [],
             "server": "src/main.server.ts",
             "prerender": true,
@@ -101,13 +99,14 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "src/styles.sass"
-            ],
+            "styles": ["src/styles/app.sass"],
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "8421fa5d-d51c-4854-9b6b-e2127c747051"
   }
 }
