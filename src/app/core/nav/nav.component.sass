@@ -1,43 +1,117 @@
 @import 'colours'
 @import 'variables'
 
+$nav-link-margin: 20px 40px 20px 8px
+$dropdown-bottom: 1.2rem
+$nav-width: 120px
+
+.blob-background
+    height: 50rem
+    position: absolute
+    top: -170px
+    left: -400px
+    z-index: 10
+
 .nav-container
-    width: 150px
     height: 100%
-    margin: 0 20px
     display: flex
     flex-direction: column
-    box-sizing: content-box
-    z-index: 100
-    position: relative
+    justify-content: space-between
 
-    .logo
-        margin: 20px 0 40px
-
-    .nav-link
-        height: 60px
-        margin: 20px 40px
+    .nav-body
+        width: $nav-width
+        margin: 0 20px
         display: flex
-        align-items: center
-        justify-content: center
+        justify-content: space-between
+        flex-direction: column
+        box-sizing: content-box
+        z-index: 100
+        position: relative
 
-        img
+        .logo
+            margin: 20px 0 40px
+
+        .nav-link
+            height: 45px
+            margin: $nav-link-margin
+            display: flex
+            align-items: center
+            justify-content: center
+
+            img
+                height: 25px
+                filter: $filter-white
+                transition: all $transition-duration
+
+                &.arrow
+                    height: 15px
+                    position: absolute
+                    right: 33px
+                    opacity: 0 !important
+
+            &:hover
+                &:not(.is-active)
+                    img
+                        &:not(.arrow)
+                            height: 28px
+
+            &.is-active
+                .arrow
+                        opacity: 1 !important
+
+    .nav-footer
+        display: flex
+        justify-content: center
+        margin: $nav-link-margin
+
+        .user-icon
+            color: $white
+            background-color: $blue-primary // TODO: customize color based on user name
             height: 30px
-            filter: $filter-white
+            width: 30px
+            display: flex
+            justify-content: center
+            align-items: center
+            border-radius: 50%
+            cursor: pointer
             transition: all $transition-duration
 
-            &.arrow
-                height: 17.5px
-                position: absolute
-                right: 28px
-                opacity: 0 !important
+            &:hover, &.is-active
+                opacity: .9
 
-        &:hover
-            &:not(.is-active)
+    +.dropdown-container
+        max-height: calc(100vh - 2*$dropdown-bottom)
+        background: $white
+        position: fixed
+        bottom: $dropdown-bottom
+        left: $nav-width - 20px
+        border-radius: $border-radius-floating
+        box-shadow: $box-shadow-primary
+        text-transform: none
+        z-index: 100001
+
+        .hd-links
+            padding: 10px 5px
+
+            &:not(:first-child)
+                border-top: 1px solid $gray-light
+
+        .hd-item
+            width: 100%
+            display: flex
+            align-items: center
+            color: $text-primary
+            box-sizing: border-box
+            padding: 5px 10px
+            font-weight: $weight-normal
+            cursor: pointer
+
+            img
+                height: 15px
+                margin-right: 10px
+                filter: $filter-gray-secondary
+                transition: all $transition-duration
+
+            &:hover
                 img
-                    &:not(.arrow)
-                        height: 33px
-
-        &.is-active
-           .arrow
-                opacity: 1 !important
+                    opacity: .8

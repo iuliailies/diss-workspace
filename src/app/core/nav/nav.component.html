@@ -1,30 +1,55 @@
 <img [src]="PATHS.IMAGES + 'blob.png'" alt="" class="blob-background"/>
 <nav class="nav-container slimScroll scroll-hidden">
-    <img [src]="PATHS.IMAGES + 'logo.svg'" alt="" class='logo'/>
-    <div class="nav-link-container">
-        <a
-            class="nav-link"
-            [routerLink]="['/notes']"
-            routerLinkActive="is-active"
-        >
-            <img [src]="PATHS.ICONS + 'notes.svg'" class="nav-icon" />
-            <img [src]="PATHS.ICONS + 'angles-right.svg'" class="arrow" alt="" />
-        </a>
-        <a
-            class="nav-link"
-            [routerLink]="['company-docs']"
-            routerLinkActive="is-active"
-        >
-            <img [src]="PATHS.ICONS + 'guidelines.svg'" class="nav-icon" />
-            <img [src]="PATHS.ICONS + 'angles-right.svg'" class="arrow" alt="" />
-        </a>
-        <a
-            class="nav-link"
-            [routerLink]="['trainings']"
-            routerLinkActive="is-active"
-        >
-            <img [src]="PATHS.ICONS + 'trainings.svg'" class="nav-icon" />
-            <img [src]="PATHS.ICONS + 'angles-right.svg'" class="arrow" alt="" />
-        </a>
+    <div class="nav-body">
+        <img [src]="PATHS.IMAGES + 'logo.svg'" alt="" class='logo'/>
+        <div class="nav-link-container">
+            <a
+                class="nav-link"
+                [routerLink]="['/notes']"
+                routerLinkActive="is-active"
+            >
+                <img [src]="PATHS.ICONS + 'notes.svg'" class="nav-icon" />
+                <img [src]="PATHS.ICONS + 'angles-right.svg'" class="arrow" alt="" />
+            </a>
+            <a
+                class="nav-link"
+                [routerLink]="['company-docs']"
+                routerLinkActive="is-active"
+            >
+                <img [src]="PATHS.ICONS + 'guidelines.svg'" class="nav-icon" />
+                <img [src]="PATHS.ICONS + 'angles-right.svg'" class="arrow" alt="" />
+            </a>
+            <a
+                class="nav-link"
+                [routerLink]="['trainings']"
+                routerLinkActive="is-active"
+            >
+                <img [src]="PATHS.ICONS + 'trainings.svg'" class="nav-icon" />
+                <img [src]="PATHS.ICONS + 'angles-right.svg'" class="arrow" alt="" />
+            </a>
+        </div>
+    </div>
+    <div
+        class="nav-footer"
+    >
+        <!-- TODO: replace with user initials -->
+        <div class="user-icon" [class.is-active]="userDropdownOpened" (click)="toggleUserDropdown()">II</div>
     </div>
 </nav>
+<div
+  class="dropdown-container slimScroll"
+  *ngIf=userDropdownOpened
+>
+    <div class="hd-links">
+      <a class="hd-item" [routerLink]="['/profile']">
+        <img [src]="PATHS.ICONS + 'medal.svg'" />
+        <span>Check profile</span>
+      </a>
+    </div>
+    <div class="hd-links">
+      <a class="hd-item" (click)="logout()">
+        <img [src]="PATHS.ICONS + 'logout.svg'"/>
+        <span>Log out</span>
+      </a>
+    </div>
+</div>
