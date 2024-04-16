@@ -11,7 +11,7 @@ import { ProfileRoutingModule } from './profile-routing.module';
   ],
   imports: [
     CommonModule,
-    ProfileRoutingModule
+    ProfileRoutingModule,
   ]
 })
 export class ProfileModule { }
