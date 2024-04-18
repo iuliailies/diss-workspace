@@ -1,0 +1,23 @@
+$button-padding-small: 10px
+$button-padding-standard: 20px
+$border-radius-button: 20px
+
+.button
+    color: white
+    background-color: $blue-primary
+    border: 1px solid $white
+    padding: $button-padding-small $button-padding-standard
+    border-radius: $border-radius-button
+    width: fit-content
+    cursor: pointer
+    transition: background-color $transition-duration
+    display: flex
+    align-items: center
+
+    &:hover
+        background-color: $blue-dark
+
+    img
+        filter: $filter-white
+        margin-right: 10px
+        height: 15px

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PATHS } from '../../app.constants';
 
 @Component({
   selector: 'app-index',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './index.component.sass'
 })
 export class IndexComponent {
-
+  PATHS = PATHS;
 }
