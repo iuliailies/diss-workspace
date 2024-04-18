@@ -1,1 +1,31 @@
-<p>note works!</p>
+<header class="header">
+    <div class="header-container">
+      <div class="container is-fluid header-divider">
+        <div class="header-left">
+          <h1 class="home-link" [routerLink]="['/notes']">Documents</h1>
+          <img [src]="PATHS.ICONS + 'chevron-right.svg'" class="arrow" alt="" />
+          <span
+            appContentEditable
+            #nameInput
+            *ngIf="!readOnly"
+            class="input"
+            (blur)="changeDocumentName($event)"
+            >{{ !loading ? 'Temp name' : 'Loading...' }}</span
+          >
+          <h2 #nameInput *ngIf="readOnly">{{ !loading ? 'Temp name' : 'Loading...' }}</h2>
+        </div>
+        <div class="header-right">
+            <!-- TODO: add save button -->
+        </div>
+        <!-- <div class="status" *ngIf="!loading && !isDeployed && !loadingGraphicalData && !readOnly">
+          <app-loader class="is-small" *ngIf="saving"></app-loader>
+          <span class="text" *ngIf="saving">Saving...</span>
+          <div class="icon" *ngIf="!saving && recentlySaved">
+            <img [src]="PATHS.STYLEGUIDE_ICONS + 'correct.svg'" class="settings-icon" />
+          </div>
+          <span class="text" *ngIf="!saving && recentlySaved">Saved</span>
+          <span class="text" *ngIf="!saving && !recentlySaved">Last edit was {{ updatedAtFromNow }}</span>
+        </div> -->
+      </div>
+    </div>
+  </header>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IndexComponent } from './index/index.component';
 import { NoteComponent } from './note/note.component';
 import { NotesRoutingModule } from './notes-routing.module';
+import { CoreModule } from '../core/core.module';
 
 
 
@@ -13,7 +14,8 @@ import { NotesRoutingModule } from './notes-routing.module';
   ],
   imports: [
     CommonModule,
-    NotesRoutingModule
+    NotesRoutingModule,
+    CoreModule
   ]
 })
 export class NotesModule { }
