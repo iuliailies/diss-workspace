@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { PATHS } from '../../app.constants';
+import { Document } from '../notes.model';
 
 @Component({
   selector: 'app-index',
@@ -8,4 +9,9 @@ import { PATHS } from '../../app.constants';
 })
 export class IndexComponent {
   PATHS = PATHS;
+  documents: Document[] = [{
+    name: 'Document 1'
+  }, {
+    name: 'Document 2'
+  }]
 }
