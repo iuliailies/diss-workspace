@@ -24,7 +24,7 @@ export class NoteComponent implements OnInit {
     keywords: '',
     created: new Date(),
     lastModified: new Date(),
-    userId: 0,
+    userId: 1,
     comments: [],
     visibility: false
   } // TODO: get from api inside ngOnInit
