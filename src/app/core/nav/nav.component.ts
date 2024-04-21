@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { PATHS } from '../../app.constants';
 import { AuthService } from '../../auth/shared/auth.service';
@@ -30,6 +30,7 @@ export class NavComponent {
     this.router.navigate(['/login']);
     localStorage.removeItem('userType');
     localStorage.removeItem('userId');
+    localStorage.removeItem('userInitials');
   }
 
   @HostListener('document:click', ['$event']) onDropdownBlur(e: MouseEvent): void {

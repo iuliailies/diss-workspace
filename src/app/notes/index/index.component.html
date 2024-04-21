@@ -28,10 +28,12 @@
     <div class="columns" *ngFor="let document of documents">
       <div class="column is-4">{{ document.title }}</div>
       <div class="column is-3">
-        <div class="user-icon">II</div>
+        <div class="user-icon">{{ document.userInitials | uppercase }}</div>
       </div>
-      <div class="column is-4">2 months ago</div>
-      <div class="column is-1"></div>
+      <div class="column is-4">{{document.lastModified | date: 'medium'}}</div>
+      <div class="column is-1">
+        <img [src]="PATHS.ICONS + 'trash-solid.svg'" class="icon" alt="" (click)="deleteDocument(document)" *ngIf="matchesUserId(document.userId)"/>
+      </div>
     </div>
   </div>
 </div>

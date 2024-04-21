@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CreateDocumentRequest, Document, newDocumentData } from '../notes/notes.model';
+import { CreateEmployeeDocumentRequest, EmployeeDocument, newDocumentData } from '../data-types/notes.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,8 +11,12 @@ export class NoteService {
 
   constructor(private http: HttpClient) { }
 
-  createNote(note: Document): Observable<Document> {
-    const documentToSend: CreateDocumentRequest = newDocumentData(note)
-    return this.http.post<Document>(this.requestURL + '/create-document', documentToSend);
+  createNote(note: EmployeeDocument): Observable<EmployeeDocument> {
+    const documentToSend: CreateEmployeeDocumentRequest = newDocumentData(note)
+    return this.http.post<EmployeeDocument>(this.requestURL + '/create-document', documentToSend);
   }
+
+    getDocuments(): Observable<EmployeeDocument[]> {
+        return this.http.get<EmployeeDocument[]>(`${this.requestURL}/get-documents/${localStorage.getItem('userId')}`);
+    }
 }

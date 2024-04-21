@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {UserLoginData} from "../data-types/UserLoginData";
+import {UserLoginDataModel} from "../data-types/user-login-data.model";
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +12,7 @@ export class UserService {
     constructor(private httpClient: HttpClient) {
     }
 
-    public login(loginData: UserLoginData) {
+    public login(loginData: UserLoginDataModel) {
         return this.httpClient.post(`${this.authUrl}/login`, loginData)
     }
 

@@ -1,4 +1,4 @@
-export interface Document {
+export interface EmployeeDocument {
     id?: number
     title: string
     text: string
@@ -9,9 +9,10 @@ export interface Document {
     userId: number
     comments?: string[]
     visibility?: boolean
+    userInitials?: string
 }
 
-export interface CreateDocumentRequest {
+export interface CreateEmployeeDocumentRequest {
     title: string
     text: string
     document: any
@@ -21,8 +22,8 @@ export interface CreateDocumentRequest {
     visibility: boolean
 }
 
-export const newDocumentData = (d: Document): CreateDocumentRequest => {
-    const doc: CreateDocumentRequest = {
+export const newDocumentData = (d: EmployeeDocument): CreateEmployeeDocumentRequest => {
+    const doc: CreateEmployeeDocumentRequest = {
         title: d.title,
         text: d.text,
         document: d.document,
@@ -31,7 +32,6 @@ export const newDocumentData = (d: Document): CreateDocumentRequest => {
         userId: d.userId,
         visibility: d.visibility || false
     };
-  
+
     return doc;
   };
-  

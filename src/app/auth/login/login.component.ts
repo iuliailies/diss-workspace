@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 import {FormBuilder, Validators} from "@angular/forms";
 import {PATHS} from "../../app.constants";
-import {UserLoginData} from "../../data-types/UserLoginData";
+import {UserLoginDataModel} from "../../data-types/user-login-data.model";
 import {UserService} from "../../services/user.service";
 import {CookieService} from "ngx-cookie-service";
 import {parseJwt} from "../../utils/JWTParser";
 import {HttpErrorResponse} from "@angular/common/http";
-import {ErrorResponse} from "../../data-types/ErrorResponse";
+import {ErrorResponseModel} from "../../data-types/error-response.model";
 
 @Component({
   selector: 'app-login',
@@ -39,7 +39,7 @@ export class LoginComponent {
   loginUser() {
     const valuesFromForm = this.loginUserDataFormGroup.value;
 
-    const loginData: UserLoginData = {
+    const loginData: UserLoginDataModel = {
       email: valuesFromForm.email!.toLowerCase(),
       password: valuesFromForm.password!,
     };
@@ -55,13 +55,14 @@ export class LoginComponent {
       const jwt = parseJwt(result['token']);
       localStorage.setItem('userType', jwt['type']);
       localStorage.setItem('userId', jwt['id']);
+      localStorage.setItem('userInitials', jwt['initials']);
       this.router.navigate(['/notes'])
     },
     error: (error: HttpErrorResponse) => {
       if (error.error instanceof ErrorEvent) {
         this.errorMessage = "An error occurred! Please try again later!"
       } else {
-        const errResponse: ErrorResponse = error.error as ErrorResponse;
+        const errResponse: ErrorResponseModel = error.error as ErrorResponseModel;
         this.errorMessage = errResponse.errorMessage;
         this.loginUserDataFormGroup.get('password')?.reset();
         this.loginUserDataFormGroup.get('email')?.reset();

@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {  Document } from '../notes.model';
+import {  EmployeeDocument } from '../../data-types/notes.model';
 import { PATHS } from '../../app.constants';
 import { NoteService } from '../../services/note.service';
 import { Router } from '@angular/router';
@@ -17,7 +17,7 @@ export class NoteComponent implements OnInit {
   loading = false;
   readOnly = false; // TODO: will be readonly if note author is not the logged in user
   createMode = true;
-  document: Document = {
+  document: EmployeeDocument = {
     title: 'New document',
     text: '',
     document: undefined,
@@ -59,11 +59,13 @@ export class NoteComponent implements OnInit {
   }
 
   createDocument() : void {
-    this.noteService.createNote(this.document).subscribe((response: Document) => {
-      const documentId= response.id;
-      this.router.navigate([`notes/${documentId}`]);
-    }, error => {
+    this.noteService.createNote(this.document).subscribe({
+      next: (response: EmployeeDocument) => {
+        const documentId = response.id;
+        this.router.navigate([`notes/${documentId}`]);
+      }, error: (error: any) => {
 
+      }
     })
   }
 
