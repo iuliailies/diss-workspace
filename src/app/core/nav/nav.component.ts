@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { PATHS } from '../../app.constants';
 import { AuthService } from '../../auth/shared/auth.service';
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-nav',
@@ -17,6 +18,7 @@ export class NavComponent {
     private elementRef: ElementRef,
     public auth: AuthService,
     public router: Router,
+    public cookieService: CookieService
   ) {}
 
   toggleUserDropdown(): void {
@@ -24,7 +26,10 @@ export class NavComponent {
   }
 
   logout(): void {
-
+    this.cookieService.delete('Token');
+    this.router.navigate(['/login']);
+    localStorage.removeItem('userType');
+    localStorage.removeItem('userId');
   }
 
   @HostListener('document:click', ['$event']) onDropdownBlur(e: MouseEvent): void {

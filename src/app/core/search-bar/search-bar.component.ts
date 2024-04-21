@@ -1,5 +1,5 @@
 import {Component, ViewEncapsulation} from '@angular/core';
-import {PATHS} from "../../../app.constants";
+import {PATHS} from "../../app.constants";
 
 @Component({
   selector: 'app-search-bar',

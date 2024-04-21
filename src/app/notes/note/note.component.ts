@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {  Document } from '../notes.model';
 import { PATHS } from '../../app.constants';
-import { NoteService } from '../note.service';
+import { NoteService } from '../../services/note.service';
 import { Router } from '@angular/router';
 
 @Component({

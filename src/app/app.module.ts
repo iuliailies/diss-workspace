@@ -4,8 +4,9 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { SearchBarComponent } from './shared/components/search-bar/search-bar.component';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {AuthenticationInterceptor} from "./services/authentication-interceptor.service";
+import {ErrorInterceptor} from "./services/error-interceptor.service";
 
 @NgModule({
     declarations: [
@@ -15,11 +16,12 @@ import { HttpClientModule } from '@angular/common/http';
         BrowserModule,
         AppRoutingModule,
         CoreModule,
-        HttpClientModule
+        HttpClientModule,
     ],
-    providers: [
-        provideClientHydration()
-    ],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+  ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
