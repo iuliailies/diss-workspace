@@ -21,10 +21,10 @@ export class NoteComponent implements OnInit {
     title: 'New document',
     text: '',
     document: undefined,
-    keywords: [],
+    keywords: '',
     created: new Date(),
     lastModified: new Date(),
-    user: '',
+    userId: 0,
     comments: []
   } // TODO: get from api inside ngOnInit
 
@@ -57,12 +57,20 @@ export class NoteComponent implements OnInit {
   }
 
   createDocument() : void {
-// TODO
-    // this.noteService.createNote(this.document).subscribe(() => {
+    const documentToSend: Document = {
+      title: this.document.title,
+      text: this.noteContent.nativeElement.innerHTML,
+      keywords: 'sample, example, json',
+      visibility: this.document.visibility,
+      lastModified: new Date(),
+      userId: 1,
+    };
+    this.noteService.createNote(documentToSend).subscribe((response: Document) => {
+      const documentId= response.id;
+      this.router.navigate([`notes/${documentId}`]);
+    }, error => {
 
-    // }, error => {
-
-    // })
+    })
   }
 
   updateDocument() : void {

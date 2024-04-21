@@ -1,11 +1,12 @@
 export interface Document {
+    id?: number
     title: string
     text: string
-    document: any
-    keywords: string[]
-    created: Date
+    document?: any
+    keywords: string
+    created?: Date
     lastModified: Date
-    user: string
-    comments: string[]
+    userId: number
+    comments?: string[]
     visibility?: boolean
 }
