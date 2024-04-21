@@ -64,21 +64,6 @@ $nav-width: 120px
         justify-content: center
         margin: $nav-link-margin
 
-        .user-icon
-            color: $white
-            background-color: $blue-primary // TODO: customize color based on user name
-            height: 30px
-            width: 30px
-            display: flex
-            justify-content: center
-            align-items: center
-            border-radius: 50%
-            cursor: pointer
-            transition: all $transition-duration
-
-            &:hover, &.is-active
-                opacity: .9
-
     +.dropdown-container
         max-height: calc(100vh - 2*$dropdown-bottom)
         background: $white
@@ -86,7 +71,7 @@ $nav-width: 120px
         bottom: $dropdown-bottom
         left: $nav-width - 20px
         border-radius: $border-radius-floating
-        box-shadow: $box-shadow-primary
+        box-shadow: $box-shadow-card
         text-transform: none
         z-index: 100001
 

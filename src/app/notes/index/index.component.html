@@ -1,1 +1,35 @@
-<app-note></app-note>
+<header class="header">
+  <div class="header-container">
+    <div class="container is-fluid header-divider">
+      <div class="header-left">
+        <h1 class="home-link">Documents</h1>
+      </div>
+      <div class="header-right">
+        <div class="button" [routerLink]="['new']">
+          <img [src]="PATHS.ICONS + 'plus.svg'" class="arrow" alt=""/>
+          <span>Add new</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-search-bar></app-search-bar>
+</header>
+
+<div class="container">
+  <div class="table card">
+    <div class="columns is-header">
+      <div class="column is-4"></div>
+      <div class="column is-3">Author</div>
+      <div class="column is-4">Last modified</div>
+      <div class="column is-1"></div>
+    </div>
+    <div class="columns" *ngFor="let document of documents">
+      <div class="column is-4">{{ document.name }}</div>
+      <div class="column is-3">
+        <div class="user-icon">II</div>
+      </div>
+      <div class="column is-4">2 months ago</div>
+      <div class="column is-1"></div>
+    </div>
+  </div>
+</div>
