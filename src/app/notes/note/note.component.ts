@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Document } from '../notes.model';
+import {  Document } from '../notes.model';
 import { PATHS } from '../../app.constants';
 import { NoteService } from '../note.service';
 import { Router } from '@angular/router';
@@ -25,7 +25,8 @@ export class NoteComponent implements OnInit {
     created: new Date(),
     lastModified: new Date(),
     userId: 0,
-    comments: []
+    comments: [],
+    visibility: false
   } // TODO: get from api inside ngOnInit
 
   constructor(private noteService: NoteService, private router: Router) {
@@ -57,15 +58,7 @@ export class NoteComponent implements OnInit {
   }
 
   createDocument() : void {
-    const documentToSend: Document = {
-      title: this.document.title,
-      text: this.noteContent.nativeElement.innerHTML,
-      keywords: 'sample, example, json',
-      visibility: this.document.visibility,
-      lastModified: new Date(),
-      userId: 1,
-    };
-    this.noteService.createNote(documentToSend).subscribe((response: Document) => {
+    this.noteService.createNote(this.document).subscribe((response: Document) => {
       const documentId= response.id;
       this.router.navigate([`notes/${documentId}`]);
     }, error => {
