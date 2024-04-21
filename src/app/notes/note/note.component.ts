@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Document } from '../notes.model';
 import { PATHS } from '../../app.constants';
+import { NoteService } from '../note.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-note',
@@ -10,10 +12,25 @@ import { PATHS } from '../../app.constants';
 export class NoteComponent implements OnInit {
 
   PATHS = PATHS
+  @ViewChild('noteContent') noteContent!: ElementRef
 
   loading = false;
   readOnly = false; // TODO: will be readonly if note author is not the logged in user
-  document: Document = {name: 'New document'} // TODO: get from api inside ngOnInit
+  createMode = true;
+  document: Document = {
+    title: 'New document',
+    text: '',
+    document: undefined,
+    keywords: [],
+    created: new Date(),
+    lastModified: new Date(),
+    user: '',
+    comments: []
+  } // TODO: get from api inside ngOnInit
+
+  constructor(private noteService: NoteService, private router: Router) {
+    this.createMode = this.router.url.indexOf('new') > -1
+  }
 
   ngOnInit(): void {
     // TODO: call api to load the actual document
@@ -23,17 +40,36 @@ export class NoteComponent implements OnInit {
     const input = event.target as HTMLElement;
     const inputText = input.innerText.trim();
     if (!inputText.length) {
-      input.innerText = this.document.name;
+      input.innerText = this.document.title;
       return;
     }
-    if (this.document.name !== input.innerText) {
-      this.document.name = input.innerText;
-      this.saveDocument();
+    if (this.document.title !== input.innerText) {
+      this.document.title = input.innerText;
     }
   }
 
   saveDocument(): void {
-    console.log("saving")
-    // TODO
+    if (this.createMode) {
+      this.createDocument()
+    } else {
+      this.updateDocument()
+    }
+  }
+
+  createDocument() : void {
+// TODO
+    // this.noteService.createNote(this.document).subscribe(() => {
+
+    // }, error => {
+
+    // })
+  }
+
+  updateDocument() : void {
+
+  }
+
+  changeVisilibity(): void {
+    this.document.visibility = !this.document.visibility
   }
 }

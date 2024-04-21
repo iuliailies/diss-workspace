@@ -9,9 +9,5 @@ import { Document } from '../notes.model';
 })
 export class IndexComponent {
   PATHS = PATHS;
-  documents: Document[] = [{
-    name: 'Document 1'
-  }, {
-    name: 'Document 2'
-  }]
+  documents: Document[] = []
 }

@@ -3,7 +3,7 @@
       <div class="container is-fluid header-divider">
         <div class="header-left">
           <h1 class="home-link" [routerLink]="['/notes']">Documents</h1>
-          <img [src]="PATHS.ICONS + 'chevron-right.svg'" class="arrow" alt="" />
+          <img [src]="PATHS.ICONS + 'chevron-right.svg'" alt="" />
           <span
             appContentEditable
             #nameInput
@@ -13,19 +13,26 @@
             >{{ !loading ? 'Temp name' : 'Loading...' }}</span
           >
           <h2 #nameInput *ngIf="readOnly">{{ !loading ? 'Temp name' : 'Loading...' }}</h2>
+          <img [src]="PATHS.ICONS + 'lock-open.svg'" *ngIf="document.visibility" class="visibility-icon" (click)="changeVisilibity()" alt="" />
+          <img [src]="PATHS.ICONS + 'lock-closed.svg'" *ngIf="!document.visibility" class="visibility-icon" (click)="changeVisilibity()" alt="" />
         </div>
         <div class="header-right">
-            <!-- TODO: add save button -->
-        </div>
-        <!-- <div class="status" *ngIf="!loading && !isDeployed && !loadingGraphicalData && !readOnly">
-          <app-loader class="is-small" *ngIf="saving"></app-loader>
-          <span class="text" *ngIf="saving">Saving...</span>
-          <div class="icon" *ngIf="!saving && recentlySaved">
-            <img [src]="PATHS.STYLEGUIDE_ICONS + 'correct.svg'" class="settings-icon" />
+          <div class="button" (click)="saveDocument()">
+            <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt=""/>
+            <span>Save changes</span>
           </div>
-          <span class="text" *ngIf="!saving && recentlySaved">Saved</span>
-          <span class="text" *ngIf="!saving && !recentlySaved">Last edit was {{ updatedAtFromNow }}</span>
-        </div> -->
+        </div>
+
       </div>
     </div>
+    <div class="container subheader justify-start align-center">
+      <div class="text">Created by</div>
+      <div class="user-icon">II</div>
+      <div class="text">Last modified 2 minutes ago</div>
+    </div>
   </header>
+
+  <div class="container">
+    <div class="card" #noteContent contenteditable>
+    </div>
+  </div>

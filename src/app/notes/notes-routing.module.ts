@@ -6,6 +6,7 @@ import { NoteComponent } from './note/note.component';
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: IndexComponent },
   { path: 'new', pathMatch: 'full', component: NoteComponent },
+  { path: ':id', pathMatch: 'full', component: NoteComponent },
   // TODO: add other routes
 ];
 
