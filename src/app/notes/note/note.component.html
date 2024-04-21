@@ -33,6 +33,7 @@
   </header>
 
   <div class="container">
+    <app-keywords (keywordsChanged)="keywordsChanged($event)"></app-keywords>
     <div class="card" #noteContent contenteditable>
     </div>
   </div>

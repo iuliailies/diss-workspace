@@ -73,4 +73,9 @@ export class NoteComponent implements OnInit {
   changeVisilibity(): void {
     this.document.visibility = !this.document.visibility
   }
+
+  keywordsChanged(keywords: string[]) : void {
+    this.document.keywords = JSON.stringify(keywords).slice(1, -1)
+    console.log(this.document.keywords)
+  }
 }
