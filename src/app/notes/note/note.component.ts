@@ -50,6 +50,7 @@ export class NoteComponent implements OnInit {
   }
 
   saveDocument(): void {
+    this.document.text = this.noteContent.nativeElement.innerHTML;
     if (this.createMode) {
       this.createDocument()
     } else {
