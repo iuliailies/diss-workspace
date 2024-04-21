@@ -1,18 +1,19 @@
 <header class="header">
-    <div class="header-container">
-      <div class="container is-fluid header-divider">
-        <div class="header-left">
-          <h1 class="home-link">Documents</h1>
-        </div>
-        <div class="header-right">
-            <div class="button" [routerLink]="['new']">
-                <img [src]="PATHS.ICONS + 'plus.svg'" class="arrow" alt="" />
-                <span>Add new</span>
-            </div>
+  <div class="header-container">
+    <div class="container is-fluid header-divider">
+      <div class="header-left">
+        <h1 class="home-link">Documents</h1>
+      </div>
+      <div class="header-right">
+        <div class="button" [routerLink]="['new']">
+          <img [src]="PATHS.ICONS + 'plus.svg'" class="arrow" alt=""/>
+          <span>Add new</span>
         </div>
       </div>
     </div>
-  </header>
+  </div>
+  <app-search-bar></app-search-bar>
+</header>
 
 <div class="container">
   <div class="table card">
@@ -30,4 +31,5 @@
       <div class="column is-4">2 months ago</div>
       <div class="column is-1"></div>
     </div>
+  </div>
 </div>

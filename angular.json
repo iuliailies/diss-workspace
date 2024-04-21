@@ -15,6 +15,27 @@
         },
         "@schematics/angular:pipe": {
           "standalone": false
+        },
+        "@schematics/angular": {
+          "application": {
+            "strict": true
+          },
+          "component": {
+            "style": "scss",
+            "skipTests": true
+          },
+          "class": {
+            "skipTests": true
+          },
+          "directive": {
+            "skipTests": true
+          },
+          "pipe": {
+            "skipTests": true
+          },
+          "service": {
+            "skipTests": true
+          }
         }
       },
       "root": "",
