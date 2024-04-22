@@ -57,7 +57,10 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": ["src/styles/app.sass"],
+            "styles": [
+              "src/styles/custom-theme.scss",
+              "src/styles/app.sass"
+            ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles", "./node_modules"]
             },

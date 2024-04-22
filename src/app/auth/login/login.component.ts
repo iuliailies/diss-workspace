@@ -28,7 +28,7 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
   ) {
   }
 
@@ -60,6 +60,7 @@ export class LoginComponent {
     },
     error: (error: HttpErrorResponse) => {
       if (error.error instanceof ErrorEvent) {
+
         this.errorMessage = "An error occurred! Please try again later!"
       } else {
         const errResponse: ErrorResponseModel = error.error as ErrorResponseModel;

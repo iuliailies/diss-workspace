@@ -6,6 +6,10 @@ import { EllipsisDirective } from './directives/ellipsis.directive';
 import { ContentEditableDirective } from './directives/content-editable.directive';
 import { KeywordsComponent } from './keywords/keywords.component';
 import { FormsModule } from '@angular/forms';
+import { ConfirmationDialogBoxComponent } from './confirmation-dialog-box/confirmation-dialog-box.component';
+import {MatDialogActions, MatDialogContent} from "@angular/material/dialog";
+import {MatSnackBarAction, MatSnackBarLabel} from "@angular/material/snack-bar";
+import { NotificationComponent } from './notification/notification.component';
 
 
 
@@ -15,12 +19,18 @@ import { FormsModule } from '@angular/forms';
     ContentEditableDirective,
     EllipsisDirective,
     KeywordsComponent,
+    ConfirmationDialogBoxComponent,
+    NotificationComponent,
   ],
-  exports: [NavComponent, ContentEditableDirective, EllipsisDirective, KeywordsComponent],
+  exports: [NavComponent, ContentEditableDirective, EllipsisDirective, KeywordsComponent, NotificationComponent],
   imports: [
     CommonModule,
-    RouterModule ,
-    FormsModule
+    RouterModule,
+    FormsModule,
+    MatDialogContent,
+    MatDialogActions,
+    MatSnackBarLabel,
+    MatSnackBarAction
   ]
 })
 export class CoreModule { }

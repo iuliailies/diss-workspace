@@ -1,0 +1,23 @@
+@import "colours"
+@import "variables"
+@import "typography"
+
+.snackbar
+  background-color: $blue-primary
+  color: $white
+  min-width: 250px /* Set a default minimum width */
+  margin-left: -125px /* Divide value of min-width by 2 */
+  text-align: center /* Centered text */
+  font-family: $font-family /* Use the font specified in the typography file */
+  border-radius: $border-radius-floating /* Rounded borders */
+  padding: 16px /* Padding */
+  position: fixed /* Sit on top of the screen */
+  z-index: 1 /* Add a z-index if needed */
+  left: 50% /* Center the snackbar */
+  bottom: 30px /* 30px from the bottom */
+
+.error
+  background-color: $red
+
+
+

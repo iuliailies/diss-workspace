@@ -16,7 +16,11 @@ export class NoteService {
     return this.http.post<EmployeeDocument>(this.requestURL + '/create-document', documentToSend);
   }
 
-    getDocuments(): Observable<EmployeeDocument[]> {
-        return this.http.get<EmployeeDocument[]>(`${this.requestURL}/get-documents/${localStorage.getItem('userId')}`);
-    }
+  getDocuments(): Observable<EmployeeDocument[]> {
+      return this.http.get<EmployeeDocument[]>(`${this.requestURL}/get-documents/${localStorage.getItem('userId')}`);
+  }
+
+  deleteDocument(id: any): Observable<any> {
+    return this.http.delete(`${this.requestURL}/${id}`);
+  }
 }

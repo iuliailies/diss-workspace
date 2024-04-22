@@ -9,15 +9,18 @@ import { CoreModule } from '../core/core.module';
 
 
 @NgModule({
-  declarations: [
-    IndexComponent,
-    NoteComponent,
-    SearchBarComponent
-  ],
-  imports: [
-    CommonModule,
-    NotesRoutingModule,
-    CoreModule
-  ]
+    declarations: [
+        IndexComponent,
+        NoteComponent,
+        SearchBarComponent
+    ],
+    exports: [
+        NoteComponent
+    ],
+    imports: [
+        CommonModule,
+        NotesRoutingModule,
+        CoreModule
+    ]
 })
 export class NotesModule { }
