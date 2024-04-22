@@ -9,7 +9,8 @@ export interface EmployeeDocument {
     userId: number
     comments?: string[]
     visibility?: boolean
-    userInitials?: string
+    userFirstname?: string
+    userLastname?: string
 }
 
 export interface CreateEmployeeDocumentRequest {

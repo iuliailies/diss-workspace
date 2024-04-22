@@ -35,4 +35,8 @@ export class IndexComponent implements OnInit{
     deleteDocument(document: EmployeeDocument) {
 
     }
+
+    getUserInitials(document: any): string {
+        return document.userFirstname[0] + document.userLastname[0];
+    }
 }

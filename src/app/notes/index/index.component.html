@@ -28,7 +28,7 @@
     <div class="columns" *ngFor="let document of documents">
       <div class="column is-4">{{ document.title }}</div>
       <div class="column is-3">
-        <div class="user-icon">{{ document.userInitials | uppercase }}</div>
+        <div class="user-icon">{{ getUserInitials(document) | uppercase }}</div>
       </div>
       <div class="column is-4">{{document.lastModified | date: 'medium'}}</div>
       <div class="column is-1">
