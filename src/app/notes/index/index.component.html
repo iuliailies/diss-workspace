@@ -6,7 +6,7 @@
       </div>
       <div class="header-right">
         <div class="button" [routerLink]="['new']">
-          <img [src]="PATHS.ICONS + 'plus.svg'" class="arrow" alt=""/>
+          <img [src]="PATHS.ICONS + 'plus.svg'" class="arrow" alt="" />
           <span>Add new</span>
         </div>
       </div>
@@ -25,14 +25,26 @@
       <div class="column is-4">Last modified</div>
       <div class="column is-1"></div>
     </div>
-    <div class="columns" *ngFor="let document of documents">
+    <div
+      class="columns"
+      *ngFor="let document of documents"
+      (click)="viewDocument(document.id)"
+    >
       <div class="column is-4">{{ document.title }}</div>
       <div class="column is-3">
         <div class="user-icon">{{ getUserInitials(document) | uppercase }}</div>
       </div>
-      <div class="column is-4">{{document.lastModified | date: 'medium'}}</div>
+      <div class="column is-4">
+        {{ document.lastModified | date: 'medium' }}
+      </div>
       <div class="column is-1">
-        <img [src]="PATHS.ICONS + 'trash-solid.svg'" class="icon" alt="" (click)="deleteDocument(document)" *ngIf="matchesUserId(document.userId)"/>
+        <img
+          [src]="PATHS.ICONS + 'trash-solid.svg'"
+          class="icon"
+          alt=""
+          (click)="deleteDocument($event, document)"
+          *ngIf="matchesUserId(document.userId)"
+        />
       </div>
     </div>
   </div>

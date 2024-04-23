@@ -3,7 +3,7 @@ import { AUTH_DATA, UserData } from './auth.model';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   data: UserData | null = null;

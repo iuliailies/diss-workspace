@@ -1,40 +1,75 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {  EmployeeDocument } from '../../data-types/notes.model';
-import { PATHS } from '../../app.constants';
-import { NoteService } from '../../services/note.service';
-import { Router } from '@angular/router';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {EmployeeDocument} from '../../data-types/notes.model';
+import {PATHS} from '../../app.constants';
+import {NoteService} from '../../services/note.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NotificationType} from '../../data-types/notification.model';
+import {ErrorResponseModel} from '../../data-types/error-response.model';
+import {NotificationService} from '../../services/notification.service';
+import {MatDialog} from '@angular/material/dialog';
+import {ConfirmationDialogBoxComponent} from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
 
 @Component({
   selector: 'app-note',
   templateUrl: './note.component.html',
-  styleUrl: './note.component.sass'
+  styleUrl: './note.component.sass',
 })
 export class NoteComponent implements OnInit {
+  PATHS = PATHS;
+  @ViewChild('noteContent') noteContent!: ElementRef;
 
-  PATHS = PATHS
-  @ViewChild('noteContent') noteContent!: ElementRef
-
+  userId = localStorage.getItem('userId');
   loading = false;
-  readOnly = false; // TODO: will be readonly if note author is not the logged in user
-  createMode = true;
-  document: EmployeeDocument = {
-    title: 'New document',
-    text: '',
-    document: undefined,
-    keywords: '',
-    created: new Date(),
-    lastModified: new Date(),
-    userId: 1,
-    comments: [],
-    visibility: false
-  } // TODO: get from api inside ngOnInit
+  readOnly = false;
+  existsUploadedFile = false;
+  keywords: string[] = [];
+  document: any;
 
-  constructor(private noteService: NoteService, private router: Router) {
-    this.createMode = this.router.url.indexOf('new') > -1
+  constructor(
+    private noteService: NoteService,
+    private notificationService: NotificationService,
+    private router: Router,
+    private dialogBox: MatDialog,
+    private activatedRoute: ActivatedRoute,
+  ) {
+    this.fetchDocument();
   }
 
   ngOnInit(): void {
-    // TODO: call api to load the actual document
+    this.fetchDocument();
+  }
+
+  fetchDocument() {
+    this.loading = true;
+    this.activatedRoute.paramMap.subscribe((params) => {
+      const documentId = params.get('id');
+      if (documentId) {
+        this.noteService.getDocument(documentId).subscribe((document) => {
+          this.document = document as EmployeeDocument;
+          this.readOnly =
+            document!.userId.toString() !== localStorage.getItem('userId');
+          if (document?.keywords) {
+            this.keywords = this.convertStringToArray(document.keywords)
+          } else {
+            this.keywords = [];
+          }
+          this.loading = false;
+        });
+      }
+    });
+  }
+
+  convertStringToArray(inputString: string): string[] {
+    // Remove the very outer quotes if they exist redundantly
+    let cleanedString = inputString.trim();
+    if (cleanedString[0] === '"' && cleanedString[cleanedString.length - 1] === '"') {
+      cleanedString = cleanedString.substring(1, cleanedString.length - 1);
+    }
+
+    // Split the string by commas not within quotes
+    return cleanedString.split(/","|(?<!"),(?=")/g).map(item =>
+      item.replace(/^"|"$/g, '') // Remove leading and trailing quotes from each item
+    );
   }
 
   changeDocumentName(event: Event): void {
@@ -49,36 +84,74 @@ export class NoteComponent implements OnInit {
     }
   }
 
-  saveDocument(): void {
+  updateDocument(): void {
     this.document.text = this.noteContent.nativeElement.innerHTML;
-    if (this.createMode) {
-      this.createDocument()
-    } else {
-      this.updateDocument()
-    }
-  }
-
-  createDocument() : void {
-    this.noteService.createNote(this.document).subscribe({
+    this.document.userId = parseInt(this.userId || '-1');
+    this.noteService.updateDocument(this.document).subscribe({
       next: (response: EmployeeDocument) => {
-        const documentId = response.id;
-        this.router.navigate([`notes/${documentId}`]);
-      }, error: (error: any) => {
-
-      }
-    })
+        this.notificationService.notify({
+          message: 'Changes successfully saved! ',
+          type: NotificationType.success,
+        });
+        this.fetchDocument();
+      },
+      error: (error: any) => {
+        if (error.error instanceof ErrorEvent) {
+          this.notificationService.notify({
+            message: 'An error occurred! Please try again later!',
+            type: NotificationType.error,
+          });
+        } else {
+          const errResponse: ErrorResponseModel =
+            error.error as ErrorResponseModel;
+          this.notificationService.notify({
+            message: errResponse.errorMessage,
+            type: NotificationType.error,
+          });
+        }
+      },
+    });
   }
 
-  updateDocument() : void {
-
+  getUserInitials(): string {
+    return this.document.userFirstname![0] + this.document.userLastname![0];
   }
 
-  changeVisilibity(): void {
-    this.document.visibility = !this.document.visibility
+  changeVisibility(): void {
+    this.document.visibility = !this.document.visibility;
   }
 
-  keywordsChanged(keywords: string[]) : void {
-    this.document.keywords = JSON.stringify(keywords).slice(1, -1)
-    console.log(this.document.keywords)
+  keywordsChanged(keywords: string[]): void {
+    this.document.keywords = JSON.stringify(keywords).slice(1, -1);
+  }
+
+  uploadDocument() {
+  }
+
+  downloadDocument() {
+  }
+
+  goBack() {
+    if (this.readOnly) {
+      this.router.navigate(['/notes']);
+    } else {
+      const dialogResponse = this.dialogBox.open(
+        ConfirmationDialogBoxComponent,
+        {
+          data: `Do you want to save the changes?`,
+          disableClose: true,
+          autoFocus: false,
+        },
+      );
+
+      dialogResponse.afterClosed().subscribe((response) => {
+        if (response) {
+          this.updateDocument();
+          this.router.navigate(['/notes']);
+        } else {
+          this.router.navigate(['/notes']);
+        }
+      });
+    }
   }
 }

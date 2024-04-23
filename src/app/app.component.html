@@ -1,13 +1,13 @@
 <main class="main" *ngIf="loggedIn | async; else loggedOut">
-    <section class="nav">
-      <app-nav></app-nav>
-    </section>
-    <section class="content slimScroll is-large">
-      <router-outlet></router-outlet>
-    </section>
+  <section class="nav">
+    <app-nav></app-nav>
+  </section>
+  <section class="content slimScroll is-large">
+    <router-outlet></router-outlet>
+  </section>
 </main>
 
 <ng-template #loggedOut>
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </ng-template>
 <app-notification></app-notification>

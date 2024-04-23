@@ -1,17 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {INotification} from "../../data-types/notification.model";
-import {NotificationService} from "../../services/notification.service";
+import { Component, OnInit } from '@angular/core';
+import { INotification } from '../../data-types/notification.model';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
-  styleUrl: './notification.component.sass'
+  styleUrl: './notification.component.sass',
 })
-export class NotificationComponent implements OnInit{
+export class NotificationComponent implements OnInit {
   notifications: INotification[] = [];
-  counter: number = 0
-  constructor(public notificationService: NotificationService) {
-  }
+  counter: number = 0;
+  constructor(public notificationService: NotificationService) {}
 
   ngOnInit() {
     this.notificationService.notifyRequest$.subscribe(
@@ -20,7 +19,9 @@ export class NotificationComponent implements OnInit{
         this.notifications.push({ ...notification, id });
 
         setTimeout(() => {
-          this.notifications = this.notifications.filter(notification => notification.id !== id);
+          this.notifications = this.notifications.filter(
+            (notification) => notification.id !== id,
+          );
         }, 3000);
       },
     );

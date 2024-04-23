@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import {Router} from "@angular/router";
-import {FormBuilder, Validators} from "@angular/forms";
-import {PATHS} from "../../app.constants";
-import {UserLoginDataModel} from "../../data-types/user-login-data.model";
-import {UserService} from "../../services/user.service";
-import {CookieService} from "ngx-cookie-service";
-import {parseJwt} from "../../utils/JWTParser";
-import {HttpErrorResponse} from "@angular/common/http";
-import {ErrorResponseModel} from "../../data-types/error-response.model";
+import { Router } from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
+import { PATHS } from '../../app.constants';
+import { UserLoginDataModel } from '../../data-types/user-login-data.model';
+import { UserService } from '../../services/user.service';
+import { CookieService } from 'ngx-cookie-service';
+import { parseJwt } from '../../utils/JWTParser';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorResponseModel } from '../../data-types/error-response.model';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.sass'
+  styleUrl: './login.component.sass',
 })
 export class LoginComponent {
   protected readonly PATHS = PATHS;
@@ -29,8 +29,7 @@ export class LoginComponent {
     private router: Router,
     private userService: UserService,
     private cookieService: CookieService,
-  ) {
-  }
+  ) {}
 
   resetWarnings() {
     this.showPasswordErrorMessage = false;
@@ -56,21 +55,20 @@ export class LoginComponent {
       localStorage.setItem('userType', jwt['type']);
       localStorage.setItem('userId', jwt['id']);
       localStorage.setItem('userInitials', jwt['initials']);
-      this.router.navigate(['/notes'])
+      this.router.navigate(['/notes']);
     },
     error: (error: HttpErrorResponse) => {
       if (error.error instanceof ErrorEvent) {
-
-        this.errorMessage = "An error occurred! Please try again later!"
+        this.errorMessage = 'An error occurred! Please try again later!';
       } else {
-        const errResponse: ErrorResponseModel = error.error as ErrorResponseModel;
+        const errResponse: ErrorResponseModel =
+          error.error as ErrorResponseModel;
         this.errorMessage = errResponse.errorMessage;
         this.loginUserDataFormGroup.get('password')?.reset();
         this.loginUserDataFormGroup.get('email')?.reset();
         this.loginUserDataFormGroup.markAllAsTouched();
       }
       this.showPasswordErrorMessage = true;
-    }
+    },
   };
-
 }

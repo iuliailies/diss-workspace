@@ -7,11 +7,12 @@ import { ContentEditableDirective } from './directives/content-editable.directiv
 import { KeywordsComponent } from './keywords/keywords.component';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationDialogBoxComponent } from './confirmation-dialog-box/confirmation-dialog-box.component';
-import {MatDialogActions, MatDialogContent} from "@angular/material/dialog";
-import {MatSnackBarAction, MatSnackBarLabel} from "@angular/material/snack-bar";
+import { MatDialogActions, MatDialogContent } from '@angular/material/dialog';
+import {
+  MatSnackBarAction,
+  MatSnackBarLabel,
+} from '@angular/material/snack-bar';
 import { NotificationComponent } from './notification/notification.component';
-
-
 
 @NgModule({
   declarations: [
@@ -22,7 +23,13 @@ import { NotificationComponent } from './notification/notification.component';
     ConfirmationDialogBoxComponent,
     NotificationComponent,
   ],
-  exports: [NavComponent, ContentEditableDirective, EllipsisDirective, KeywordsComponent, NotificationComponent],
+  exports: [
+    NavComponent,
+    ContentEditableDirective,
+    EllipsisDirective,
+    KeywordsComponent,
+    NotificationComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -30,7 +37,7 @@ import { NotificationComponent } from './notification/notification.component';
     MatDialogContent,
     MatDialogActions,
     MatSnackBarLabel,
-    MatSnackBarAction
-  ]
+    MatSnackBarAction,
+  ],
 })
-export class CoreModule { }
+export class CoreModule {}

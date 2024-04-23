@@ -1,0 +1,22 @@
+@import 'variables'
+
+$note-padding: 10px
+
+.card
+  margin-top: 20px
+  width: calc(100% - 2*$note-padding)
+  height: 80vh
+  padding: $note-padding
+  border: 1px solid transparent
+  cursor: text !important
+  outline: none
+
+.visibility-icon
+  cursor: pointer
+  transition: all $transition-duration
+
+  &:hover
+    opacity: .8
+
+.subheader
+  margin-top: -15px

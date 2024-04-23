@@ -1,6 +1,9 @@
 <ng-container>
-  <div class="snackbar" [class.error]="notification.type === 'error'" *ngFor="let notification of notifications"
+  <div
+    class="snackbar"
+    [class.error]="notification.type === 'error'"
+    *ngFor="let notification of notifications"
   >
-    {{notification.message}}
+    {{ notification.message }}
   </div>
 </ng-container>

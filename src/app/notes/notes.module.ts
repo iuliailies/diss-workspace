@@ -3,24 +3,19 @@ import { CommonModule } from '@angular/common';
 import { IndexComponent } from './index/index.component';
 import { NoteComponent } from './note/note.component';
 import { NotesRoutingModule } from './notes-routing.module';
-import { SearchBarComponent } from "../core/search-bar/search-bar.component";
+import { SearchBarComponent } from '../core/search-bar/search-bar.component';
 import { CoreModule } from '../core/core.module';
-
-
+import { CreateNoteComponent } from './create-note/create-note.component';
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @NgModule({
-    declarations: [
-        IndexComponent,
-        NoteComponent,
-        SearchBarComponent
-    ],
-    exports: [
-        NoteComponent
-    ],
-    imports: [
-        CommonModule,
-        NotesRoutingModule,
-        CoreModule
-    ]
+  declarations: [
+    IndexComponent,
+    NoteComponent,
+    SearchBarComponent,
+    CreateNoteComponent,
+  ],
+  exports: [NoteComponent],
+  imports: [CommonModule, NotesRoutingModule, CoreModule, MatProgressSpinner],
 })
-export class NotesModule { }
+export class NotesModule {}

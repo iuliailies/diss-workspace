@@ -1,13 +1,13 @@
-import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PATHS } from '../../app.constants';
 import { AuthService } from '../../auth/shared/auth.service';
-import {CookieService} from "ngx-cookie-service";
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrl: './nav.component.sass'
+  styleUrl: './nav.component.sass',
 })
 export class NavComponent {
   PATHS = PATHS;
@@ -18,7 +18,7 @@ export class NavComponent {
     private elementRef: ElementRef,
     public auth: AuthService,
     public router: Router,
-    public cookieService: CookieService
+    public cookieService: CookieService,
   ) {}
 
   toggleUserDropdown(): void {
@@ -33,9 +33,12 @@ export class NavComponent {
     localStorage.removeItem('userInitials');
   }
 
-  @HostListener('document:click', ['$event']) onDropdownBlur(e: MouseEvent): void {
+  @HostListener('document:click', ['$event']) onDropdownBlur(
+    e: MouseEvent,
+  ): void {
     if (this.userDropdownOpened) {
-      const userItem: HTMLElement = this.elementRef.nativeElement.querySelector('.user-icon');
+      const userItem: HTMLElement =
+        this.elementRef.nativeElement.querySelector('.user-icon');
       if (e.target === userItem || userItem.contains(e.target as Node)) {
         return;
       }

@@ -5,5 +5,5 @@ const fontsPath = './assets/fonts/';
 export const PATHS = {
   IMAGES: imagesPath,
   ICONS: iconsPath,
-  FONTS: fontsPath
+  FONTS: fontsPath,
 };

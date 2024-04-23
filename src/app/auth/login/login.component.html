@@ -6,32 +6,72 @@
   >
     <p class="title-container">Welcome back!</p>
 
-    <div class="input-label-container" [class.error]="loginUserDataFormGroup.get('email')?.touched && loginUserDataFormGroup.get('email')?.invalid">
+    <div
+      class="input-label-container"
+      [class.error]="
+        loginUserDataFormGroup.get('email')?.touched &&
+        loginUserDataFormGroup.get('email')?.invalid
+      "
+    >
       <label class="subtitle-container">Email</label>
       <div class="input-container">
-        <input class="input" type="text" formControlName="email" (click)="resetWarnings()"/>
+        <input
+          class="input-field"
+          type="text"
+          formControlName="email"
+          (click)="resetWarnings()"
+        />
       </div>
     </div>
 
-    <div class="input-label-container" [class.error]="loginUserDataFormGroup.get('password')?.touched && loginUserDataFormGroup.get('password')?.invalid">
+    <div
+      class="input-label-container"
+      [class.error]="
+        loginUserDataFormGroup.get('password')?.touched &&
+        loginUserDataFormGroup.get('password')?.invalid
+      "
+    >
       <label class="subtitle-container">Password</label>
       <div class="input-container">
-        <input class="input" [type]="hidePassword ? 'password' : 'text'" formControlName="password"
-               (click)="resetWarnings()"/>
-        <button type="button" class="search-button" (click)="hidePassword = !hidePassword">
-          <img [src]=" hidePassword ? PATHS.ICONS + 'eye-slash-solid.svg' : PATHS.ICONS + 'eye-solid.svg'"
-               class="icon" alt=""/>
+        <input
+          class="input-field"
+          [type]="hidePassword ? 'password' : 'text'"
+          formControlName="password"
+          (click)="resetWarnings()"
+        />
+        <button
+          type="button"
+          class="search-button"
+          (click)="hidePassword = !hidePassword"
+        >
+          <img
+            [src]="
+              hidePassword
+                ? PATHS.ICONS + 'eye-slash-solid.svg'
+                : PATHS.ICONS + 'eye-solid.svg'
+            "
+            class="icon"
+            alt=""
+          />
         </button>
       </div>
     </div>
 
     <div class="button-container">
-      <button class="button" [class.disabled]="loginUserDataFormGroup.invalid" type="submit" id="form-button">
+      <button
+        class="button"
+        [class.disabled]="loginUserDataFormGroup.invalid"
+        type="submit"
+        id="form-button"
+      >
         Sign in
       </button>
     </div>
-    <div class="password-hint align-center justify-center" *ngIf="showPasswordErrorMessage">
-        {{errorMessage}}
+    <div
+      class="password-hint align-center justify-center"
+      *ngIf="showPasswordErrorMessage"
+    >
+      {{ errorMessage }}
     </div>
   </form>
 </div>

@@ -1,9 +1,20 @@
 <div class="keywords slimScroll">
-    <div class="search-container">
-        <input type="text" class="search-input" placeholder="Add keywords..."  [(ngModel)]="keywordInput" (keydown.enter)="addKeyword()">
-    </div>
-    <div class="keyword" *ngFor="let keyword of keywords; let i = index">
-        <span class="text">{{ keyword }}</span>
-        <img [src]="PATHS.ICONS + 'x-solid.svg'" (click)="removeKeyword(i)" />
-    </div>
+  <span *ngIf="readOnly" class="keywords-title">Keywords: </span>
+  <div *ngIf="!readOnly" class="search-container">
+    <input
+      type="text"
+      class="search-input"
+      placeholder="Add keywords..."
+      [(ngModel)]="keywordInput"
+      (keydown.enter)="addKeyword()"
+    />
+  </div>
+  <div class="keyword" *ngFor="let keyword of keywords; let i = index">
+    <span class="text">{{ keyword }}</span>
+    <img
+      *ngIf="!readOnly"
+      [src]="PATHS.ICONS + 'x-solid.svg'"
+      (click)="removeKeyword(i)"
+    />
+  </div>
 </div>

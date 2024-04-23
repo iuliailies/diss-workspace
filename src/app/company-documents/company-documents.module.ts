@@ -4,16 +4,8 @@ import { IndexComponent } from './index/index.component';
 import { DocumentComponent } from './document/document.component';
 import { CompanyDocumentsRoutingModule } from './company-documents-routing.module';
 
-
-
 @NgModule({
-  declarations: [
-    IndexComponent,
-    DocumentComponent
-  ],
-  imports: [
-    CommonModule,
-    CompanyDocumentsRoutingModule
-  ]
+  declarations: [IndexComponent, DocumentComponent],
+  imports: [CommonModule, CompanyDocumentsRoutingModule],
 })
-export class CompanyDocumentsModule { }
+export class CompanyDocumentsModule {}

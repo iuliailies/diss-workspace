@@ -4,15 +4,21 @@ import {
   Route,
   Router,
   RouterStateSnapshot,
-  UrlSegment
+  UrlSegment,
 } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuardService {
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+  ) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Promise<boolean> {
     return this.authGuard();
   }
 

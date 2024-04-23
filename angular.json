@@ -48,19 +48,11 @@
             "outputPath": "dist/diss-workspace",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "sass",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles/custom-theme.scss",
-              "src/styles/app.sass"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles/custom-theme.scss", "src/styles/app.sass"],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles", "./node_modules"]
             },
@@ -111,16 +103,10 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "sass",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles/app.sass"],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles", "./node_modules"]

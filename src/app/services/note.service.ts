@@ -1,26 +1,48 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CreateEmployeeDocumentRequest, EmployeeDocument, newDocumentData } from '../data-types/notes.model';
+import {
+  CreateEmployeeDocumentRequest,
+  EmployeeDocument,
+  newDocumentData,
+} from '../data-types/notes.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NoteService {
   private requestURL = 'http://localhost:8090/employee-document';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   createNote(note: EmployeeDocument): Observable<EmployeeDocument> {
-    const documentToSend: CreateEmployeeDocumentRequest = newDocumentData(note)
-    return this.http.post<EmployeeDocument>(this.requestURL + '/create-document', documentToSend);
+    const documentToSend: CreateEmployeeDocumentRequest = newDocumentData(note);
+    return this.http.post<EmployeeDocument>(
+      this.requestURL + '/create-document',
+      documentToSend,
+    );
   }
 
   getDocuments(): Observable<EmployeeDocument[]> {
-      return this.http.get<EmployeeDocument[]>(`${this.requestURL}/get-documents/${localStorage.getItem('userId')}`);
+    return this.http.get<EmployeeDocument[]>(
+      `${this.requestURL}/get-documents/${localStorage.getItem('userId')}`,
+    );
   }
 
   deleteDocument(id: any): Observable<any> {
     return this.http.delete(`${this.requestURL}/${id}`);
+  }
+
+  getDocument(id: any): Observable<EmployeeDocument> {
+    return this.http.get<EmployeeDocument>(
+      `${this.requestURL}/get-document/${id}`,
+    );
+  }
+
+  updateDocument(document: EmployeeDocument): Observable<EmployeeDocument> {
+    return this.http.put<EmployeeDocument>(
+      `${this.requestURL}/update-document`,
+      document,
+    );
   }
 }

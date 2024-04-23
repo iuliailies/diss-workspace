@@ -1,7 +1,14 @@
-import { Directive, ElementRef, EventEmitter, HostListener, Output, Renderer2 } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Output,
+  Renderer2,
+} from '@angular/core';
 
 @Directive({
-  selector: '[appContentEditable]'
+  selector: '[appContentEditable]',
 })
 export class ContentEditableDirective {
   private domElement: HTMLElement;
@@ -9,7 +16,10 @@ export class ContentEditableDirective {
   @Output() focused = new EventEmitter();
   @Output() unfocused = new EventEmitter();
 
-  constructor(private element: ElementRef, private renderer: Renderer2) {
+  constructor(
+    private element: ElementRef,
+    private renderer: Renderer2,
+  ) {
     this.domElement = this.element.nativeElement;
     this.renderer.setAttribute(this.domElement, 'contenteditable', 'true');
     this.renderer.addClass(this.domElement, 'content-editable');
