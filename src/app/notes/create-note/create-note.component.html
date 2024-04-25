@@ -28,22 +28,34 @@
           (click)="changeVisibility()"
           alt=""
         />
+        <input
+          type="file"
+          class="file-input"
+          (change)="onFileSelected($event)"
+          #fileUpload
+        />
+
         <img
           loading="eager"
           [src]="PATHS.ICONS + 'upload-solid.svg'"
           class="visibility-icon"
-          (click)="uploadDocument()"
+          (click)="fileUpload.click()"
           alt=""
         />
-        <span
-          *ngIf="document.document"
-          class="input"
-          (blur)="changeDocumentName($event)"
-          >{{ !loading ? document.document : 'Loading...' }}</span
-        >
+
+        <div *ngIf="fileName" class="container-file-title">
+          <p (click)="downloadDocument()" class="file-title">{{ fileName }}</p>
+          <div class="container-delete-file-img" (click)="removeFile()">
+            <img
+              id="delete-file-img"
+              [src]="PATHS.ICONS + 'x-solid.svg'"
+              alt=""
+            />
+          </div>
+        </div>
       </div>
       <div class="header-right">
-        <div class="button" (click)="saveDocument()">
+        <div class="button" (click)="createDocument()">
           <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
           <span>Save changes</span>
         </div>

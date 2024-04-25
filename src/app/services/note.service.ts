@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
-  CreateEmployeeDocumentRequest,
+  SaveEmployeeDocument,
   EmployeeDocument,
   newDocumentData,
 } from '../data-types/notes.model';
@@ -15,11 +15,10 @@ export class NoteService {
 
   constructor(private http: HttpClient) {}
 
-  createNote(note: EmployeeDocument): Observable<EmployeeDocument> {
-    const documentToSend: CreateEmployeeDocumentRequest = newDocumentData(note);
+  createNote(note: SaveEmployeeDocument): Observable<EmployeeDocument> {
     return this.http.post<EmployeeDocument>(
       this.requestURL + '/create-document',
-      documentToSend,
+      note,
     );
   }
 

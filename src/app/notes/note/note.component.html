@@ -1,90 +1,89 @@
 <div *ngIf="!loading">
   <header class="header">
-  <div class="header-container">
-    <div class="container is-fluid header-divider">
-      <div class="header-left">
-        <h1 class="home-link" (click)="goBack()">Documents</h1>
-        <img [src]="PATHS.ICONS + 'chevron-right.svg'" alt="" />
+    <div class="header-container">
+      <div class="container is-fluid header-divider">
+        <div class="header-left">
+          <h1 class="home-link" (click)="goBack()">Documents</h1>
+          <img [src]="PATHS.ICONS + 'chevron-right.svg'" alt="" />
 
-        <span
-          appContentEditable
-          #nameInput
-          *ngIf="!readOnly"
-          class="input"
-          (blur)="changeDocumentName($event)"
-          >{{ !loading ? document.title : 'Loading...' }}</span
-        >
-        <h2 class="input" *ngIf="readOnly">
-          {{ !loading ? document.title : 'Loading...' }}
-        </h2>
-        <img
-          loading="eager"
-          [src]="PATHS.ICONS + 'lock-open.svg'"
-          *ngIf="document.visibility"
-          class="visibility-icon"
-          (click)="!readOnly ? changeVisibility() : null"
-          alt=""
-        />
-        <img
-          loading="eager"
-          [src]="PATHS.ICONS + 'lock-closed.svg'"
-          *ngIf="!document.visibility"
-          class="visibility-icon"
-          (click)="!readOnly ? changeVisibility() : null"
-          alt=""
-        />
-        <img
-          loading="eager"
-          [src]="PATHS.ICONS + 'upload-solid.svg'"
-          *ngIf="!readOnly"
-          class="visibility-icon"
-          (click)="uploadDocument()"
-          alt=""
-        />
-        <img
-          loading="eager"
-          [src]="PATHS.ICONS + 'download-solid.svg'"
-          *ngIf="readOnly"
-          class="visibility-icon"
-          (click)="downloadDocument()"
-          alt=""
-        />
-        <span
-          *ngIf="existsUploadedFile"
-          class="input"
-          (click)="!readOnly ? downloadDocument() : null"
-          >{{ !loading ? document.document : 'Loading...' }}</span
-        >
-      </div>
-      <div *ngIf="!readOnly" class="header-right">
-        <div class="button" (click)="updateDocument()">
-          <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
-          <span>Save changes</span>
+          <span
+            appContentEditable
+            #nameInput
+            *ngIf="!readOnly"
+            class="input"
+            (blur)="changeDocumentName($event)"
+            >{{ !loading ? document.title : 'Loading...' }}</span
+          >
+          <h2 class="input" *ngIf="readOnly">
+            {{ !loading ? document.title : 'Loading...' }}
+          </h2>
+          <img
+            loading="eager"
+            [src]="PATHS.ICONS + 'lock-open.svg'"
+            *ngIf="document.visibility"
+            class="visibility-icon"
+            (click)="!readOnly ? changeVisibility() : null"
+            alt=""
+          />
+          <img
+            loading="eager"
+            [src]="PATHS.ICONS + 'lock-closed.svg'"
+            *ngIf="!document.visibility"
+            class="visibility-icon"
+            (click)="!readOnly ? changeVisibility() : null"
+            alt=""
+          />
+          <img
+            loading="eager"
+            [src]="PATHS.ICONS + 'upload-solid.svg'"
+            *ngIf="!readOnly"
+            class="visibility-icon"
+            (click)="uploadDocument()"
+            alt=""
+          />
+          <!--TODO make this appear when readOnly is true-->
+          <img
+            loading="eager"
+            [src]="PATHS.ICONS + 'download-solid.svg'"
+            class="visibility-icon"
+            (click)="downloadDocument()"
+            alt=""
+          />
+          <span
+            *ngIf="existsUploadedFile"
+            class="input"
+            (click)="!readOnly ? downloadDocument() : null"
+            >{{ !loading ? document.document : 'Loading...' }}</span
+          >
+        </div>
+        <div *ngIf="!readOnly" class="header-right">
+          <div class="button" (click)="updateDocument()">
+            <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
+            <span>Save changes</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container subheader justify-start align-center">
-    <div class="text">Created by</div>
-    <div class="user-icon">{{ getUserInitials() }}</div>
-    <div class="text">
-      Last modified: {{ document.lastModified | date: 'medium' }}
+    <div class="container subheader justify-start align-center">
+      <div class="text">Created by</div>
+      <div class="user-icon">{{ getUserInitials() }}</div>
+      <div class="text">
+        Last modified: {{ document.lastModified | date: 'medium' }}
+      </div>
     </div>
+  </header>
+
+  <div class="container">
+    <app-keywords
+      [readOnly]="readOnly"
+      [keywords]="keywords"
+      (keywordsChanged)="keywordsChanged($event)"
+    ></app-keywords>
+    <div
+      class="card"
+      #noteContent
+      [contentEditable]="!readOnly ? 'true' : 'false'"
+      [innerHTML]="document.text"
+    ></div>
   </div>
-</header>
-
-<div class="container">
-  <app-keywords
-    [readOnly]="readOnly"
-    [keywords]="keywords"
-    (keywordsChanged)="keywordsChanged($event)"
-  ></app-keywords>
-  <div
-    class="card"
-    #noteContent
-    [contentEditable]="!readOnly ? 'true' : 'false'"
-    [innerHTML]="document.text"
-  ></div>
 </div>
-
-

@@ -43,7 +43,7 @@
           class="icon"
           alt=""
           (click)="deleteDocument($event, document)"
-          *ngIf="matchesUserId(document.userId)"
+          *ngIf="matchesUserId(document.user.id)"
         />
       </div>
     </div>

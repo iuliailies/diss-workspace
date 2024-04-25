@@ -1,11 +1,15 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { EmployeeDocument } from '../../data-types/notes.model';
+import {
+  EmployeeDocument,
+  SaveEmployeeDocument,
+} from '../../data-types/notes.model';
 import { NoteService } from '../../services/note.service';
 import { Router } from '@angular/router';
 import { PATHS } from '../../app.constants';
 import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { NotificationService } from '../../services/notification.service';
+import { File } from '../../data-types/file.model';
 
 @Component({
   selector: 'app-create-note',
@@ -19,16 +23,17 @@ export class CreateNoteComponent {
   userId = localStorage.getItem('userId');
   userInitials = localStorage.getItem('userInitials');
   loading = false;
-  document: EmployeeDocument = {
+  document: SaveEmployeeDocument = {
     title: 'New document',
     text: '',
-    document: undefined,
+    file: undefined,
     keywords: '',
-    lastModified: undefined,
     userId: 16,
-    comments: [],
     visibility: false,
   };
+  fileType: any;
+  fileName: any;
+  file: any;
 
   constructor(
     private noteService: NoteService,
@@ -49,8 +54,6 @@ export class CreateNoteComponent {
   }
 
   saveDocument(): void {
-    this.document.text = this.noteContent.nativeElement.innerHTML;
-    this.document.userId = parseInt(this.userId || '-1');
     this.noteService.createNote(this.document).subscribe({
       next: (response: EmployeeDocument) => {
         this.notificationService.notify({
@@ -77,6 +80,26 @@ export class CreateNoteComponent {
     });
   }
 
+  createDocument() {
+    this.document.text = this.noteContent.nativeElement.innerHTML;
+    this.document.userId = parseInt(this.userId || '-1');
+    if (this.file) {
+      //there is a file
+      this.file.arrayBuffer().then((buff: ArrayBuffer) => {
+        let x = new Uint8Array(buff);
+        this.document.file = {
+          name: this.fileName,
+          type: this.fileType,
+          buffer: Array.from(x),
+        };
+        this.saveDocument();
+      });
+    } else {
+      this.document.file = undefined;
+      this.saveDocument();
+    }
+  }
+
   navigateToNoteView(document: any): void {
     this.router.navigate([`notes/${document.id}`]);
   }
@@ -89,7 +112,31 @@ export class CreateNoteComponent {
     this.document.keywords = JSON.stringify(keywords).slice(1, -1);
   }
 
-  uploadDocument() {}
+  downloadDocument() {
+    const blob = new Blob([this.file], {
+      type: `application/${this.fileType}`,
+    });
+    const url = window.URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.download = this.fileName;
+    anchor.href = url;
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+  }
 
-  downloadDocument() {}
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+
+    if (file) {
+      this.fileType = file.type;
+      this.fileName = file.name;
+      this.file = file;
+    }
+  }
+
+  removeFile() {
+    this.file = null;
+    this.fileName = null;
+  }
 }

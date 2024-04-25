@@ -1,38 +1,36 @@
+import { User } from './user.model';
+import { File } from './file.model';
+
 export interface EmployeeDocument {
   id?: number;
   title: string;
   text: string;
-  document?: any;
   keywords: string;
   lastModified?: Date;
-  userId: number;
   comments?: string[];
   visibility?: boolean;
-  userFirstname?: string;
-  userLastname?: string;
+  user: User;
+  file: File;
 }
 
-export interface CreateEmployeeDocumentRequest {
+export interface SaveEmployeeDocument {
+  id?: number;
   title: string;
   text: string;
-  document: any;
   keywords: string;
-  lastModified: Date;
-  userId: number;
   visibility: boolean;
+  userId: number;
+  file?: File;
 }
 
-export const newDocumentData = (
-  d: EmployeeDocument,
-): CreateEmployeeDocumentRequest => {
-  const doc: CreateEmployeeDocumentRequest = {
+export const newDocumentData = (d: EmployeeDocument): SaveEmployeeDocument => {
+  const doc: SaveEmployeeDocument = {
     title: d.title,
     text: d.text,
-    document: d.document,
     keywords: d.keywords,
-    lastModified: new Date(),
-    userId: d.userId,
+    userId: d.user.id,
     visibility: d.visibility || false,
+    file: d.file,
   };
 
   return doc;

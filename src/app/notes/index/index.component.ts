@@ -86,7 +86,7 @@ export class IndexComponent implements OnInit {
   }
 
   getUserInitials(document: any): string {
-    return document.userFirstname[0] + document.userLastname[0];
+    return document.user.firstname[0] + document.user.lastname[0];
   }
 
   viewDocument(id: any) {

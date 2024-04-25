@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { PATHS } from '../../app.constants';
-import { UserLoginDataModel } from '../../data-types/user-login-data.model';
+import { UserLogin } from '../../data-types/user.model';
 import { UserService } from '../../services/user.service';
 import { CookieService } from 'ngx-cookie-service';
 import { parseJwt } from '../../utils/JWTParser';
@@ -38,7 +38,7 @@ export class LoginComponent {
   loginUser() {
     const valuesFromForm = this.loginUserDataFormGroup.value;
 
-    const loginData: UserLoginDataModel = {
+    const loginData: UserLogin = {
       email: valuesFromForm.email!.toLowerCase(),
       password: valuesFromForm.password!,
     };

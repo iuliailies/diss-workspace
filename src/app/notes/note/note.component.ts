@@ -1,13 +1,13 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {EmployeeDocument} from '../../data-types/notes.model';
-import {PATHS} from '../../app.constants';
-import {NoteService} from '../../services/note.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {NotificationType} from '../../data-types/notification.model';
-import {ErrorResponseModel} from '../../data-types/error-response.model';
-import {NotificationService} from '../../services/notification.service';
-import {MatDialog} from '@angular/material/dialog';
-import {ConfirmationDialogBoxComponent} from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { EmployeeDocument } from '../../data-types/notes.model';
+import { PATHS } from '../../app.constants';
+import { NoteService } from '../../services/note.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationType } from '../../data-types/notification.model';
+import { ErrorResponseModel } from '../../data-types/error-response.model';
+import { NotificationService } from '../../services/notification.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
 
 @Component({
   selector: 'app-note',
@@ -47,9 +47,9 @@ export class NoteComponent implements OnInit {
         this.noteService.getDocument(documentId).subscribe((document) => {
           this.document = document as EmployeeDocument;
           this.readOnly =
-            document!.userId.toString() !== localStorage.getItem('userId');
+            document!.user.id.toString() !== localStorage.getItem('userId');
           if (document?.keywords) {
-            this.keywords = this.convertStringToArray(document.keywords)
+            this.keywords = this.convertStringToArray(document.keywords);
           } else {
             this.keywords = [];
           }
@@ -62,13 +62,16 @@ export class NoteComponent implements OnInit {
   convertStringToArray(inputString: string): string[] {
     // Remove the very outer quotes if they exist redundantly
     let cleanedString = inputString.trim();
-    if (cleanedString[0] === '"' && cleanedString[cleanedString.length - 1] === '"') {
+    if (
+      cleanedString[0] === '"' &&
+      cleanedString[cleanedString.length - 1] === '"'
+    ) {
       cleanedString = cleanedString.substring(1, cleanedString.length - 1);
     }
 
     // Split the string by commas not within quotes
-    return cleanedString.split(/","|(?<!"),(?=")/g).map(item =>
-      item.replace(/^"|"$/g, '') // Remove leading and trailing quotes from each item
+    return cleanedString.split(/","|(?<!"),(?=")/g).map(
+      (item) => item.replace(/^"|"$/g, ''), // Remove leading and trailing quotes from each item
     );
   }
 
@@ -114,7 +117,7 @@ export class NoteComponent implements OnInit {
   }
 
   getUserInitials(): string {
-    return this.document.userFirstname![0] + this.document.userLastname![0];
+    return this.document.user.firstname![0] + this.document.user.lastname![0];
   }
 
   changeVisibility(): void {
@@ -125,10 +128,27 @@ export class NoteComponent implements OnInit {
     this.document.keywords = JSON.stringify(keywords).slice(1, -1);
   }
 
-  uploadDocument() {
-  }
+  uploadDocument() {}
 
   downloadDocument() {
+    const file = this.document.file;
+    let binary_string = window.atob(file.buffer);
+
+    let len = binary_string.length;
+    let bytes = new Uint8Array(len);
+
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binary_string.charCodeAt(i);
+    }
+
+    const blob = new Blob([bytes.buffer], { type: `application/${file.type}` });
+    const url = window.URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.download = file.name;
+    anchor.href = url;
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
   }
 
   goBack() {

@@ -1,0 +1,18 @@
+export interface UserLogin {
+  email: string;
+  password: string;
+}
+
+export interface User {
+  id: number;
+  email: string;
+  firstname: string;
+  lastname: string;
+  phoneNumber: string;
+  role: string;
+  department: string;
+  location: string;
+  level: number;
+  points: number;
+  type: string;
+}
