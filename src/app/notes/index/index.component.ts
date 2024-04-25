@@ -32,7 +32,6 @@ export class IndexComponent implements OnInit {
     this.activatedRoute.params.subscribe(() => {
       this.fetchDocuments();
     });
-    this.fetchDocuments();
     this.userId = localStorage.getItem('userId');
   }
 
@@ -90,8 +89,6 @@ export class IndexComponent implements OnInit {
   }
 
   viewDocument(id: any) {
-    this.noteService.getDocument(id).subscribe((document) => {
-      this.router.navigate([`notes/${id}`]);
-    });
+    this.router.navigate([`notes/${id}`]);
   }
 }

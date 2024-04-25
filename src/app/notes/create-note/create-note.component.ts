@@ -86,7 +86,7 @@ export class CreateNoteComponent {
     if (this.file) {
       //there is a file
       this.file.arrayBuffer().then((buff: ArrayBuffer) => {
-        let x = new Uint8Array(buff);
+        const x = new Uint8Array(buff);
         this.document.file = {
           name: this.fileName,
           type: this.fileType,

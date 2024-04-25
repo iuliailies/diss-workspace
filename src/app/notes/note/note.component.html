@@ -14,9 +14,11 @@
             (blur)="changeDocumentName($event)"
             >{{ !loading ? document.title : 'Loading...' }}</span
           >
+
           <h2 class="input" *ngIf="readOnly">
             {{ !loading ? document.title : 'Loading...' }}
           </h2>
+
           <img
             loading="eager"
             [src]="PATHS.ICONS + 'lock-open.svg'"
@@ -25,6 +27,7 @@
             (click)="!readOnly ? changeVisibility() : null"
             alt=""
           />
+
           <img
             loading="eager"
             [src]="PATHS.ICONS + 'lock-closed.svg'"
@@ -33,37 +36,55 @@
             (click)="!readOnly ? changeVisibility() : null"
             alt=""
           />
+
+          <input
+            type="file"
+            class="file-input"
+            (change)="onFileSelected($event)"
+            #fileUpload
+          />
+
           <img
             loading="eager"
             [src]="PATHS.ICONS + 'upload-solid.svg'"
             *ngIf="!readOnly"
             class="visibility-icon"
-            (click)="uploadDocument()"
+            (click)="fileUpload.click()"
             alt=""
           />
-          <!--TODO make this appear when readOnly is true-->
+
           <img
+            *ngIf="readOnly && this.document.file"
             loading="eager"
             [src]="PATHS.ICONS + 'download-solid.svg'"
             class="visibility-icon"
             (click)="downloadDocument()"
             alt=""
           />
-          <span
-            *ngIf="existsUploadedFile"
-            class="input"
-            (click)="!readOnly ? downloadDocument() : null"
-            >{{ !loading ? document.document : 'Loading...' }}</span
-          >
+
+          <div *ngIf="this.document.file" class="container-file-title">
+            <p (click)="!readOnly ? downloadDocument() : null" class="file-title">{{ this.document.file.name }}</p>
+            <div *ngIf="!readOnly" class="container-delete-file-img" (click)="removeFile()">
+              <img
+                id="delete-file-img"
+                [src]="PATHS.ICONS + 'x-solid.svg'"
+                alt=""
+              />
+            </div>
+          </div>
+
         </div>
+
         <div *ngIf="!readOnly" class="header-right">
           <div class="button" (click)="updateDocument()">
             <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
             <span>Save changes</span>
           </div>
         </div>
+
       </div>
     </div>
+
     <div class="container subheader justify-start align-center">
       <div class="text">Created by</div>
       <div class="user-icon">{{ getUserInitials() }}</div>

@@ -8,6 +8,7 @@ import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { NotificationService } from '../../services/notification.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
+import {File} from "../../data-types/file.model";
 
 @Component({
   selector: 'app-note',
@@ -21,9 +22,9 @@ export class NoteComponent implements OnInit {
   userId = localStorage.getItem('userId');
   loading = false;
   readOnly = false;
-  existsUploadedFile = false;
   keywords: string[] = [];
   document: any;
+  fileChanged = false;
 
   constructor(
     private noteService: NoteService,
@@ -32,7 +33,6 @@ export class NoteComponent implements OnInit {
     private dialogBox: MatDialog,
     private activatedRoute: ActivatedRoute,
   ) {
-    this.fetchDocument();
   }
 
   ngOnInit(): void {
@@ -46,17 +46,23 @@ export class NoteComponent implements OnInit {
       if (documentId) {
         this.noteService.getDocument(documentId).subscribe((document) => {
           this.document = document as EmployeeDocument;
-          this.readOnly =
-            document!.user.id.toString() !== localStorage.getItem('userId');
-          if (document?.keywords) {
-            this.keywords = this.convertStringToArray(document.keywords);
-          } else {
-            this.keywords = [];
-          }
+          this.initializeFields();
           this.loading = false;
         });
       }
     });
+  }
+
+  initializeFields() {
+    this.fileChanged = false;
+
+    this.readOnly = this.document!.user.id.toString() !== localStorage.getItem('userId');
+
+    if (this.document?.keywords) {
+      this.keywords = this.convertStringToArray(this.document.keywords);
+    } else {
+      this.keywords = [];
+    }
   }
 
   convertStringToArray(inputString: string): string[] {
@@ -90,8 +96,23 @@ export class NoteComponent implements OnInit {
   updateDocument(): void {
     this.document.text = this.noteContent.nativeElement.innerHTML;
     this.document.userId = parseInt(this.userId || '-1');
+    if (this.fileChanged && this.document.file) {
+      this.document.file.buffer.arrayBuffer().then((buff: ArrayBuffer) => {
+        const x = new Uint8Array(buff);
+        this.document.file = {
+          ...this.document.file,
+          buffer: Array.from(x),
+        };
+        this.saveDocument();
+      });
+    } else {
+      this.saveDocument();
+    }
+  }
+
+  saveDocument(): void {
     this.noteService.updateDocument(this.document).subscribe({
-      next: (response: EmployeeDocument) => {
+      next: () => {
         this.notificationService.notify({
           message: 'Changes successfully saved! ',
           type: NotificationType.success,
@@ -128,23 +149,32 @@ export class NoteComponent implements OnInit {
     this.document.keywords = JSON.stringify(keywords).slice(1, -1);
   }
 
-  uploadDocument() {}
-
   downloadDocument() {
     const file = this.document.file;
-    let binary_string = window.atob(file.buffer);
+    if(!this.fileChanged) {
+      let binary_string = window.atob(file.buffer);
 
-    let len = binary_string.length;
-    let bytes = new Uint8Array(len);
+      let len = binary_string.length;
+      let bytes = new Uint8Array(len);
 
-    for (let i = 0; i < len; i++) {
-      bytes[i] = binary_string.charCodeAt(i);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binary_string.charCodeAt(i);
+      }
+
+      const blob = new Blob([bytes.buffer], {type: `application/${file.type}`});
+      this.triggerDownload(blob, file.name);
+    } else {
+      const blob = new Blob([file.buffer], {
+        type: `application/${file.type}`,
+      });
+      this.triggerDownload(blob, file.name);
     }
+  }
 
-    const blob = new Blob([bytes.buffer], { type: `application/${file.type}` });
+  triggerDownload(blob: any, name: any) {
     const url = window.URL.createObjectURL(blob);
     const anchor = document.createElement('a');
-    anchor.download = file.name;
+    anchor.download = name
     anchor.href = url;
     document.body.appendChild(anchor);
     anchor.click();
@@ -167,11 +197,21 @@ export class NoteComponent implements OnInit {
       dialogResponse.afterClosed().subscribe((response) => {
         if (response) {
           this.updateDocument();
-          this.router.navigate(['/notes']);
-        } else {
-          this.router.navigate(['/notes']);
         }
+        this.router.navigate(['/notes']);
       });
+    }
+  }
+
+  removeFile() {
+    this.document.file = undefined;
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.document.file = {...this.document.file, buffer: file, name: file.name, type: file.type};
+      this.fileChanged = true;
     }
   }
 }
