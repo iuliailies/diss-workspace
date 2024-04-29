@@ -1,7 +1,7 @@
 export interface Badge {
-    trainingId: number;
-    userId: number;
-    progressStatus?: string;
-    currentPage?: number;
-    name: string;
+  trainingId: number;
+  userId: number;
+  progressStatus?: string;
+  currentPage?: number;
+  name: string;
 }

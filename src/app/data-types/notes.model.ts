@@ -1,4 +1,4 @@
-import {User, UserDocument} from './user.model';
+import { User, UserDocument } from './user.model';
 import { File } from './file.model';
 
 export interface GetEmployeeDocument {

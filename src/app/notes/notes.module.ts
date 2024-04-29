@@ -9,11 +9,7 @@ import { CreateNoteComponent } from './create-note/create-note.component';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @NgModule({
-  declarations: [
-    IndexComponent,
-    NoteComponent,
-    CreateNoteComponent,
-  ],
+  declarations: [IndexComponent, NoteComponent, CreateNoteComponent],
   exports: [NoteComponent],
   imports: [CommonModule, NotesRoutingModule, CoreModule, MatProgressSpinner],
 })

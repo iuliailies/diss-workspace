@@ -13,7 +13,7 @@ import {
   MatSnackBarLabel,
 } from '@angular/material/snack-bar';
 import { NotificationComponent } from './notification/notification.component';
-import {SearchBarComponent} from "./search-bar/search-bar.component";
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 @NgModule({
   declarations: [

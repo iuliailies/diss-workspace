@@ -8,7 +8,7 @@ import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { NotificationService } from '../../services/notification.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
-import {File} from "../../data-types/file.model";
+import { File } from '../../data-types/file.model';
 
 @Component({
   selector: 'app-note',
@@ -32,8 +32,7 @@ export class NoteComponent implements OnInit {
     private router: Router,
     private dialogBox: MatDialog,
     private activatedRoute: ActivatedRoute,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.fetchDocument();
@@ -56,7 +55,8 @@ export class NoteComponent implements OnInit {
   initializeFields() {
     this.fileChanged = false;
 
-    this.readOnly = this.document!.user.id.toString() !== localStorage.getItem('userId');
+    this.readOnly =
+      this.document!.user.id.toString() !== localStorage.getItem('userId');
 
     if (this.document?.keywords) {
       this.keywords = this.convertStringToArray(this.document.keywords);
@@ -155,7 +155,7 @@ export class NoteComponent implements OnInit {
 
   downloadDocument() {
     const file = this.document.file;
-    if(!this.fileChanged) {
+    if (!this.fileChanged) {
       let binary_string = window.atob(file.buffer);
 
       let len = binary_string.length;
@@ -165,7 +165,9 @@ export class NoteComponent implements OnInit {
         bytes[i] = binary_string.charCodeAt(i);
       }
 
-      const blob = new Blob([bytes.buffer], {type: `application/${file.type}`});
+      const blob = new Blob([bytes.buffer], {
+        type: `application/${file.type}`,
+      });
       this.triggerDownload(blob, file.name);
     } else {
       const blob = new Blob([file.buffer], {
@@ -178,7 +180,7 @@ export class NoteComponent implements OnInit {
   triggerDownload(blob: any, name: any) {
     const url = window.URL.createObjectURL(blob);
     const anchor = document.createElement('a');
-    anchor.download = name
+    anchor.download = name;
     anchor.href = url;
     document.body.appendChild(anchor);
     anchor.click();
@@ -214,7 +216,12 @@ export class NoteComponent implements OnInit {
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
-      this.document.file = {...this.document.file, buffer: file, name: file.name, type: file.type};
+      this.document.file = {
+        ...this.document.file,
+        buffer: file,
+        name: file.name,
+        type: file.type,
+      };
       this.fileChanged = true;
     }
   }

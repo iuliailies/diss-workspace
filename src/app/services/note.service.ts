@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import {
   SaveEmployeeDocument,
   EmployeeDocument,
-  newDocumentData, GetEmployeeDocument,
+  newDocumentData,
+  GetEmployeeDocument,
 } from '../data-types/notes.model';
 import { Observable } from 'rxjs';
 

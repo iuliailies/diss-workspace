@@ -1,26 +1,29 @@
 <header class="header">
   <div class="header-container">
     <div class="container is-fluid header-divider">
-
       <div class="header-left">
         <div class="align-center justify-center">
-          <div class="user-icon icon-size">{{getUserInitials()}}</div>
+          <div class="user-icon icon-size">{{ getUserInitials() }}</div>
           <div class="user-details-container">
-            <h1 class="name">{{userFirstname + " " + userLastname}}</h1>
-            <span id="email-title" class="input">{{userEmail}}</span>
+            <h1 class="name">{{ userFirstname + ' ' + userLastname }}</h1>
+            <span id="email-title" class="input">{{ userEmail }}</span>
           </div>
         </div>
       </div>
 
       <div class="header-right flex-column">
-          <div class="level-first-container">
-            <div class="level-second-container">
-              <span id="level-title" class="input">{{"Level " + userLevel}}</span>
-              <span id="xp-title" class="input">{{userPoints + " xp"}}</span>
-            </div>
-            <div class="user-icon level-icon">{{userLevel}}</div>
+        <div class="level-first-container">
+          <div class="level-second-container">
+            <span id="level-title" class="input">{{
+              'Level ' + userLevel
+            }}</span>
+            <span id="xp-title" class="input">{{ userPoints + ' xp' }}</span>
           </div>
-          <span id="remaining-xp-title" class="input">190xp to go until next level</span>
+          <div class="user-icon level-icon">{{ userLevel }}</div>
+        </div>
+        <span id="remaining-xp-title" class="input"
+          >190xp to go until next level</span
+        >
       </div>
     </div>
   </div>
@@ -60,7 +63,6 @@
     </div>
   </div>
 </div>
-
 
 <!--<div class="badges-card">-->
 

@@ -3,39 +3,38 @@
     <div class="container is-fluid header-divider">
       <div class="header-left">
         <h1 class="home-link" [routerLink]="['/trainings']">Trainings</h1>
-        <img class="chevron-img" [src]="PATHS.ICONS + 'chevron-right.svg'" alt=""/>
-        <h1 class="add-training-title">{{ loading ? 'Loading...' : 'Add training'}}</h1>
+        <img
+          class="chevron-img"
+          [src]="PATHS.ICONS + 'chevron-right.svg'"
+          alt=""
+        />
+        <h1 class="add-training-title">
+          {{ loading ? 'Loading...' : 'Add training' }}
+        </h1>
       </div>
 
       <div class="header-right">
         <div class="button" (click)="createTraining()">
-          <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt=""/>
+          <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
           <span>Save changes</span>
         </div>
       </div>
-
     </div>
   </div>
 </header>
 
 <div class="container">
   <app-keywords
-          [readOnly]="false"
-          [keywords]="[]"
-          (keywordsChanged)="keywordsChanged($event)"
+    [readOnly]="false"
+    [keywords]="[]"
+    (keywordsChanged)="keywordsChanged($event)"
   ></app-keywords>
 </div>
 
 <div class="card">
-  <form
-    [formGroup]="createTrainingForm"
-    class="create-training-form"
-  >
+  <form [formGroup]="createTrainingForm" class="create-training-form">
     <div class="left-container">
-      <div
-        class="input-label-container"
-        [class.error]="isInvalid"
-      >
+      <div class="input-label-container" [class.error]="isInvalid">
         <label class="subtitle-container">Name</label>
         <div class="bigger-input-container input-container">
           <input
@@ -47,11 +46,8 @@
         </div>
       </div>
 
-      <div class=two-inputs-container>
-        <div
-          class="input-label-container"
-          [class.error]="isInvalid"
-        >
+      <div class="two-inputs-container">
+        <div class="input-label-container" [class.error]="isInvalid">
           <label class="subtitle-container">Required Level</label>
           <div class="smaller-input-container input-container">
             <input
@@ -62,10 +58,7 @@
             />
           </div>
         </div>
-        <div
-          class="input-label-container"
-          [class.error]="isInvalid"
-        >
+        <div class="input-label-container" [class.error]="isInvalid">
           <label class="subtitle-container">Reward XP</label>
           <div class="smaller-input-container input-container">
             <input
@@ -78,10 +71,7 @@
         </div>
       </div>
 
-      <div
-        class="input-label-container"
-        [class.error]="isInvalid"
-      >
+      <div class="input-label-container" [class.error]="isInvalid">
         <label class="subtitle-container">Description</label>
         <div class="text-area-container error">
           <textarea
@@ -90,15 +80,13 @@
             rows="5"
             [maxlength]="200"
             class="text-area-field"
-            formControlName="description">
-            </textarea>
+            formControlName="description"
+          >
+          </textarea>
         </div>
       </div>
 
-      <div
-        class="input-label-container"
-        [class.error]="isInvalid"
-      >
+      <div class="input-label-container" [class.error]="isInvalid">
         <label class="subtitle-container">Upload file</label>
 
         <div
@@ -106,8 +94,8 @@
           (dragover)="onDragOver($event)"
           (dragleave)="onDragEnd($event)"
           (drop)="onFileDrop($event)"
-          #dragZoneRef>
-
+          #dragZoneRef
+        >
           <input
             type="file"
             (change)="onFileChange($event)"
@@ -115,15 +103,25 @@
             class="visually-hidden"
           />
 
-          <div  *ngIf="!fileName" class="upload-container justify-center align-center" (click)="fileInput.click()" >
+          <div
+            *ngIf="!fileName"
+            class="upload-container justify-center align-center"
+            (click)="fileInput.click()"
+          >
             <div class="image-container">
-              <img [src]="PATHS.ICONS + 'upload-solid.svg'" class="drop-image" alt="Upload"/>
+              <img
+                [src]="PATHS.ICONS + 'upload-solid.svg'"
+                class="drop-image"
+                alt="Upload"
+              />
               <span class="drop-text">or drop it here</span>
             </div>
           </div>
 
           <div *ngIf="fileName" class="container-file-title">
-            <p (click)="downloadDocument($event)" class="file-title">{{ fileName }}</p>
+            <p (click)="downloadDocument($event)" class="file-title">
+              {{ fileName }}
+            </p>
             <div class="container-delete-file-img" (click)="removeFile($event)">
               <img
                 id="delete-file-img"
@@ -132,16 +130,10 @@
               />
             </div>
           </div>
-
         </div>
       </div>
-
-
     </div>
 
-    <div class="empty-container">
-
-    </div>
-
+    <div class="empty-container"></div>
   </form>
 </div>

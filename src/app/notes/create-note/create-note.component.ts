@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   EmployeeDocument,
   SaveEmployeeDocument,
@@ -10,8 +10,8 @@ import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { NotificationService } from '../../services/notification.service';
 import { File } from '../../data-types/file.model';
-import {ConfirmationDialogBoxComponent} from "../../core/confirmation-dialog-box/confirmation-dialog-box.component";
-import {MatDialog} from "@angular/material/dialog";
+import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
+import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 
 @Component({
@@ -19,7 +19,7 @@ import { Location } from '@angular/common';
   templateUrl: './create-note.component.html',
   styleUrl: './create-note.component.sass',
 })
-export class CreateNoteComponent{
+export class CreateNoteComponent {
   @ViewChild('noteContent') noteContent!: ElementRef;
 
   protected readonly PATHS = PATHS;
@@ -86,14 +86,11 @@ export class CreateNoteComponent{
   }
 
   goBack() {
-    const dialogResponse = this.dialogBox.open(
-        ConfirmationDialogBoxComponent,
-        {
-          data: `Do you want to save the changes?`,
-          disableClose: true,
-          autoFocus: false,
-        },
-    );
+    const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent, {
+      data: `Do you want to save the changes?`,
+      disableClose: true,
+      autoFocus: false,
+    });
 
     dialogResponse.afterClosed().subscribe((response) => {
       if (response) {
@@ -105,7 +102,7 @@ export class CreateNoteComponent{
 
   createDocument() {
     this.document.text = this.noteContent.nativeElement.innerHTML;
-    this.document.userId = this.userId
+    this.document.userId = this.userId;
     if (this.file) {
       //there is a file
       this.file.arrayBuffer().then((buff: ArrayBuffer) => {

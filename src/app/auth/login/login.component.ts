@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { PATHS } from '../../app.constants';
-import {User, UserLogin} from '../../data-types/user.model';
+import { User, UserLogin } from '../../data-types/user.model';
 import { UserService } from '../../services/user.service';
 import { CookieService } from 'ngx-cookie-service';
 import { parseJwt } from '../../utils/JWTParser';
@@ -55,13 +55,15 @@ export class LoginComponent {
       localStorage.setItem('userType', jwt['type']);
       localStorage.setItem('userId', jwt['id']);
       localStorage.setItem('userEmail', jwt['email']);
-      this.userService.getUserInfo(localStorage.getItem('userId')).subscribe((user: User) => {
-        localStorage.setItem('userFirstname', user.firstname)
-        localStorage.setItem('userLastname', user.lastname)
-        localStorage.setItem('userPoints', String(user.points))
-        localStorage.setItem('userLevel', String(user.level))
-        this.router.navigate(['/notes']);
-      });
+      this.userService
+        .getUserInfo(localStorage.getItem('userId'))
+        .subscribe((user: User) => {
+          localStorage.setItem('userFirstname', user.firstname);
+          localStorage.setItem('userLastname', user.lastname);
+          localStorage.setItem('userPoints', String(user.points));
+          localStorage.setItem('userLevel', String(user.level));
+          this.router.navigate(['/notes']);
+        });
     },
     error: (error: HttpErrorResponse) => {
       if (error.error instanceof ErrorEvent) {

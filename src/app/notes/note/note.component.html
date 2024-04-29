@@ -63,8 +63,17 @@
           />
 
           <div *ngIf="this.document.file" class="container-file-title">
-            <p (click)="!readOnly ? downloadDocument() : null" class="file-title">{{ this.document.file.name }}</p>
-            <div *ngIf="!readOnly" class="container-delete-file-img" (click)="removeFile()">
+            <p
+              (click)="!readOnly ? downloadDocument() : null"
+              class="file-title"
+            >
+              {{ this.document.file.name }}
+            </p>
+            <div
+              *ngIf="!readOnly"
+              class="container-delete-file-img"
+              (click)="removeFile()"
+            >
               <img
                 id="delete-file-img"
                 [src]="PATHS.ICONS + 'x-solid.svg'"
@@ -72,7 +81,6 @@
               />
             </div>
           </div>
-
         </div>
 
         <div *ngIf="!readOnly" class="header-right">
@@ -81,7 +89,6 @@
             <span>Save changes</span>
           </div>
         </div>
-
       </div>
     </div>
 

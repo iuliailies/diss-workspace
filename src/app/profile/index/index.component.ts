@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import {PATHS} from "../../app.constants";
-import {GetEmployeeDocument} from "../../data-types/notes.model";
-import {NoteService} from "../../services/note.service";
-import {MatDialog} from "@angular/material/dialog";
-import {NotificationService} from "../../services/notification.service";
-import {Router} from "@angular/router";
-import {ConfirmationDialogBoxComponent} from "../../core/confirmation-dialog-box/confirmation-dialog-box.component";
-import {NotificationType} from "../../data-types/notification.model";
-import {ErrorResponseModel} from "../../data-types/error-response.model";
+import { PATHS } from '../../app.constants';
+import { GetEmployeeDocument } from '../../data-types/notes.model';
+import { NoteService } from '../../services/note.service';
+import { MatDialog } from '@angular/material/dialog';
+import { NotificationService } from '../../services/notification.service';
+import { Router } from '@angular/router';
+import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
+import { NotificationType } from '../../data-types/notification.model';
+import { ErrorResponseModel } from '../../data-types/error-response.model';
 
 @Component({
   selector: 'app-index',
@@ -18,7 +18,7 @@ export class IndexComponent {
   protected readonly PATHS = PATHS;
   documents: GetEmployeeDocument[] = [];
 
-  userEmail=  localStorage.getItem('userEmail') || '';
+  userEmail = localStorage.getItem('userEmail') || '';
   userFirstname = localStorage.getItem('userFirstname') || '';
   userLastname = localStorage.getItem('userLastname') || '';
   userPoints = parseInt(localStorage.getItem('userPoints') || '-1');

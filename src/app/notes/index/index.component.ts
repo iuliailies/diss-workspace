@@ -9,7 +9,6 @@ import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { ActivatedRoute, Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
@@ -32,7 +31,6 @@ export class IndexComponent implements OnInit {
     this.activatedRoute.params.subscribe(() => {
       this.fetchDocuments();
     });
-
   }
 
   matchesUserId(documentUserId: number): boolean {
