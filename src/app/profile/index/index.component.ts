@@ -88,4 +88,12 @@ export class IndexComponent {
   viewDocument(id: any) {
     this.router.navigate([`notes/${id}`]);
   }
+
+  previous(){
+
+  }
+
+  next(){
+
+  }
 }
