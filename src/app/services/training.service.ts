@@ -46,4 +46,8 @@ export class TrainingService {
     updateBadge(badge: any): Observable<any> {
         return this.http.post(`${this.requestURL}/update-progress`, badge);
     }
+
+    updateUserProgress(user: any): Observable<any> {
+        return this.http.put(`${this.requestURL}/update-user`, user);
+    }
 }

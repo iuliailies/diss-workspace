@@ -3,4 +3,5 @@ export interface Badge {
     userId: number;
     progressStatus?: string;
     currentPage?: number;
+    name: string;
 }

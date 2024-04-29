@@ -108,31 +108,35 @@ export class IndexComponent implements OnInit{
     });
   }
 
-  viewTraining(id: any) {
+  startTraining(training: any) {
     const badge: Badge = {
-        userId: parseInt(this.userId || '-1'),
-        trainingId: id,
+      userId: parseInt(this.userId || '-1'),
+      trainingId: training.id,
+      name: training.title
     };
     this.trainingService.updateBadge(badge).subscribe({
-        next: () => {
-            this.router.navigate([`trainings/${id}`]);
-        },
-        error: (error: any) => {
-            if (error.error instanceof ErrorEvent) {
-            this.notificationService.notify({
-                message: 'An error occurred! Please try again later!',
-                type: NotificationType.error,
-            });
-            } else {
-            const errResponse: ErrorResponseModel =
-                error.error as ErrorResponseModel;
-            this.notificationService.notify({
-                message: errResponse.errorMessage,
-                type: NotificationType.error,
-            });
-            }
-        },
-        });
-    }
+      next: () => {
+        this.router.navigate([`trainings/${training.id}`]);
+      },
+      error: (error: any) => {
+        if (error.error instanceof ErrorEvent) {
+          this.notificationService.notify({
+            message: 'An error occurred! Please try again later!',
+            type: NotificationType.error,
+          });
+        } else {
+          const errResponse: ErrorResponseModel =
+            error.error as ErrorResponseModel;
+          this.notificationService.notify({
+            message: errResponse.errorMessage,
+            type: NotificationType.error,
+          });
+        }
+      },
+    });
+  }
 
+  viewTraining(id: any) {
+    this.router.navigate([`trainings/${id}`]);
+  }
 }

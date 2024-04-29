@@ -23,3 +23,9 @@ export interface UserDocument {
   firstname: string;
   lastname: string;
 }
+
+export interface UserProgressUpdate {
+  id: number;
+  points: number;
+  level: number;
+}

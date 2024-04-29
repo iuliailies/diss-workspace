@@ -28,7 +28,7 @@
         <div
                 class="columns"
                 *ngFor="let training of todoTrainings"
-                (click)="hasEnoughLevel(training.requiredLevel) ? viewTraining(training.id) : null"
+                (click)="hasEnoughLevel(training.requiredLevel) ? startTraining(training) : null"
                 [class.enough-level-columns]="hasEnoughLevel(training.requiredLevel)"
                 [class.not-enough-level-columns]="!hasEnoughLevel(training.requiredLevel)"
         >

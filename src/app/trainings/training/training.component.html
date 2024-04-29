@@ -1,38 +1,60 @@
 <header class="header">
-    <div class="header-container">
-        <div class="container is-fluid header-divider">
-            <div class="header-left">
-                <h1 class="home-link" (click)="goBack()">Trainings</h1>
-                <img [src]="PATHS.ICONS + 'chevron-right.svg'" alt=""/>
-                <h1 class="add-training-title">{{ loading ? 'Loading...' : training.title }}</h1>
-            </div>
-        </div>
+  <div class="header-container">
+    <div class="container is-fluid header-divider">
+      <div class="header-left">
+        <h1 class="home-link" (click)="goBack()">Trainings</h1>
+        <img [src]="PATHS.ICONS + 'chevron-right.svg'" alt=""/>
+        <h1 class="add-training-title">{{ loading ? 'Loading...' : training.title }}</h1>
+      </div>
     </div>
+  </div>
 </header>
 
 <div class="card-pdf">
-    <pdf-viewer *ngIf="!isCompleted()" [src]="pdfSrc" [render-text]="true" [page]="currentPage" [show-all]="false" [original-size]="false"
-                [fit-to-page]="true" (after-load-complete)="afterLoadComplete($event)" [autoresize]="true" class="pdf-viewer">
-    </pdf-viewer>
-    <div *ngIf="isCompleted()" class="training-finished">
-        Bravo! Ai terminat trainingul!
-        <!-- TODO finish page -->
+  <pdf-viewer *ngIf="!isCompleted()" [src]="pdfSrc" [render-text]="true" [page]="currentPage" [show-all]="false"
+              [original-size]="false"
+              [fit-to-page]="true" (after-load-complete)="afterLoadComplete($event)" [autoresize]="true"
+              class="pdf-viewer">
+  </pdf-viewer>
+
+  <div *ngIf="isCompleted() && !newLevelUnlocked" class="training-finished-container align-center justify-center">
+    <span class="title">Well done! You received {{training.reward + "xp"}}!</span>
+    <div class="level-container">
+      <div class="level-icon old-level">{{userLevel}}</div>
+      <div class="finish-level-container align-center">
+        <div class="align-center justify-end">
+          <span class="xp-title">{{this.xpToNextLevel + "xp left"}}</span>
+        </div>
+        <img class="finish-arrow-img" (click)="next()" [src]="PATHS.ICONS + 'arrow-right.svg'" alt=""/>
+      </div>
+      <div class="level-icon new-level">{{newLevel}}</div>
     </div>
+    <span class="home-title" [routerLink]="'/trainings'">Check other trainings</span>
+  </div>
+
+  <div *ngIf="isCompleted() && newLevelUnlocked" class="level-unlocked-container align-center justify-center">
+    <span class="first-title">Well done! You received {{training.reward + "xp"}}!</span>
+    <span class="title">New level unlocked!</span>
+    <div class="unlocked-level level-icon">{{newLevel}}</div>
+    <span class="home-title" [routerLink]="'/trainings'">Check your newly unlocked trainings</span>
+  </div>
 </div>
 
 <div *ngIf="!isCompleted() && !readOnly" class="footer">
-    <div class="footer-container">
-        <span class="pages-counter" [routerLink]="['/trainings']">{{currentPage}} / {{totalPages}}</span>
-        <img class="chevron-img" (click)="previous()" [src]="PATHS.ICONS + 'chevron-left.svg'" alt=""/>
-        <img *ngIf="!isFinished()" class="chevron-img" (click)="next()" [src]="PATHS.ICONS + 'chevron-right.svg'" alt=""/>
-        <img *ngIf="isFinished()" class="finished-img" (click)="finish()" [src]="PATHS.ICONS + 'check.svg'" alt=""/>
-    </div>
+  <div class="footer-container">
+    <span class="pages-counter">{{currentPage}} / {{totalPages}}</span>
+    <img class="chevron-img" (click)="previous()" [src]="PATHS.ICONS + 'chevron-left.svg'" alt=""/>
+    <img *ngIf="!isFinished()" class="chevron-img" (click)="next()" [src]="PATHS.ICONS + 'chevron-right.svg'" alt=""/>
+    <img *ngIf="isFinished()" class="finished-img" (click)="finish()" [src]="PATHS.ICONS + 'check.svg'" alt=""/>
+  </div>
 </div>
 
 <div *ngIf="readOnly" class="footer">
-    <div class="footer-container">
-        <span class="pages-counter" [routerLink]="['/trainings']">{{currentPage}} / {{totalPages}}</span>
-        <img class="chevron-img" (click)="previous()" [src]="PATHS.ICONS + 'chevron-left.svg'" alt=""/>
-        <img class="chevron-img" (click)="next()" [src]="PATHS.ICONS + 'chevron-right.svg'" alt=""/>
-    </div>
+  <div class="footer-container">
+    <span class="pages-counter">{{currentPage}} / {{totalPages}}</span>
+    <img class="chevron-img" (click)="previous()" [src]="PATHS.ICONS + 'chevron-left.svg'" alt=""/>
+    <img class="chevron-img" (click)="next()" [src]="PATHS.ICONS + 'chevron-right.svg'" alt=""/>
+  </div>
 </div>
+
+

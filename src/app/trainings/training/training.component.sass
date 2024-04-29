@@ -7,6 +7,7 @@ $form-padding: 80px
 $card-width: calc(100% - 2 * $card-margin)
 $bigger-input-width: 700px
 $smaller-input-width: 300px
+$title-margin: 50px
 
 .add-training-title
   margin-left: 12px
@@ -63,4 +64,72 @@ $smaller-input-width: 300px
   align-items: center
   font-family: $font-family
   color: $gray-secondary
+
+.level-icon
+  color: $white
+  height: 60px
+  width: 60px
+  display: flex
+  justify-content: center
+  align-items: center
+  border-radius: 50%
+  transition: all $transition-duration
+
+  &:hover, &.is-active
+    opacity: .9
+
+.home-title
+  cursor: pointer
+  margin-top: $title-margin
+  color: $blue-primary
+
+.training-finished-container
+  height: 100%
+  width: 100%
+  flex-direction: column
+
+  .title
+    margin-bottom: $title-margin
+
+  .level-container
+    display: flex
+    flex-direction: row
+    width: fit-content
+    height: fit-content
+
+    .old-level
+      background-color: $orange
+
+    .new-level
+      background-color: $light-blue
+
+    .finish-level-container
+      width: 17vh
+      height: 5vh
+      flex-direction: column
+      justify-content: space-evenly
+
+      .xp-title
+        color: $gray-secondary
+        margin: 0 0 -16px
+
+      .finish-arrow-img
+        padding: 14px
+        filter: $filter-gray-light
+
+
+.level-unlocked-container
+  flex-direction: column
+  height: 100%
+  width: 100%
+
+  .first-title
+    margin-bottom: 20px
+
+  .title
+    margin-bottom: $title-margin
+
+  .unlocked-level
+    background-color: $bright-blue
+
 
