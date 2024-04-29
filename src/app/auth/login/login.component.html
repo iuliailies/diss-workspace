@@ -14,10 +14,10 @@
       "
     >
       <label class="subtitle-container">Email</label>
-      <div class="input-container">
+      <div class="input-container container-size">
         <input
           class="input-field"
-          type="text"
+          type="email"
           formControlName="email"
           (click)="resetWarnings()"
         />
@@ -32,7 +32,7 @@
       "
     >
       <label class="subtitle-container">Password</label>
-      <div class="input-container">
+      <div class="input-container container-size">
         <input
           class="input-field"
           [type]="hidePassword ? 'password' : 'text'"

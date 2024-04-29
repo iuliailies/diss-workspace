@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PATHS } from '../../app.constants';
-import { EmployeeDocument } from '../../data-types/notes.model';
+import {EmployeeDocument, GetEmployeeDocument} from '../../data-types/notes.model';
 import { NoteService } from '../../services/note.service';
 import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,7 +17,7 @@ import { filter } from 'rxjs';
 })
 export class IndexComponent implements OnInit {
   PATHS = PATHS;
-  documents: EmployeeDocument[] = [];
+  documents: GetEmployeeDocument[] = [];
   userId: string | null = '';
 
   constructor(
@@ -45,7 +45,7 @@ export class IndexComponent implements OnInit {
     });
   }
 
-  deleteDocument(event: any, document: EmployeeDocument) {
+  deleteDocument(event: any, document: GetEmployeeDocument) {
     event.stopPropagation();
 
     const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent, {

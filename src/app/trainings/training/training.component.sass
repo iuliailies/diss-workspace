@@ -1,0 +1,66 @@
+@import "variables"
+@import "colours"
+@import "typography"
+
+$card-margin: 40px
+$form-padding: 80px
+$card-width: calc(100% - 2 * $card-margin)
+$bigger-input-width: 700px
+$smaller-input-width: 300px
+
+.add-training-title
+  margin-left: 12px
+
+.card-pdf
+  width: $card-width
+  height: 80vh
+  margin: 10px $card-margin
+  border-radius: 30px
+  outline: none
+  border: 1px solid transparent
+  display: flex
+  justify-content: center
+  align-items: center
+  background-color: $white
+  box-shadow: $box-shadow-card
+
+.pdf-viewer
+  display: flex
+  max-width: 1000px
+  width: calc($card-width - 2 * $card-margin)
+  height: 80vh
+
+::ng-deep .ng2-pdf-viewer-container
+  display: flex
+  flex-direction: row
+  justify-content: center
+  align-items: center
+
+.footer
+  margin-right: $card-margin
+
+.footer-container
+  display: flex
+  justify-content: end
+  width: 100%
+  margin-top: 20px
+
+.chevron-img
+  width: 15px
+  padding: 10px
+  filter: $filter-gray-secondary
+  cursor: pointer
+
+.finished-img
+  width: 22px
+  padding: 10px
+  filter: $filter-gray-secondary
+  cursor: pointer
+
+.pages-counter
+  padding-right: 20px
+  display: flex
+  align-items: center
+  font-family: $font-family
+  color: $gray-secondary
+

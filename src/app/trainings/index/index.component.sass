@@ -1,0 +1,44 @@
+@import "colours"
+@import "variables"
+
+.icon
+  filter: $filter-gray-secondary
+
+.points-required-icon
+    color: $white
+    height: 40px
+    width: 40px
+    display: flex
+    justify-content: center
+    align-items: center
+    border-radius: 50%
+    cursor: pointer
+    transition: all $transition-duration
+
+    &:hover, &.is-active
+      opacity: .9
+
+.icon-color
+  background-color: $blue-primary
+
+.not-enough-level-columns
+  color: $gray-secondary
+  cursor: default !important
+
+.enough-level-icon
+  background-color: $orange
+
+.not-enough-level-icon
+  background-color: $light-blue
+
+.training-row
+  border-bottom: 1px solid #ddd
+  padding: 10px
+
+
+.training-row.expanded
+  background-color: #eee
+
+
+.training-details
+  padding: 10px

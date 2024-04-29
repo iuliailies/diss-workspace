@@ -10,6 +10,8 @@ import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { NotificationService } from '../../services/notification.service';
 import { File } from '../../data-types/file.model';
+import {ConfirmationDialogBoxComponent} from "../../core/confirmation-dialog-box/confirmation-dialog-box.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-create-note',
@@ -39,6 +41,7 @@ export class CreateNoteComponent {
     private noteService: NoteService,
     private router: Router,
     private notificationService: NotificationService,
+    private dialogBox: MatDialog,
   ) {}
 
   changeDocumentName(event: Event): void {
@@ -78,6 +81,25 @@ export class CreateNoteComponent {
         }
       },
     });
+  }
+
+  goBack() {
+    const dialogResponse = this.dialogBox.open(
+        ConfirmationDialogBoxComponent,
+        {
+          data: `Do you want to save the changes?`,
+          disableClose: true,
+          autoFocus: false,
+        },
+    );
+
+    dialogResponse.afterClosed().subscribe((response) => {
+      if (response) {
+        this.createDocument();
+      }
+      this.router.navigate(['/notes']);
+    });
+
   }
 
   createDocument() {

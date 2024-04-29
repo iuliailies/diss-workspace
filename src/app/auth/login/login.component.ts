@@ -55,6 +55,8 @@ export class LoginComponent {
       localStorage.setItem('userType', jwt['type']);
       localStorage.setItem('userId', jwt['id']);
       localStorage.setItem('userInitials', jwt['initials']);
+      localStorage.setItem('userLevel', jwt['level'])
+      localStorage.setItem('userPoints', jwt['points'])
       this.router.navigate(['/notes']);
     },
     error: (error: HttpErrorResponse) => {

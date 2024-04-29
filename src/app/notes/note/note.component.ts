@@ -94,6 +94,10 @@ export class NoteComponent implements OnInit {
   }
 
   updateDocument(): void {
+    //TODO find a way to take the noteContent when the text box is changed so that we can track if a change was made after
+    // the document was saved and if there were no changes made and he clicks on a menu button, to not ask him to save the document
+
+    //TODO also find a way when a menu button is pressed, to display the pop up for saving the changes
     this.document.text = this.noteContent.nativeElement.innerHTML;
     this.document.userId = parseInt(this.userId || '-1');
     if (this.fileChanged && this.document.file) {

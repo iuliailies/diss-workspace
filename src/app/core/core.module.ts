@@ -13,6 +13,7 @@ import {
   MatSnackBarLabel,
 } from '@angular/material/snack-bar';
 import { NotificationComponent } from './notification/notification.component';
+import {SearchBarComponent} from "./search-bar/search-bar.component";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { NotificationComponent } from './notification/notification.component';
     KeywordsComponent,
     ConfirmationDialogBoxComponent,
     NotificationComponent,
+    SearchBarComponent,
   ],
   exports: [
     NavComponent,
@@ -29,6 +31,7 @@ import { NotificationComponent } from './notification/notification.component';
     EllipsisDirective,
     KeywordsComponent,
     NotificationComponent,
+    SearchBarComponent,
   ],
   imports: [
     CommonModule,

@@ -16,3 +16,10 @@ export interface User {
   points: number;
   type: string;
 }
+
+export interface UserDocument {
+  id: number;
+  email: string;
+  firstname: string;
+  lastname: string;
+}

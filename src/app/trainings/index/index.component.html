@@ -1,1 +1,92 @@
-<p>trainings index works!</p>
+<header class="header">
+  <div class="header-container">
+    <div class="container is-fluid header-divider">
+      <div class="header-left">
+        <h1 class="home-link">Trainings</h1>
+      </div>
+      <div class="header-right">
+        <div class="button" [routerLink]="['new']">
+          <img [src]="PATHS.ICONS + 'plus.svg'" class="arrow" alt="" />
+          <span>Add new</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <app-search-bar></app-search-bar>
+  </div>
+</header>
+
+<div class="container">
+    <div class="table card">
+        <div class="columns is-header">
+            <div class="column is-4">TODO</div>
+            <div class="column is-3">Required Level</div>
+            <div class="column is-4">Reward</div>
+            <div class="column is-1"></div>
+        </div>
+        <div
+                class="columns"
+                *ngFor="let training of todoTrainings"
+                (click)="hasEnoughLevel(training.requiredLevel) ? viewTraining(training.id) : null"
+                [class.enough-level-columns]="hasEnoughLevel(training.requiredLevel)"
+                [class.not-enough-level-columns]="!hasEnoughLevel(training.requiredLevel)"
+        >
+            <div class="column is-4">{{ training.title }}</div>
+            <div class="column is-3">
+                <div class="points-required-icon"
+                     [class.not-enough-level-icon]="!hasEnoughLevel(training.requiredLevel)"
+                     [class.enough-level-icon]="hasEnoughLevel(training.requiredLevel)"
+                >
+                    {{ training.requiredLevel}}
+                </div>
+            </div>
+            <div class="column is-4">
+                {{ training.reward + "xp"}}
+            </div>
+            <div class="column is-1">
+                <img
+                        [src]="PATHS.ICONS + 'trash-solid.svg'"
+                        class="icon"
+                        alt=""
+                        (click)="deleteTraining($event, training)"
+                        *ngIf="matchesUserId(training.user.id)"
+                />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+  <div class="table card">
+    <div class="columns is-header">
+      <div class="column is-4">Completed</div>
+      <div class="column is-3">Required Level</div>
+      <div class="column is-4">Reward</div>
+      <div class="column is-1"></div>
+    </div>
+    <div
+      class="columns"
+      *ngFor="let training of completedTrainings"
+      (click)="viewTraining(training.id)"
+    >
+      <div class="column is-4">{{ training.title }}</div>
+      <div class="column is-3">
+        <div class="points-required-icon icon-color">{{ training.requiredLevel }}</div>
+      </div>
+      <div class="column is-4">
+        {{ training.reward + "xp"}}
+      </div>
+      <div class="column is-1">
+        <img
+          [src]="PATHS.ICONS + 'trash-solid.svg'"
+          class="icon"
+          alt=""
+          (click)="deleteTraining($event, training)"
+          *ngIf="matchesUserId(training.user.id)"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+

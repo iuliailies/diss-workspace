@@ -1,0 +1,109 @@
+@import 'variables'
+@import "typography"
+@import "colours"
+
+$card-margin: 40px
+$form-padding: 80px
+$card-width: calc(100% - 2*$card-margin)
+$bigger-input-width: 700px
+$smaller-input-width: 300px
+
+.card
+  width: $card-width
+  height: 75vh
+  margin: $card-margin
+  border-radius: 30px
+  outline: none
+  border: 1px solid transparent
+
+.add-training-title
+  margin-left: 12px
+
+.create-training-form
+  padding-left: $form-padding
+  display: flex
+  flex-direction: column
+  height: fit-content
+  width: fit-content
+
+.left-container
+  width: $bigger-input-width
+  display: flex
+  flex-direction: column
+  padding-right: 20px
+
+.two-inputs-container
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+
+.smaller-input-container
+  width: $smaller-input-width
+
+.bigger-input-container
+  width: $bigger-input-width
+
+.text-area-container
+  background-color: white
+  border-radius: $border-radius-floating
+  border: 1px solid $gray-light
+  &:focus-within
+    border: 1px solid $blue-primary
+
+.text-area-field
+  font-family: $font-family
+  font-weight: 400
+  font-style: normal
+  font-size: $font-size
+  border: none
+  outline: none
+  background-color: transparent
+  padding-left: 10px
+  resize: none
+  overflow: hidden
+
+.input-label-container.error .text-area-container
+  border: 1px solid $red
+
+.input-label-container.error .drag-zone
+  border: 1px solid $red
+
+.input-label-container.error label
+  color: $red
+
+.drag-zone
+  height: 200px
+  display: flex
+  align-items: center
+  justify-content: center
+  overflow: hidden
+  cursor: pointer
+  border-radius: $border-radius-floating
+  border: 1px solid $gray-light
+
+  &.drag-active
+    border: 1px solid $blue-primary
+
+  &:hover
+    border: 1px solid $blue-primary
+
+.visually-hidden
+  display: none
+
+.upload-container
+  width: 100%
+  height: 100%
+
+.image-container
+  width: fit-content
+  height: fit-content
+  display: flex
+  flex-direction: column
+
+.drop-image
+  padding: 18px
+  filter: $filter-gray-secondary
+
+.drop-text
+  color: $gray-secondary
+

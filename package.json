@@ -22,7 +22,10 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
+    "html2canvas": "^1.4.1",
+    "ng2-pdf-viewer": "^10.0.0",
     "ngx-cookie-service": "^17.1.0",
+    "pdf-lib": "^1.17.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

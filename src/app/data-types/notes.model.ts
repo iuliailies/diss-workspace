@@ -1,15 +1,21 @@
-import { User } from './user.model';
+import {User, UserDocument} from './user.model';
 import { File } from './file.model';
 
+export interface GetEmployeeDocument {
+  id: number;
+  title: string;
+  lastModified?: Date;
+  user: UserDocument;
+}
 export interface EmployeeDocument {
-  id?: number;
+  id: number;
   title: string;
   text: string;
   keywords: string;
   lastModified?: Date;
   comments?: string[];
   visibility?: boolean;
-  user: User;
+  user: UserDocument;
   file: File;
 }
 

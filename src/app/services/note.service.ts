@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import {
   SaveEmployeeDocument,
   EmployeeDocument,
-  newDocumentData,
+  newDocumentData, GetEmployeeDocument,
 } from '../data-types/notes.model';
 import { Observable } from 'rxjs';
 
@@ -22,8 +22,8 @@ export class NoteService {
     );
   }
 
-  getDocuments(): Observable<EmployeeDocument[]> {
-    return this.http.get<EmployeeDocument[]>(
+  getDocuments(): Observable<GetEmployeeDocument[]> {
+    return this.http.get<GetEmployeeDocument[]>(
       `${this.requestURL}/get-documents/${localStorage.getItem('userId')}`,
     );
   }

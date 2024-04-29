@@ -12,7 +12,6 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
   declarations: [
     IndexComponent,
     NoteComponent,
-    SearchBarComponent,
     CreateNoteComponent,
   ],
   exports: [NoteComponent],

@@ -1,1 +1,38 @@
-<p>training works!</p>
+<header class="header">
+    <div class="header-container">
+        <div class="container is-fluid header-divider">
+            <div class="header-left">
+                <h1 class="home-link" (click)="goBack()">Trainings</h1>
+                <img [src]="PATHS.ICONS + 'chevron-right.svg'" alt=""/>
+                <h1 class="add-training-title">{{ loading ? 'Loading...' : training.title }}</h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="card-pdf">
+    <pdf-viewer *ngIf="!isCompleted()" [src]="pdfSrc" [render-text]="true" [page]="currentPage" [show-all]="false" [original-size]="false"
+                [fit-to-page]="true" (after-load-complete)="afterLoadComplete($event)" [autoresize]="true" class="pdf-viewer">
+    </pdf-viewer>
+    <div *ngIf="isCompleted()" class="training-finished">
+        Bravo! Ai terminat trainingul!
+        <!-- TODO finish page -->
+    </div>
+</div>
+
+<div *ngIf="!isCompleted() && !readOnly" class="footer">
+    <div class="footer-container">
+        <span class="pages-counter" [routerLink]="['/trainings']">{{currentPage}} / {{totalPages}}</span>
+        <img class="chevron-img" (click)="previous()" [src]="PATHS.ICONS + 'chevron-left.svg'" alt=""/>
+        <img *ngIf="!isFinished()" class="chevron-img" (click)="next()" [src]="PATHS.ICONS + 'chevron-right.svg'" alt=""/>
+        <img *ngIf="isFinished()" class="finished-img" (click)="finish()" [src]="PATHS.ICONS + 'check.svg'" alt=""/>
+    </div>
+</div>
+
+<div *ngIf="readOnly" class="footer">
+    <div class="footer-container">
+        <span class="pages-counter" [routerLink]="['/trainings']">{{currentPage}} / {{totalPages}}</span>
+        <img class="chevron-img" (click)="previous()" [src]="PATHS.ICONS + 'chevron-left.svg'" alt=""/>
+        <img class="chevron-img" (click)="next()" [src]="PATHS.ICONS + 'chevron-right.svg'" alt=""/>
+    </div>
+</div>
