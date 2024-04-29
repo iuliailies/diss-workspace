@@ -20,15 +20,15 @@ export class TrainingService {
         );
     }
 
-    getCompletedTrainings(): Observable<TrainingDocument[]> {
+    getCompletedTrainings(id: any): Observable<TrainingDocument[]> {
         return this.http.get<TrainingDocument[]>(
-            `${this.requestURL}/get-completed-trainings/${localStorage.getItem('userId')}`,
+            `${this.requestURL}/get-completed-trainings/${id}`,
         );
     }
 
-    getTodoTrainings(): Observable<TrainingDocument[]> {
+    getTodoTrainings(id: any): Observable<TrainingDocument[]> {
         return this.http.get<TrainingDocument[]>(
-            `${this.requestURL}/get-todo-trainings/${localStorage.getItem('userId')}`,
+            `${this.requestURL}/get-todo-trainings/${id}`,
         );
     }
 

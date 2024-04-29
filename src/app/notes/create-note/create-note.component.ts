@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {
   EmployeeDocument,
   SaveEmployeeDocument,
@@ -12,18 +12,20 @@ import { NotificationService } from '../../services/notification.service';
 import { File } from '../../data-types/file.model';
 import {ConfirmationDialogBoxComponent} from "../../core/confirmation-dialog-box/confirmation-dialog-box.component";
 import {MatDialog} from "@angular/material/dialog";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-note',
   templateUrl: './create-note.component.html',
   styleUrl: './create-note.component.sass',
 })
-export class CreateNoteComponent {
+export class CreateNoteComponent{
   @ViewChild('noteContent') noteContent!: ElementRef;
 
   protected readonly PATHS = PATHS;
-  userId = localStorage.getItem('userId');
-  userInitials = localStorage.getItem('userInitials');
+  userId = parseInt(localStorage.getItem('userId') || '-1');
+  userFirstname = localStorage.getItem('userFirstname') || '';
+  userLastname = localStorage.getItem('userLastname') || '';
   loading = false;
   document: SaveEmployeeDocument = {
     title: 'New document',
@@ -42,8 +44,8 @@ export class CreateNoteComponent {
     private router: Router,
     private notificationService: NotificationService,
     private dialogBox: MatDialog,
+    private location: Location,
   ) {}
-
   changeDocumentName(event: Event): void {
     const input = event.target as HTMLElement;
     const inputText = input.innerText.trim();
@@ -97,14 +99,13 @@ export class CreateNoteComponent {
       if (response) {
         this.createDocument();
       }
-      this.router.navigate(['/notes']);
+      this.location.back();
     });
-
   }
 
   createDocument() {
     this.document.text = this.noteContent.nativeElement.innerHTML;
-    this.document.userId = parseInt(this.userId || '-1');
+    this.document.userId = this.userId
     if (this.file) {
       //there is a file
       this.file.arrayBuffer().then((buff: ArrayBuffer) => {
@@ -160,5 +161,9 @@ export class CreateNoteComponent {
   removeFile() {
     this.file = null;
     this.fileName = null;
+  }
+
+  getUserInitials(): string {
+    return this.userFirstname[0] + this.userLastname[0];
   }
 }

@@ -28,6 +28,12 @@ export class NoteService {
     );
   }
 
+  getOwnDocuments(id: any): Observable<GetEmployeeDocument[]> {
+    return this.http.get<GetEmployeeDocument[]>(
+      `${this.requestURL}/get-own-documents/${id}`,
+    );
+  }
+
   deleteDocument(id: any): Observable<any> {
     return this.http.delete(`${this.requestURL}/${id}`);
   }

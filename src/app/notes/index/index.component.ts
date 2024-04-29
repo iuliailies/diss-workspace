@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { PATHS } from '../../app.constants';
-import {EmployeeDocument, GetEmployeeDocument} from '../../data-types/notes.model';
+import { GetEmployeeDocument } from '../../data-types/notes.model';
 import { NoteService } from '../../services/note.service';
 import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationService } from '../../services/notification.service';
 import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-index',
@@ -18,7 +18,7 @@ import { filter } from 'rxjs';
 export class IndexComponent implements OnInit {
   PATHS = PATHS;
   documents: GetEmployeeDocument[] = [];
-  userId: string | null = '';
+  userId = localStorage.getItem('userId');
 
   constructor(
     private noteService: NoteService,
@@ -32,7 +32,7 @@ export class IndexComponent implements OnInit {
     this.activatedRoute.params.subscribe(() => {
       this.fetchDocuments();
     });
-    this.userId = localStorage.getItem('userId');
+
   }
 
   matchesUserId(documentUserId: number): boolean {

@@ -1,1 +1,67 @@
-<p>profile index works!</p>
+<header class="header">
+  <div class="header-container">
+    <div class="container is-fluid header-divider">
+
+      <div class="header-left">
+        <div class="align-center justify-center">
+          <div class="user-icon icon-size">{{getUserInitials()}}</div>
+          <div class="user-details-container">
+            <h1 class="name">{{userFirstname + " " + userLastname}}</h1>
+            <span id="email-title" class="input">{{userEmail}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-right flex-column">
+          <div class="level-first-container">
+            <div class="level-second-container">
+              <span id="level-title" class="input">{{"Level " + userLevel}}</span>
+              <span id="xp-title" class="input">{{userPoints + " xp"}}</span>
+            </div>
+            <div class="user-icon level-icon">{{userLevel}}</div>
+          </div>
+          <span id="remaining-xp-title" class="input">190xp to go until next level</span>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <app-search-bar></app-search-bar>
+  </div>
+</header>
+
+<div class="container">
+  <div class="table card">
+    <div class="columns is-header">
+      <div class="column is-4"></div>
+      <div class="column is-3">Author</div>
+      <div class="column is-4">Last modified</div>
+      <div class="column is-1"></div>
+    </div>
+    <div
+      class="columns"
+      *ngFor="let document of documents"
+      (click)="viewDocument(document.id)"
+    >
+      <div class="column is-4">{{ document.title }}</div>
+      <div class="column is-3">
+        <div class="user-icon">{{ getUserInitials() }}</div>
+      </div>
+      <div class="column is-4">
+        {{ document.lastModified | date: 'medium' }}
+      </div>
+      <div class="column is-1">
+        <img
+          [src]="PATHS.ICONS + 'trash-solid.svg'"
+          class="icon"
+          alt=""
+          (click)="deleteDocument($event, document)"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--<div class="badges-card">-->
+
+<!--</div>-->

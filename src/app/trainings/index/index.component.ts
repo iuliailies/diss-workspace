@@ -20,8 +20,8 @@ export class IndexComponent implements OnInit{
   protected readonly PATHS = PATHS;
   completedTrainings: GetTrainingDocument[] = [];
   todoTrainings: GetTrainingDocument[] = [];
-  userId: string | null = '';
-  userLevel: number = 0;
+  userId = localStorage.getItem('userId');
+  userLevel = parseInt(localStorage.getItem('userLevel')!);
   expandedTrainingId: number | null = null;
 
   constructor(
@@ -44,8 +44,6 @@ export class IndexComponent implements OnInit{
       this.fetchTodoTrainings();
       this.fetchCompletedTrainings();
     });
-    this.userId = localStorage.getItem('userId');
-    this.userLevel = parseInt(localStorage.getItem('userLevel')!);
   }
 
   hasEnoughLevel(requiredLevel: number): boolean {
@@ -53,13 +51,13 @@ export class IndexComponent implements OnInit{
   }
 
   fetchTodoTrainings() {
-    this.trainingService.getTodoTrainings().subscribe((trainings) => {
+    this.trainingService.getTodoTrainings(this.userId).subscribe((trainings) => {
       this.todoTrainings = trainings;
     });
   }
 
   fetchCompletedTrainings() {
-    this.trainingService.getCompletedTrainings().subscribe((trainings) => {
+    this.trainingService.getCompletedTrainings(this.userId).subscribe((trainings) => {
       this.completedTrainings = trainings;
     });
   }
