@@ -4,7 +4,13 @@
 
 .buttons-container
   display: flex
-  justify-content: space-evenly
+  justify-content: flex-end
+  padding: 8px 22px
+
+  .button
+    &:not(&:last-child)
+      margin-right: 5px
+      
 
 .confirmationContainer
   border-radius: $border-radius-floating
