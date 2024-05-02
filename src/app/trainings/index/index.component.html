@@ -25,38 +25,45 @@
       <div class="column is-4">Reward</div>
       <div class="column is-1"></div>
     </div>
-    <div
+    <div class="columns-wrapper" *ngFor="let training of todoTrainings;" (click)="toggleDetails(training.id)">
+      <div
       class="columns"
-      *ngFor="let training of todoTrainings"
-      (click)="
-        hasEnoughLevel(training.requiredLevel) ? startTraining(training) : null
-      "
       [class.enough-level-columns]="hasEnoughLevel(training.requiredLevel)"
       [class.not-enough-level-columns]="!hasEnoughLevel(training.requiredLevel)"
-    >
-      <div class="column is-4">{{ training.title }}</div>
-      <div class="column is-3">
-        <div
-          class="points-required-icon"
-          [class.not-enough-level-icon]="
-            !hasEnoughLevel(training.requiredLevel)
-          "
-          [class.enough-level-icon]="hasEnoughLevel(training.requiredLevel)"
-        >
-          {{ training.requiredLevel }}
+      >
+        <div class="column is-4">{{ training.title }}</div>
+        <div class="column is-3">
+          <div
+            class="points-required-icon"
+            [class.not-enough-level-icon]="
+              !hasEnoughLevel(training.requiredLevel)
+            "
+            [class.enough-level-icon]="hasEnoughLevel(training.requiredLevel)"
+          >
+            {{ training.requiredLevel }}
+          </div>
+        </div>
+        <div class="column is-4">
+          {{ training.reward + 'xp' }}
+        </div>
+        <div class="column is-1">
+          <img
+            [src]="PATHS.ICONS + 'trash-solid.svg'"
+            class="icon"
+            alt=""
+            (click)="deleteTraining($event, training)"
+            *ngIf="matchesUserId(training.user.id)"
+          />
         </div>
       </div>
-      <div class="column is-4">
-        {{ training.reward + 'xp' }}
-      </div>
-      <div class="column is-1">
-        <img
-          [src]="PATHS.ICONS + 'trash-solid.svg'"
-          class="icon"
-          alt=""
-          (click)="deleteTraining($event, training)"
-          *ngIf="matchesUserId(training.user.id)"
-        />
+      <div class="columns flex-column align-start" *ngIf="expandedTrainingId === training.id">
+        <div class="column">{{ training.text }}</div>
+        <div class="column">
+          <div class="button" (click)="hasEnoughLevel(training.requiredLevel) ? startTraining(training) : null">
+            <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
+            <span>Start training</span>
+        </div>
+        </div>
       </div>
     </div>
   </div>
@@ -70,28 +77,37 @@
       <div class="column is-4">Reward</div>
       <div class="column is-1"></div>
     </div>
-    <div
+    <div class="columns-wrapper" *ngFor="let training of completedTrainings;" (click)="toggleDetails(training.id)">
+      <div
       class="columns"
-      *ngFor="let training of completedTrainings"
-      (click)="viewTraining(training.id)"
-    >
-      <div class="column is-4">{{ training.title }}</div>
-      <div class="column is-3">
-        <div class="points-required-icon icon-color">
-          {{ training.requiredLevel }}
+      >
+        <div class="column is-4">{{ training.title }}</div>
+        <div class="column is-3">
+          <div class="points-required-icon icon-color">
+            {{ training.requiredLevel }}
+          </div>
+        </div>
+        <div class="column is-4">
+          {{ training.reward + 'xp' }}
+        </div>
+        <div class="column is-1">
+          <img
+            [src]="PATHS.ICONS + 'trash-solid.svg'"
+            class="icon"
+            alt=""
+            (click)="deleteTraining($event, training)"
+            *ngIf="matchesUserId(training.user.id)"
+          />
         </div>
       </div>
-      <div class="column is-4">
-        {{ training.reward + 'xp' }}
-      </div>
-      <div class="column is-1">
-        <img
-          [src]="PATHS.ICONS + 'trash-solid.svg'"
-          class="icon"
-          alt=""
-          (click)="deleteTraining($event, training)"
-          *ngIf="matchesUserId(training.user.id)"
-        />
+      <div class="columns flex-column align-start" *ngIf="expandedTrainingId === training.id">
+        <div class="column">{{ training.text }}</div>
+        <div class="column">
+          <div class="button" (click)="viewTraining(training.id)">
+            <img [src]="PATHS.ICONS + 'eye-solid.svg'" class="arrow" alt="" />
+            <span>View training</span>
+        </div>
+        </div>
       </div>
     </div>
   </div>
