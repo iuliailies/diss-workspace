@@ -14,7 +14,7 @@
       </div>
 
       <div class="header-right">
-        <div class="button" (click)="createTraining()">
+        <div class="button" [class.disabled]="loading" (click)="createTraining()">
           <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
           <span>Save changes</span>
         </div>
@@ -23,7 +23,11 @@
   </div>
 </header>
 
-<div class="container">
+<div class="loading-spinner" [class.not-loading]="!loading">
+  <mat-spinner *ngIf="loading"></mat-spinner>
+</div>
+
+<div class="container" *ngIf="!loading">
   <app-keywords
     [readOnly]="false"
     [keywords]="[]"
@@ -31,7 +35,7 @@
   ></app-keywords>
 </div>
 
-<div class="card">
+<div class="card" *ngIf="!loading">
   <form [formGroup]="createTrainingForm" class="create-training-form">
     <div class="left-container">
       <div class="input-label-container" [class.error]="isInvalid">

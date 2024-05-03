@@ -78,6 +78,7 @@ export class CreateTrainingComponent {
     event.preventDefault();
     this.dragZone.nativeElement.classList.remove('drag-active');
     const files = event.dataTransfer.files;
+
     if (files.length > 1) {
       this.notificationService.notify({
         message: 'Only one file is allowed',
@@ -181,6 +182,7 @@ export class CreateTrainingComponent {
       keywords: this.keywords,
     };
     if (this.file) {
+      this.loading = true;
       this.file.arrayBuffer().then((buff: ArrayBuffer) => {
         const x = new Uint8Array(buff);
         createTrainingData.file = {
@@ -203,6 +205,7 @@ export class CreateTrainingComponent {
           type: NotificationType.success,
         });
         this.contentUpdated = false;
+        this.loading = false;
         this.navigateToTrainingsView();
       },
       error: (error: any) => {
@@ -212,6 +215,7 @@ export class CreateTrainingComponent {
             message: 'An error occurred! Please try again later!',
             type: NotificationType.error,
           });
+          this.loading = false;
         } else {
           const errResponse: ErrorResponseModel =
             error.error as ErrorResponseModel;
@@ -219,6 +223,7 @@ export class CreateTrainingComponent {
             message: errResponse.errorMessage,
             type: NotificationType.error,
           });
+          this.loading = false;
         }
       },
     });

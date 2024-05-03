@@ -34,8 +34,12 @@
   </div>
 </header>
 
+<div class="loading-spinner" [class.not-loading]="!loading">
+  <mat-spinner *ngIf="loading"></mat-spinner>
+</div>
 
-<div class="container">
+
+<div class="container" *ngIf="!loading">
   <div class="badges-container card">
     <img
       [src]="PATHS.ICONS + 'chevron-left.svg'"
@@ -61,7 +65,7 @@
 </div>
 
 
-<div class="container">
+<div class="container" *ngIf="!loading">
   <div class="table card">
     <div class="columns is-header">
       <div class="column is-4"></div>

@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { TrainingService } from '../../services/training.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TrainingDocument } from '../../data-types/training.model';
-import { PDFDocumentProxy } from 'ng2-pdf-viewer';
-import { PATHS } from '../../app.constants';
-import { NotificationService } from '../../services/notification.service';
-import { NotificationType } from '../../data-types/notification.model';
-import { Badge } from '../../data-types/badge.model';
-import { ErrorResponseModel } from '../../data-types/error-response.model';
-import { UserProgressUpdate } from '../../data-types/user.model';
+import {Component, OnInit} from '@angular/core';
+import {TrainingService} from '../../services/training.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TrainingDocument} from '../../data-types/training.model';
+import {PDFDocumentProxy} from 'ng2-pdf-viewer';
+import {PATHS} from '../../app.constants';
+import {NotificationService} from '../../services/notification.service';
+import {NotificationType} from '../../data-types/notification.model';
+import {Badge} from '../../data-types/badge.model';
+import {ErrorResponseModel} from '../../data-types/error-response.model';
+import {UserProgressUpdate} from '../../data-types/user.model';
 
 @Component({
   selector: 'app-training',
@@ -39,7 +39,8 @@ export class TrainingComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private notificationService: NotificationService,
     private router: Router,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.initializeVariables();
@@ -59,7 +60,7 @@ export class TrainingComponent implements OnInit {
       const trainingId = params.get('id');
       if (trainingId) {
         this.trainingService
-          .getTraining({ trainingId: trainingId, userId: this.userId })
+          .getTraining({trainingId: trainingId, userId: this.userId})
           .subscribe((training) => {
             this.training = training as TrainingDocument;
             this.initializeFields();
@@ -79,8 +80,10 @@ export class TrainingComponent implements OnInit {
 
   initializeFields() {
     this.currentPage = this.training.badge.currentPage;
-    if (this.training.badge.progressStatus === 'Completed')
+    if (this.training.badge.progressStatus === 'Completed') {
+      this.currentPage = 1;
       this.readOnly = true;
+    }
     this.readDocument();
   }
 
@@ -139,7 +142,8 @@ export class TrainingComponent implements OnInit {
     };
 
     this.trainingService.updateUserProgress(user).subscribe({
-      next: () => {},
+      next: () => {
+      },
       error: (error) => {
         if (error.error instanceof ErrorEvent) {
           this.notificationService.notify({
@@ -173,7 +177,7 @@ export class TrainingComponent implements OnInit {
       for (let i = 0; i < len; i++) {
         bytes[i] = binary_string.charCodeAt(i);
       }
-      const blob = new Blob([bytes.buffer], { type: `application/pdf` });
+      const blob = new Blob([bytes.buffer], {type: `application/pdf`});
       reader.readAsArrayBuffer(blob);
     }
   }

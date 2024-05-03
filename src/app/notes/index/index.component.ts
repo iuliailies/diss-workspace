@@ -18,6 +18,7 @@ export class IndexComponent implements OnInit {
   PATHS = PATHS;
   documents: GetEmployeeDocument[] = [];
   userId = localStorage.getItem('userId');
+  loading = true;
 
   constructor(
     private noteService: NoteService,
@@ -38,8 +39,10 @@ export class IndexComponent implements OnInit {
   }
 
   fetchDocuments(): void {
+    this.loading = true;
     this.noteService.getDocuments().subscribe((documents) => {
       this.documents = documents;
+      this.loading = false;
     });
   }
 

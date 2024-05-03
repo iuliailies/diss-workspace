@@ -13,20 +13,22 @@ import {
   MatExpansionPanel,
   MatExpansionPanelHeader,
 } from '@angular/material/expansion';
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [IndexComponent, TrainingComponent, CreateTrainingComponent],
-  imports: [
-    CommonModule,
-    TrainingsRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CoreModule,
-    PdfViewerModule,
-    MatExpansionPanel,
-    MatExpansionPanelHeader,
-    MatAccordion,
-    MatExpansionModule,
-  ],
+    imports: [
+        CommonModule,
+        TrainingsRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CoreModule,
+        PdfViewerModule,
+        MatExpansionPanel,
+        MatExpansionPanelHeader,
+        MatAccordion,
+        MatExpansionModule,
+        MatProgressSpinner,
+    ],
 })
 export class TrainingsModule {}

@@ -115,3 +115,7 @@
     ></div>
   </div>
 </div>
+
+<div class="loading-spinner" [class.not-loading]="!loading">
+  <mat-spinner *ngIf="loading"></mat-spinner>
+</div>

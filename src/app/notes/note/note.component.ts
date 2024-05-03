@@ -194,9 +194,13 @@ export class NoteComponent implements OnInit {
     document.body.removeChild(anchor);
   }
 
+  navigateToNotesView(): void {
+    this.router.navigate(['/notes']);
+  }
+
   goBack() {
     if (this.readOnly) {
-      this.router.navigate(['/notes']);
+      this.navigateToNotesView();
     } else {
       const text = this.noteContent.nativeElement.innerHTML;
       if (this.contentUpdated || this.document.text !== text) {
@@ -213,11 +217,11 @@ export class NoteComponent implements OnInit {
           if (response) {
             this.updateDocument();
           }
-          this.router.navigate(['/notes']);
+          this.navigateToNotesView();
         });
       }
       else {
-        this.router.navigate(['/notes'])
+        this.navigateToNotesView();
       }
     }
   }

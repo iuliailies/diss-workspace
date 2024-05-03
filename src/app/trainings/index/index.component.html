@@ -5,7 +5,7 @@
         <h1 class="home-link">Trainings</h1>
       </div>
       <div class="header-right">
-        <div class="button" [routerLink]="['new']">
+        <div class="button" [class.disabled]="loading" [routerLink]="['new']">
           <img [src]="PATHS.ICONS + 'plus.svg'" class="arrow" alt="" />
           <span>Add new</span>
         </div>
@@ -17,7 +17,11 @@
   </div>
 </header>
 
-<div class="container">
+<div class="loading-spinner" [class.not-loading]="!loading">
+  <mat-spinner *ngIf="loading"></mat-spinner>
+</div>
+
+<div class="container" *ngIf="!loading">
   <div class="table card" [class.is-closed]="!isToDoOpen">
     <div class="columns is-header">
       <div class="column is-4 has-toggle">
@@ -74,7 +78,7 @@
   </div>
 </div>
 
-<div class="container">
+<div class="container" *ngIf="!loading">
   <div class="table card" [class.is-closed]="!isCompletedOpen">
     <div class="columns is-header">
       <div class="column is-4 has-toggle">
@@ -121,3 +125,4 @@
     </div>
   </div>
 </div>
+

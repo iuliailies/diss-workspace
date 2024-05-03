@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="header-right">
-        <div class="button" (click)="createDocument()">
+        <div class="button" [class.disabled]="loading" (click)="createDocument()">
           <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
           <span>Save changes</span>
         </div>
@@ -68,7 +68,11 @@
   </div>
 </header>
 
-<div class="container">
+<div class="loading-spinner" [class.not-loading]="!loading">
+  <mat-spinner *ngIf="loading"></mat-spinner>
+</div>
+
+<div class="container" *ngIf="!loading">
   <app-keywords
     [readOnly]="false"
     [keywords]="[]"

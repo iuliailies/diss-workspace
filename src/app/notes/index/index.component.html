@@ -17,7 +17,11 @@
   </div>
 </header>
 
-<div class="container">
+<div class="loading-spinner" [class.not-loading]="!loading">
+  <mat-spinner *ngIf="loading"></mat-spinner>
+</div>
+
+<div class="container" *ngIf="!loading">
   <div class="table card">
     <div class="columns is-header">
       <div class="column is-4"></div>

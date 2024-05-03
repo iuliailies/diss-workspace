@@ -68,6 +68,7 @@ export class CreateNoteComponent {
           type: NotificationType.success,
         });
         this.contentUpdated = false;
+        this.loading = false;
         this.navigateToNoteView(response);
       },
       error: (error: any) => {
@@ -76,6 +77,7 @@ export class CreateNoteComponent {
             message: 'An error occurred! Please try again later!',
             type: NotificationType.error,
           });
+          this.loading = false;
         } else {
           const errResponse: ErrorResponseModel =
             error.error as ErrorResponseModel;
@@ -83,6 +85,7 @@ export class CreateNoteComponent {
             message: errResponse.errorMessage,
             type: NotificationType.error,
           });
+          this.loading = false;
         }
       },
     });
@@ -114,6 +117,7 @@ export class CreateNoteComponent {
     if (this.file) {
       //there is a file
       this.file.arrayBuffer().then((buff: ArrayBuffer) => {
+        this.loading = true;
         const x = new Uint8Array(buff);
         this.document.file = {
           name: this.fileName,

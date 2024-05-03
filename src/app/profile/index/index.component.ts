@@ -25,6 +25,7 @@ export class IndexComponent implements OnInit{
   endIndex = 10;
   pageSize = 10;
   xpUntilNextLevel = 0;
+  loading = true;
 
   userEmail = localStorage.getItem('userEmail') || '';
   userFirstname = localStorage.getItem('userFirstname') || '';
@@ -46,13 +47,14 @@ export class IndexComponent implements OnInit{
   }
 
   fetchDocuments(): void {
+    this.loading = true;
     this.noteService.getOwnDocuments(this.userId).subscribe((documents) => {
       this.documents = documents;
       this.xpUntilNextLevel = 200 - this.userPoints;
       this.userService.getUserBadges(this.userId).subscribe((badges) => {
         this.badges = badges;
         this.displayedBadges = this.badges.slice(this.startIndex, this.endIndex)
-        console.log(this.startIndex + " " +  this.endIndex)
+        this.loading = false;
       });
     });
   }

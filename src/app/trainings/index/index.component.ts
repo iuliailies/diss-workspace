@@ -25,6 +25,7 @@ export class IndexComponent implements OnInit {
   expandedTrainingId: number | null = null;
   isToDoOpen = true;
   isCompletedOpen = false;
+  loading = true;
 
   constructor(
     private trainingService: TrainingService,
@@ -53,18 +54,22 @@ export class IndexComponent implements OnInit {
   }
 
   fetchTodoTrainings() {
+    this.loading = true;
     this.trainingService
       .getTodoTrainings(this.userId)
       .subscribe((trainings) => {
-        this.todoTrainings = trainings;
+        this.todoTrainings = trainings
+        this.loading = false;
       });
   }
 
   fetchCompletedTrainings() {
+    this.loading = true;
     this.trainingService
       .getCompletedTrainings(this.userId)
       .subscribe((trainings) => {
         this.completedTrainings = trainings;
+        this.loading = false;
       });
   }
 
