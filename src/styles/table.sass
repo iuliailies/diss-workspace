@@ -36,6 +36,7 @@ $table-padding: 20px
         &.is-header
             font-size: $font-size-subtitle
             height: 70px
+            position: relative
 
         .column
             padding: 10px
@@ -43,9 +44,8 @@ $table-padding: 20px
             text-overflow: ellipsis
             display: flex
             justify-content: center
-            
 
-            &:first-child
+            &:first-of-type
                 justify-content: flex-start
 
             &:last-child
@@ -68,3 +68,24 @@ $table-padding: 20px
 
             &.is-12
                 width: 100%
+
+            &.has-toggle
+                .toggle-arrow
+                    position: absolute
+                    height: 20px
+                    padding: 0
+                    transform: rotate(90deg)
+                    transition: all $transition-duration
+                    cursor: pointer
+
+                span
+                    padding-left: 30px
+
+    &.is-closed
+        .columns-wrapper, .columns
+            &:not(.is-header)
+                display: none
+        
+            .column
+                .toggle-arrow
+                    transform: rotate(0deg)

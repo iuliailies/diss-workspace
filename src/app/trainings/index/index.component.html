@@ -18,9 +18,12 @@
 </header>
 
 <div class="container">
-  <div class="table card">
+  <div class="table card" [class.is-closed]="!isToDoOpen">
     <div class="columns is-header">
-      <div class="column is-4">TODO</div>
+      <div class="column is-4 has-toggle">
+        <img [src]="PATHS.ICONS + 'chevron-right.svg'" class="toggle-arrow icon" (click)="isToDoOpen = !isToDoOpen" alt="" />
+        <span>TODO</span>
+      </div>
       <div class="column is-3">Required Level</div>
       <div class="column is-4">Reward</div>
       <div class="column is-1"></div>
@@ -70,9 +73,12 @@
 </div>
 
 <div class="container">
-  <div class="table card">
+  <div class="table card" [class.is-closed]="!isCompletedOpen">
     <div class="columns is-header">
-      <div class="column is-4">Completed</div>
+      <div class="column is-4 has-toggle">
+        <img [src]="PATHS.ICONS + 'chevron-right.svg'" class="toggle-arrow icon" (click)="isCompletedOpen = !isCompletedOpen" alt="" />
+        <span>Completed</span>
+      </div>
       <div class="column is-3">Required Level</div>
       <div class="column is-4">Reward</div>
       <div class="column is-1"></div>

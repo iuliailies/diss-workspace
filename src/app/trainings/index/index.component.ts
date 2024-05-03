@@ -23,6 +23,8 @@ export class IndexComponent implements OnInit {
   userId = localStorage.getItem('userId');
   userLevel = parseInt(localStorage.getItem('userLevel')!);
   expandedTrainingId: number | null = null;
+  isToDoOpen = true;
+  isCompletedOpen = false;
 
   constructor(
     private trainingService: TrainingService,
