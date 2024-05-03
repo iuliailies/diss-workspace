@@ -63,7 +63,7 @@
         <div class="column">{{ training.text }}</div>
         <div class="column">
           <div class="button"
-               [class.not-enough-level-button]="!hasEnoughLevel(training.requiredLevel)"
+               [class.disabled]="!hasEnoughLevel(training.requiredLevel)"
                (click)="hasEnoughLevel(training.requiredLevel) ? startTraining(training, $event) : null">
             <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
             <span>Start training</span>
@@ -109,7 +109,7 @@
           />
         </div>
       </div>
-      <div class="columns flex-column align-start" style="cursor: default" *ngIf="expandedTrainingId === training.id">
+      <div class="columns flex-column align-start cursor-default" *ngIf="expandedTrainingId === training.id">
         <div class="column">{{ training.text }}</div>
         <div class="column">
           <div class="button" (click)="viewTraining(training.id)">
