@@ -20,4 +20,9 @@ export class UserService {
   public getUserInfo(id: any): Observable<User> {
     return this.httpClient.get<User>(`${this.userUrl}/${id}`);
   }
+
+  public getUserBadges(id: any): Observable<any> {
+    return this.httpClient.get(`${this.userUrl}/badges/${id}`);
+  }
+
 }

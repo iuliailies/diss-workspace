@@ -27,7 +27,7 @@ import { LevelColorPipe } from './pipes/level-color.pipe';
     NotificationComponent,
     SearchBarComponent,
     GenerateColorPipe,
-    LevelColorPipe
+    LevelColorPipe,
   ],
   exports: [
     NavComponent,
@@ -37,7 +37,7 @@ import { LevelColorPipe } from './pipes/level-color.pipe';
     NotificationComponent,
     SearchBarComponent,
     GenerateColorPipe,
-    LevelColorPipe
+    LevelColorPipe,
   ],
   imports: [
     CommonModule,
