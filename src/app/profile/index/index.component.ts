@@ -52,6 +52,7 @@ export class IndexComponent implements OnInit{
       this.userService.getUserBadges(this.userId).subscribe((badges) => {
         this.badges = badges;
         this.displayedBadges = this.badges.slice(this.startIndex, this.endIndex)
+        console.log(this.startIndex + " " +  this.endIndex)
       });
     });
   }
@@ -104,7 +105,7 @@ export class IndexComponent implements OnInit{
   }
 
   previous(){
-    if(this.startIndex > this.pageSize - 1) {
+    if(this.startIndex >= this.pageSize) {
       this.startIndex = this.startIndex - this.pageSize;
       this.endIndex = this.endIndex - this.pageSize;
       this.displayedBadges = this.badges.slice(this.startIndex, this.endIndex)
@@ -112,7 +113,7 @@ export class IndexComponent implements OnInit{
   }
 
   next(){
-    if(this.endIndex - this.pageSize - 1 < this.badges.length){
+    if(this.startIndex + this.pageSize <= this.badges.length){
       this.endIndex = this.endIndex + this.pageSize;
       this.startIndex = this.startIndex + this.pageSize;
       this.displayedBadges = this.badges.slice(this.startIndex, this.endIndex)

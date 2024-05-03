@@ -44,7 +44,6 @@
       (click)="previous()"
     />
     <ng-container *ngFor="let badge of displayedBadges">
-      <!--TODO add tooltip and create the list logic with the backend -->
       <img
         matTooltip="{{badge.name}}"
         [src]="PATHS.ICONS + 'badge.svg'"
