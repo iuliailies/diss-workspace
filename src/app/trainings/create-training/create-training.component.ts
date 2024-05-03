@@ -1,29 +1,23 @@
 import {
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
   ViewChild,
 } from '@angular/core';
-import { PATHS } from '../../app.constants';
+import {PATHS} from '../../app.constants';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
-import { CookieService } from 'ngx-cookie-service';
-import { File } from '../../data-types/file.model';
-import { NotificationService } from '../../services/notification.service';
-import { NotificationType } from '../../data-types/notification.model';
-import { SaveTrainingDocument } from '../../data-types/training.model';
-import { TrainingService } from '../../services/training.service';
-import { EmployeeDocument } from '../../data-types/notes.model';
-import { ErrorResponseModel } from '../../data-types/error-response.model';
+import {Router} from '@angular/router';
+import {File} from '../../data-types/file.model';
+import {NotificationService} from '../../services/notification.service';
+import {NotificationType} from '../../data-types/notification.model';
+import {SaveTrainingDocument} from '../../data-types/training.model';
+import {TrainingService} from '../../services/training.service';
+import {ErrorResponseModel} from '../../data-types/error-response.model';
+import {ConfirmationDialogBoxComponent} from "../../core/confirmation-dialog-box/confirmation-dialog-box.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-create-training',
@@ -41,6 +35,7 @@ export class CreateTrainingComponent {
   file: any;
   keywords: any;
   isInvalid = false;
+  contentUpdated = false;
 
   @ViewChild('dragZoneRef') dragZone!: ElementRef;
 
@@ -48,6 +43,7 @@ export class CreateTrainingComponent {
     private formBuilder: FormBuilder,
     private notificationService: NotificationService,
     private trainingService: TrainingService,
+    private dialogBox: MatDialog,
     private router: Router,
   ) {
     this.createForm();
@@ -150,8 +146,23 @@ export class CreateTrainingComponent {
   resetWarnings() {
     this.isInvalid = false;
   }
+
   createTraining() {
-    if (this.createTrainingForm.invalid) {
+    if (this.createTrainingForm.controls['requiredLevel'].invalid) {
+      this.isInvalid = true;
+      this.notificationService.notify({
+        message: 'Required level must be a number!',
+        type: NotificationType.error,
+      });
+      return;
+    } else if (this.createTrainingForm.controls['reward'].invalid) {
+      this.isInvalid = true;
+      this.notificationService.notify({
+        message: 'Reward must be a number!',
+        type: NotificationType.error,
+      });
+      return;
+    } else if (this.createTrainingForm.invalid) {
       this.isInvalid = true;
       this.notificationService.notify({
         message: 'Complete all the fields to create the training!',
@@ -191,6 +202,7 @@ export class CreateTrainingComponent {
           message: 'Training saved successfully! ',
           type: NotificationType.success,
         });
+        this.contentUpdated = false;
         this.navigateToTrainingsView();
       },
       error: (error: any) => {
@@ -213,10 +225,35 @@ export class CreateTrainingComponent {
   }
 
   keywordsChanged(keywords: string[]): void {
+    this.contentUpdated = true;
     this.keywords = JSON.stringify(keywords).slice(1, -1);
   }
 
   navigateToTrainingsView(): void {
     this.router.navigate([`trainings`]);
+  }
+
+  goBack() {
+    if (this.contentUpdated || this.createTrainingForm.touched) {
+      const dialogResponse = this.dialogBox.open(
+        ConfirmationDialogBoxComponent,
+        {
+          data: `Do you want to save the changes?`,
+          disableClose: true,
+          autoFocus: false,
+        },
+      );
+      dialogResponse.afterClosed().subscribe((response) => {
+        if (response) {
+          this.createTraining();
+        }
+        else {
+          this.navigateToTrainingsView();
+        }
+      });
+    }
+    else {
+      this.navigateToTrainingsView();
+    }
   }
 }
