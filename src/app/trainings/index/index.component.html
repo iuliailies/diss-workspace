@@ -28,9 +28,10 @@
       <div class="column is-4">Reward</div>
       <div class="column is-1"></div>
     </div>
-    <div class="columns-wrapper" *ngFor="let training of todoTrainings;" (click)="toggleDetails(training.id)">
+    <div class="columns-wrapper" *ngFor="let training of todoTrainings;">
       <div
       class="columns"
+      (click)="toggleDetails(training.id)"
       [class.enough-level-columns]="hasEnoughLevel(training.requiredLevel)"
       [class.not-enough-level-columns]="!hasEnoughLevel(training.requiredLevel)"
       >
@@ -38,10 +39,6 @@
         <div class="column is-3">
           <div
             class="points-required-icon"
-            [class.not-enough-level-icon]="
-              !hasEnoughLevel(training.requiredLevel)
-            "
-            [class.enough-level-icon]="hasEnoughLevel(training.requiredLevel)"
             [style.background-color]="training.requiredLevel | levelColor"
           >
             {{ training.requiredLevel }}
@@ -60,10 +57,14 @@
           />
         </div>
       </div>
-      <div class="columns flex-column align-start" *ngIf="expandedTrainingId === training.id">
+      <div class="columns flex-column align-start"
+           [class.not-enough-level-rows]="!hasEnoughLevel(training.requiredLevel)"
+           *ngIf="expandedTrainingId === training.id">
         <div class="column">{{ training.text }}</div>
         <div class="column">
-          <div class="button" (click)="hasEnoughLevel(training.requiredLevel) ? startTraining(training) : null">
+          <div class="button"
+               [class.not-enough-level-button]="!hasEnoughLevel(training.requiredLevel)"
+               (click)="hasEnoughLevel(training.requiredLevel) ? startTraining(training, $event) : null">
             <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
             <span>Start training</span>
         </div>
@@ -84,9 +85,10 @@
       <div class="column is-4">Reward</div>
       <div class="column is-1"></div>
     </div>
-    <div class="columns-wrapper" *ngFor="let training of completedTrainings;" (click)="toggleDetails(training.id)">
+    <div class="columns-wrapper" *ngFor="let training of completedTrainings;">
       <div
       class="columns"
+      (click)="toggleDetails(training.id)"
       >
         <div class="column is-4">{{ training.title }}</div>
         <div class="column is-3">
@@ -107,7 +109,7 @@
           />
         </div>
       </div>
-      <div class="columns flex-column align-start" *ngIf="expandedTrainingId === training.id">
+      <div class="columns flex-column align-start" style="cursor: default" *ngIf="expandedTrainingId === training.id">
         <div class="column">{{ training.text }}</div>
         <div class="column">
           <div class="button" (click)="viewTraining(training.id)">

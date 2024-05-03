@@ -112,7 +112,8 @@ export class IndexComponent implements OnInit {
     });
   }
 
-  startTraining(training: any) {
+  startTraining(training: any, event: any) {
+    event.stopPropagation();
     const badge: Badge = {
       userId: parseInt(this.userId || '-1'),
       trainingId: training.id,
