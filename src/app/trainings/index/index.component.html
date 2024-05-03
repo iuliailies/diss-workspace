@@ -42,6 +42,7 @@
               !hasEnoughLevel(training.requiredLevel)
             "
             [class.enough-level-icon]="hasEnoughLevel(training.requiredLevel)"
+            [style.background-color]="training.requiredLevel | levelColor"
           >
             {{ training.requiredLevel }}
           </div>
@@ -89,7 +90,7 @@
       >
         <div class="column is-4">{{ training.title }}</div>
         <div class="column is-3">
-          <div class="points-required-icon icon-color">
+          <div class="points-required-icon icon-color" [style.background-color]="training.requiredLevel | levelColor">
             {{ training.requiredLevel }}
           </div>
         </div>

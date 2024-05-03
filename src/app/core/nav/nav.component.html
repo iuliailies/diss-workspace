@@ -35,7 +35,7 @@
       class="user-icon"
       [class.is-active]="userDropdownOpened"
       (click)="toggleUserDropdown()"
-    >
+      [style.background-color]="userName | generateColor">
       II
     </div>
   </div>

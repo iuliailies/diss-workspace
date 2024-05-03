@@ -13,6 +13,7 @@ export class NavComponent {
   PATHS = PATHS;
 
   userDropdownOpened = false;
+  userName = 'Iulia Ilies'
 
   constructor(
     private elementRef: ElementRef,

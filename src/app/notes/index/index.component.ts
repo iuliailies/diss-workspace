@@ -86,6 +86,10 @@ export class IndexComponent implements OnInit {
     return document.user.firstname[0] + document.user.lastname[0];
   }
 
+  getUserName(document: any): string {
+    return document.user.firstname + ' ' +document.user.lastname;
+  }
+
   viewDocument(id: any) {
     this.router.navigate([`notes/${id}`]);
   }

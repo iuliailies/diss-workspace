@@ -64,7 +64,7 @@
   </div>
   <div class="container subheader justify-start align-center">
     <div class="text">Created by</div>
-    <div class="user-icon">{{ getUserInitials() }}</div>
+    <div class="user-icon" [style.background-color]="getUserName() | generateColor">{{ getUserInitials() }}</div>
   </div>
 </header>
 

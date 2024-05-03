@@ -14,6 +14,8 @@ import {
 } from '@angular/material/snack-bar';
 import { NotificationComponent } from './notification/notification.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
+import { GenerateColorPipe } from './pipes/generate-color.pipe';
+import { LevelColorPipe } from './pipes/level-color.pipe';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
     ConfirmationDialogBoxComponent,
     NotificationComponent,
     SearchBarComponent,
+    GenerateColorPipe,
+    LevelColorPipe
   ],
   exports: [
     NavComponent,
@@ -32,6 +36,8 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
     KeywordsComponent,
     NotificationComponent,
     SearchBarComponent,
+    GenerateColorPipe,
+    LevelColorPipe
   ],
   imports: [
     CommonModule,

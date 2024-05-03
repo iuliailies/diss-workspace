@@ -163,4 +163,8 @@ export class CreateNoteComponent {
   getUserInitials(): string {
     return this.userFirstname[0] + this.userLastname[0];
   }
+
+  getUserName(): string {
+    return this.userFirstname + ' ' + this.userLastname;
+  }
 }

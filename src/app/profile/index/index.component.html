@@ -3,7 +3,7 @@
     <div class="container is-fluid header-divider">
       <div class="header-left">
         <div class="align-center justify-center">
-          <div class="user-icon icon-size">{{ getUserInitials() }}</div>
+          <div class="user-icon icon-size" [style.background-color]="userFirstname + ' ' + userLastname | generateColor">{{ getUserInitials() }}</div>
           <div class="user-details-container">
             <h1 class="name">{{ userFirstname + ' ' + userLastname }}</h1>
             <span id="email-title" class="input">{{ userEmail }}</span>
@@ -19,7 +19,7 @@
             }}</span>
             <span id="xp-title" class="input">{{ userPoints + ' xp' }}</span>
           </div>
-          <div class="user-icon level-icon">{{ userLevel }}</div>
+          <div class="user-icon level-icon" [style.background-color]="userLevel | levelColor">{{ userLevel }}</div>
         </div>
         <span id="remaining-xp-title" class="input"
           >190xp to go until next level</span
@@ -119,7 +119,7 @@
     >
       <div class="column is-4">{{ document.title }}</div>
       <div class="column is-3">
-        <div class="user-icon">{{ getUserInitials() }}</div>
+        <div class="user-icon" [style.background-color]="userFirstname + ' ' + userLastname | generateColor">{{ getUserInitials() }}</div>
       </div>
       <div class="column is-4">
         {{ document.lastModified | date: 'medium' }}

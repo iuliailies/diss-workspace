@@ -145,6 +145,10 @@ export class NoteComponent implements OnInit {
     return this.document.user.firstname![0] + this.document.user.lastname![0];
   }
 
+  getUserName(): string {
+    return this.document.user.firstname! + ' ' + this.document.user.lastname!;
+  }
+
   changeVisibility(): void {
     this.document.visibility = !this.document.visibility;
   }
