@@ -38,6 +38,7 @@ export class CreateNoteComponent {
   fileType: any;
   fileName: any;
   file: any;
+  contentUpdated = false;
 
   constructor(
     private noteService: NoteService,
@@ -47,6 +48,7 @@ export class CreateNoteComponent {
     private location: Location,
   ) {}
   changeDocumentName(event: Event): void {
+    this.contentUpdated = true;
     const input = event.target as HTMLElement;
     const inputText = input.innerText.trim();
     if (!inputText.length) {
@@ -65,6 +67,7 @@ export class CreateNoteComponent {
           message: 'Document saved successfully! ',
           type: NotificationType.success,
         });
+        this.contentUpdated = false;
         this.navigateToNoteView(response);
       },
       error: (error: any) => {
@@ -86,18 +89,23 @@ export class CreateNoteComponent {
   }
 
   goBack() {
-    const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent, {
-      data: `Do you want to save the changes?`,
-      disableClose: true,
-      autoFocus: false,
-    });
+    const text = this.noteContent.nativeElement.innerHTML;
+    if (this.contentUpdated || this.document.text !== text) {
+      const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent, {
+        data: `Do you want to save the changes?`,
+        disableClose: true,
+        autoFocus: false,
+      });
 
-    dialogResponse.afterClosed().subscribe((response) => {
-      if (response) {
-        this.createDocument();
-      }
+      dialogResponse.afterClosed().subscribe((response) => {
+        if (response) {
+          this.createDocument();
+        }
+        this.location.back();
+      });
+    } else {
       this.location.back();
-    });
+    }
   }
 
   createDocument() {
@@ -125,10 +133,12 @@ export class CreateNoteComponent {
   }
 
   changeVisibility(): void {
+    this.contentUpdated = true;
     this.document.visibility = !this.document.visibility;
   }
 
   keywordsChanged(keywords: string[]): void {
+    this.contentUpdated = true;
     this.document.keywords = JSON.stringify(keywords).slice(1, -1);
   }
 
@@ -149,6 +159,7 @@ export class CreateNoteComponent {
     const file: File = event.target.files[0];
 
     if (file) {
+      this.contentUpdated = true;
       this.fileType = file.type;
       this.fileName = file.name;
       this.file = file;
@@ -156,6 +167,7 @@ export class CreateNoteComponent {
   }
 
   removeFile() {
+    this.contentUpdated = true;
     this.file = null;
     this.fileName = null;
   }

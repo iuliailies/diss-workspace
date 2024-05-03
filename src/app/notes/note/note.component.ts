@@ -25,6 +25,7 @@ export class NoteComponent implements OnInit {
   keywords: string[] = [];
   document: any;
   fileChanged = false;
+  contentUpdated = false;
 
   constructor(
     private noteService: NoteService,
@@ -82,6 +83,7 @@ export class NoteComponent implements OnInit {
   }
 
   changeDocumentName(event: Event): void {
+    this.contentUpdated = true;
     const input = event.target as HTMLElement;
     const inputText = input.innerText.trim();
     if (!inputText.length) {
@@ -94,8 +96,6 @@ export class NoteComponent implements OnInit {
   }
 
   updateDocument(): void {
-    //TODO find a way to take the noteContent when the text box is changed so that we can track if a change was made after
-    // the document was saved and if there were no changes made and he clicks on a menu button, to not ask him to save the document
 
     //TODO also find a way when a menu button is pressed, to display the pop up for saving the changes
     this.document.text = this.noteContent.nativeElement.innerHTML;
@@ -122,6 +122,7 @@ export class NoteComponent implements OnInit {
           type: NotificationType.success,
         });
         this.fetchDocument();
+        this.contentUpdated = false;
       },
       error: (error: any) => {
         if (error.error instanceof ErrorEvent) {
@@ -150,10 +151,12 @@ export class NoteComponent implements OnInit {
   }
 
   changeVisibility(): void {
+    this.contentUpdated = true;
     this.document.visibility = !this.document.visibility;
   }
 
   keywordsChanged(keywords: string[]): void {
+    this.contentUpdated = true;
     this.document.keywords = JSON.stringify(keywords).slice(1, -1);
   }
 
@@ -195,25 +198,32 @@ export class NoteComponent implements OnInit {
     if (this.readOnly) {
       this.router.navigate(['/notes']);
     } else {
-      const dialogResponse = this.dialogBox.open(
-        ConfirmationDialogBoxComponent,
-        {
-          data: `Do you want to save the changes?`,
-          disableClose: true,
-          autoFocus: false,
-        },
-      );
+      const text = this.noteContent.nativeElement.innerHTML;
+      if (this.contentUpdated || this.document.text !== text) {
+        const dialogResponse = this.dialogBox.open(
+          ConfirmationDialogBoxComponent,
+          {
+            data: `Do you want to save the changes?`,
+            disableClose: true,
+            autoFocus: false,
+          },
+        );
 
-      dialogResponse.afterClosed().subscribe((response) => {
-        if (response) {
-          this.updateDocument();
-        }
-        this.router.navigate(['/notes']);
-      });
+        dialogResponse.afterClosed().subscribe((response) => {
+          if (response) {
+            this.updateDocument();
+          }
+          this.router.navigate(['/notes']);
+        });
+      }
+      else {
+        this.router.navigate(['/notes'])
+      }
     }
   }
 
   removeFile() {
+    this.contentUpdated = true;
     this.document.file = undefined;
   }
 
@@ -226,6 +236,7 @@ export class NoteComponent implements OnInit {
         name: file.name,
         type: file.type,
       };
+      this.contentUpdated = true;
       this.fileChanged = true;
     }
   }
