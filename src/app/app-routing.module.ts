@@ -9,11 +9,14 @@ const routes: Routes = [
       import('./notes/notes.module').then((m) => m.NotesModule),
   },
   {
+    path: 'users',
+    loadChildren: () =>
+      import('./users/users.module').then((m) => m.UsersModule),
+  },
+  {
     path: 'company-docs',
     loadChildren: () =>
-      import('./company-documents/company-documents.module').then(
-        (m) => m.CompanyDocumentsModule,
-      ),
+      import('./company-documents/company-documents.module').then((m) => m.CompanyDocumentsModule),
   },
   {
     path: 'trainings',
@@ -29,7 +32,7 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-  },
+  }
 ];
 
 @NgModule({

@@ -14,7 +14,7 @@ export interface User {
   location: string;
   level: number;
   points: number;
-  type: string;
+  type: UserType;
 }
 
 export interface UserDocument {
@@ -28,4 +28,11 @@ export interface UserProgressUpdate {
   id: number;
   points: number;
   level: number;
+}
+
+export enum UserType {
+  ADMIN = 'ADMIN',
+  TRAINER = 'TRAINER',
+  HR = 'HR',
+  EMPLOYEE = 'EMPLOYEE'
 }

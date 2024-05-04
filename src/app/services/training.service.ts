@@ -49,6 +49,6 @@ export class TrainingService {
   }
 
   updateUserProgress(user: any): Observable<any> {
-    return this.http.put(`${this.requestURL}/update-user`, user);
+    return this.http.put(`${this.requestURL}/update-user-progress`, user);
   }
 }

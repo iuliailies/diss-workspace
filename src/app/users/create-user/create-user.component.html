@@ -1,0 +1,201 @@
+<header class="header">
+  <div class="header-container">
+    <div class="container is-fluid header-divider">
+      <div class="header-left">
+        <h1 class="home-link" (click)="goBack()">Users</h1>
+        <img
+          class="chevron-img"
+          [src]="PATHS.ICONS + 'chevron-right.svg'"
+          alt=""
+        />
+        <h1 class="add-training-title">
+          {{ loading ? 'Loading...' : 'Add user' }}
+        </h1>
+      </div>
+
+      <div class="header-right">
+        <div class="button" [class.disabled]="loading" (click)="createUser()">
+          <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
+          <span>Save changes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="loading-spinner" [class.not-loading]="!loading">
+  <mat-spinner *ngIf="loading"></mat-spinner>
+</div>
+
+<div class="card" *ngIf="!loading">
+  <form [formGroup]="createUserForm" class="create-training-form">
+    <div class="left-container">
+      <div class="input-label-container" [class.error]="isInvalid">
+        <label class="subtitle-container">Firstname</label>
+        <div class="input-container">
+          <input
+            (click)="resetWarnings()"
+            class="input-field"
+            type="text"
+            formControlName="firstname"
+          />
+        </div>
+      </div>
+
+      <div class="input-label-container" [class.error]="isInvalid">
+        <label class="subtitle-container">Email</label>
+        <div class="input-container">
+          <input
+            (click)="resetWarnings()"
+            class="input-field"
+            type="text"
+            formControlName="email"
+          />
+        </div>
+      </div>
+
+      <div
+        class="input-label-container" [class.error]="isInvalid">
+        <label class="subtitle-container">Password</label>
+        <div class="input-container">
+          <input
+            class="input-field"
+            [type]="hidePassword1 ? 'password' : 'text'"
+            formControlName="password"
+            (click)="resetWarnings()"
+          />
+          <button
+            type="button"
+            class="search-button"
+            (click)="hidePassword1 = !hidePassword1"
+          >
+            <img
+              [src]="
+              hidePassword1
+                ? PATHS.ICONS + 'eye-slash-solid.svg'
+                : PATHS.ICONS + 'eye-solid.svg'
+            "
+              class="icon"
+              alt=""
+            />
+          </button>
+        </div>
+      </div>
+
+      <div class="input-label-container" [class.error]="isInvalid">
+        <label class="subtitle-container">Role</label>
+        <div class="input-container">
+          <input
+            (click)="resetWarnings()"
+            class="input-field"
+            type="text"
+            formControlName="role"
+          />
+        </div>
+      </div>
+
+      <div class="input-label-container" [class.error]="isInvalid">
+        <label class="subtitle-container">Location</label>
+        <div class="input-container">
+          <input
+            (click)="resetWarnings()"
+            class="input-field"
+            type="text"
+            formControlName="location"
+          />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="right-container">
+      <div class="input-label-container" [class.error]="isInvalid">
+        <label class="subtitle-container">Lastname</label>
+        <div class="input-container">
+          <input
+            (click)="resetWarnings()"
+            class="input-field"
+            type="text"
+            formControlName="lastname"
+          />
+        </div>
+      </div>
+
+      <div class="input-label-container" [class.error]="isInvalid">
+        <label class="subtitle-container">Type</label>
+        <div class="input-container">
+          <select
+            name="type"
+            (click)="resetWarnings()"
+            class="input-field custom-select">
+            <option selected disabled hidden>
+              Select type
+            </option>
+            <option *ngFor="let type of userTypes">
+              {{ type }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div
+        class="input-label-container" [class.error]="isInvalid">
+        <label class="subtitle-container">Confirm password</label>
+        <div class="input-container">
+          <input
+            class="input-field"
+            [type]="hidePassword2 ? 'password' : 'text'"
+            formControlName="confirmPassword"
+            (click)="resetWarnings()"
+          />
+          <button
+            type="button"
+            class="search-button"
+            (click)="hidePassword2 = !hidePassword2"
+          >
+            <img
+              [src]="
+              hidePassword2
+                ? PATHS.ICONS + 'eye-slash-solid.svg'
+                : PATHS.ICONS + 'eye-solid.svg'
+            "
+              class="icon"
+              alt=""
+            />
+          </button>
+        </div>
+      </div>
+
+      <div class="input-label-container" [class.error]="isInvalid">
+        <label class="subtitle-container">Department</label>
+        <div class="input-container">
+          <input
+            (click)="resetWarnings()"
+            class="input-field"
+            type="text"
+            formControlName="department"
+          />
+        </div>
+      </div>
+
+<!--      (click)="resetWarnings()"-->
+<!--      class="input-field"-->
+<!--      type="text"-->
+<!--      formControlName="name"-->
+<!--      />-->
+
+      <div class="input-label-container" [class.error]="isInvalid">
+        <label class="subtitle-container">Phone number</label>
+        <div class="input-container">
+          <input
+            (click)="resetWarnings()"
+            class="input-field"
+            type="text"
+            formControlName="phoneNumber"
+          />
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>

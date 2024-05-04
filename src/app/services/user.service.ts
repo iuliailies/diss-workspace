@@ -25,4 +25,7 @@ export class UserService {
     return this.httpClient.get(`${this.userUrl}/badges/${id}`);
   }
 
+  getUsers(): Observable<any> {
+    return this.httpClient.get(`${this.userUrl}/get-users`);
+  }
 }

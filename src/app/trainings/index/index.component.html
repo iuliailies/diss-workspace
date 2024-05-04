@@ -4,7 +4,7 @@
       <div class="header-left">
         <h1 class="home-link">Trainings</h1>
       </div>
-      <div class="header-right">
+      <div class="header-right" *ngIf="isUserTrainer()">
         <div class="button" [class.disabled]="loading" [routerLink]="['new']">
           <img [src]="PATHS.ICONS + 'plus.svg'" class="arrow" alt="" />
           <span>Add new</span>

@@ -8,7 +8,7 @@ import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { PATHS } from '../../app.constants';
 import { GetTrainingDocument } from '../../data-types/training.model';
 import { TrainingService } from '../../services/training.service';
-import { UserLogin } from '../../data-types/user.model';
+import {UserLogin, UserType} from '../../data-types/user.model';
 import { Badge } from '../../data-types/badge.model';
 
 @Component({
@@ -22,6 +22,7 @@ export class IndexComponent implements OnInit {
   todoTrainings: GetTrainingDocument[] = [];
   userId = localStorage.getItem('userId');
   userLevel = parseInt(localStorage.getItem('userLevel')!);
+  userType = localStorage.getItem('userType');
   expandedTrainingId: number | null = null;
   isToDoOpen = true;
   isCompletedOpen = false;
@@ -34,6 +35,10 @@ export class IndexComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
   ) {}
+
+  isUserTrainer() {
+    return this.userType === UserType.TRAINER;
+  }
 
   toggleDetails(trainingId: number) {
     if (this.expandedTrainingId === trainingId) {
