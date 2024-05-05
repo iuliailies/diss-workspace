@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Router,
-} from '@angular/router';
 import {CookieService} from "ngx-cookie-service";
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
+import {parseJwt} from "../../utils/JWTParser";
+import {UserType} from "../../data-types/user.model";
 
-@Injectable({ providedIn: 'root' })
-export class AlreadyAuthGuardService {
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuardOtherService {
+
   constructor(
     private cookieService: CookieService,
     private router: Router,
@@ -22,11 +23,13 @@ export class AlreadyAuthGuardService {
 
   private authGuard(): boolean {
     const token = this.cookieService.get('Token');
-    if (token) {
+    const jwt = parseJwt(token);
+    if (jwt['type'] !== UserType.ADMIN) {
       return true;
     } else {
-      this.router.navigate(['../login']);
+      this.router.navigate(['../users']);
     }
+
     return false;
   }
 }

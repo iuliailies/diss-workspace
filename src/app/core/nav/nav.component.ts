@@ -51,10 +51,14 @@ export class NavComponent implements OnInit{
 
   logout(): void {
     this.cookieService.delete('Token');
-    this.router.navigate(['/login']);
     localStorage.removeItem('userType');
     localStorage.removeItem('userId');
-    localStorage.removeItem('userInitials');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userFirstname');
+    localStorage.removeItem('userLastname');
+    localStorage.removeItem('userPoints');
+    localStorage.removeItem('userLevel');
+    this.router.navigate(['/login']);
   }
 
   @HostListener('document:click', ['$event']) onDropdownBlur(
