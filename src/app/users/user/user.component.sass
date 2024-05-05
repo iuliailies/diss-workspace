@@ -1,0 +1,59 @@
+@import 'variables'
+@import "typography"
+@import "colours"
+
+$card-margin: 40px
+$form-padding: 80px
+$card-width: calc(100% - 2*$card-margin)
+$containers-width: calc($card-width/2 - 20px)
+$input-width: calc($card-width - 40px)
+
+.icon
+  filter: $filter-gray-secondary
+
+.card
+  width: $card-width
+  min-height: calc(100vh - 390px)
+  margin: $card-margin
+  border-radius: 30px
+  outline: none
+  border: 1px solid transparent
+
+.delete-button
+  background-color: $red
+
+.delete-button-container
+  display: flex
+  justify-content: flex-end
+
+.add-training-title
+  margin-left: 12px
+
+.input-container
+  width: $input-width
+
+.custom-select
+  margin-right: 5px
+
+.create-training-form
+  display: flex
+  flex-direction: row
+  height: 100%
+  width: 100%
+
+.left-container
+  width: $containers-width
+  display: flex
+  flex-direction: column
+  padding-left: $form-padding
+  padding-right: 20px
+
+.right-container
+  width: $containers-width
+  display: flex
+  flex-direction: column
+  padding-right: 20px
+
+.input-label-container.error label
+  color: $red
+

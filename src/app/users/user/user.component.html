@@ -9,12 +9,12 @@
           alt=""
         />
         <h1 class="add-training-title">
-          {{ loading ? 'Loading...' : 'Add user' }}
+          {{ loading ? 'Loading...' : 'Modify user' }}
         </h1>
       </div>
 
       <div class="header-right">
-        <div class="button" [class.disabled]="loading" (click)="createUser()">
+        <div class="button" [class.disabled]="loading" (click)="updateUser()">
           <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
           <span>Save changes</span>
         </div>
@@ -51,34 +51,6 @@
             type="text"
             formControlName="email"
           />
-        </div>
-      </div>
-
-      <div
-        class="input-label-container" [class.error]="isInvalid || isPasswordInvalid">
-        <label class="subtitle-container">Password</label>
-        <div class="input-container">
-          <input
-            class="input-field"
-            [type]="hidePassword1 ? 'password' : 'text'"
-            formControlName="password"
-            (click)="resetWarnings()"
-          />
-          <button
-            type="button"
-            class="search-button"
-            (click)="hidePassword1 = !hidePassword1"
-          >
-            <img
-              [src]="
-              hidePassword1
-                ? PATHS.ICONS + 'eye-slash-solid.svg'
-                : PATHS.ICONS + 'eye-solid.svg'
-            "
-              class="icon"
-              alt=""
-            />
-          </button>
         </div>
       </div>
 
@@ -121,50 +93,20 @@
         </div>
       </div>
 
-      <div class="input-label-container" [class.error]="isInvalid || isTypeInvalid">
+      <div class="input-label-container" [class.error]="isInvalid">
         <label class="subtitle-container">Type</label>
         <div class="input-container">
           <select
             formControlName="type"
             (click)="resetWarnings()"
             class="input-field custom-select">
-            <option selected disabled hidden>
-              Select type
-            </option>
-            <option *ngFor="let type of userTypes">
+            <option *ngFor="let type of userTypes" [ngValue]="type">
               {{ type }}
             </option>
           </select>
         </div>
       </div>
 
-      <div
-        class="input-label-container" [class.error]="isInvalid || isPasswordInvalid">
-        <label class="subtitle-container">Confirm password</label>
-        <div class="input-container">
-          <input
-            class="input-field"
-            [type]="hidePassword2 ? 'password' : 'text'"
-            formControlName="confirmPassword"
-            (click)="resetWarnings()"
-          />
-          <button
-            type="button"
-            class="search-button"
-            (click)="hidePassword2 = !hidePassword2"
-          >
-            <img
-              [src]="
-              hidePassword2
-                ? PATHS.ICONS + 'eye-slash-solid.svg'
-                : PATHS.ICONS + 'eye-solid.svg'
-            "
-              class="icon"
-              alt=""
-            />
-          </button>
-        </div>
-      </div>
 
       <div class="input-label-container" [class.error]="isInvalid">
         <label class="subtitle-container">Department</label>
@@ -192,4 +134,11 @@
 
     </div>
   </form>
+</div>
+
+<div class="container delete-button-container">
+  <div class="button delete-button" [class.disabled]="loading" (click)="deleteUser()">
+    <img [src]="PATHS.ICONS + 'trash-solid.svg'" class="arrow" alt="" />
+    <span>Delete user</span>
+  </div>
 </div>

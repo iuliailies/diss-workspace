@@ -41,8 +41,6 @@ export class IndexComponent implements OnInit {
 
 
   viewUser(id: any) {
-    this.router.navigate([`user/${id}`]);
+    this.router.navigate([`users/${id}`]);
   }
-
-  protected readonly String = String;
 }

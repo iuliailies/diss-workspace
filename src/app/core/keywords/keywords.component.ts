@@ -1,10 +1,8 @@
 import {
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   Output,
-  ViewChild,
 } from '@angular/core';
 import { PATHS } from '../../app.constants';
 

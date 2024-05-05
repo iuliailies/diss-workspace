@@ -30,6 +30,20 @@ export interface UserProgressUpdate {
   level: number;
 }
 
+export interface SaveUser {
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
+  phoneNumber: string;
+  role: string;
+  department: string;
+  location: string;
+  level: number;
+  points: number;
+  type: UserType;
+}
+
 export enum UserType {
   ADMIN = 'ADMIN',
   TRAINER = 'TRAINER',

@@ -22,6 +22,8 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
+    "@types/google-libphonenumber": "^7.4.30",
+    "google-libphonenumber": "^3.2.34",
     "html2canvas": "^1.4.1",
     "ng2-pdf-viewer": "^10.0.0",
     "ngx-cookie-service": "^17.1.0",

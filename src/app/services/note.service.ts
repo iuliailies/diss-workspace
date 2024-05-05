@@ -1,9 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   SaveEmployeeDocument,
   EmployeeDocument,
-  newDocumentData,
   GetEmployeeDocument,
 } from '../data-types/notes.model';
 import { Observable } from 'rxjs';

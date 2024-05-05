@@ -1,34 +1,30 @@
-import {Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import { User, UserType} from "../../data-types/user.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NotificationService} from "../../services/notification.service";
+import {UserService} from "../../services/user.service";
 import {MatDialog} from "@angular/material/dialog";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {NotificationType} from "../../data-types/notification.model";
+import {ErrorResponseModel} from "../../data-types/error-response.model";
 import {ConfirmationDialogBoxComponent} from "../../core/confirmation-dialog-box/confirmation-dialog-box.component";
 import {PATHS} from "../../app.constants";
-import {SaveUser, UserType} from "../../data-types/user.model";
-import {NotificationType} from "../../data-types/notification.model";
-import {UserService} from "../../services/user.service";
-import {ErrorResponseModel} from "../../data-types/error-response.model";
 
 @Component({
-  selector: 'app-create-user',
-  templateUrl: './create-user.component.html',
-  styleUrl: './create-user.component.sass'
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrl: './user.component.sass'
 })
-export class CreateUserComponent implements OnInit{
+export class UserComponent implements OnInit{
   userTypes: UserType[] = [];
   loading = false;
   createUserForm!: FormGroup;
 
   protected readonly PATHS = PATHS;
-  hidePassword1 = true;
-  hidePassword2 = true;
 
   isInvalid = false;
   isEmailInvalid = false;
   isPhoneNumberInvalid = false;
-  isTypeInvalid = false;
-  isPasswordInvalid = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,16 +32,41 @@ export class CreateUserComponent implements OnInit{
     private userService: UserService,
     private dialogBox: MatDialog,
     private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
     this.createForm();
   }
 
   ngOnInit() {
     this.userTypes = Object.values(UserType);
+    this.fetchUser();
+  }
+
+  fetchUserTypes() {
+    if ( this.createUserForm.get('type')?.value === 'ADMIN') {
+      this.userTypes = [UserType.ADMIN];
+    } else {
+      this.userTypes = [UserType.TRAINER, UserType.EMPLOYEE, UserType.HR];
+    }
+  }
+
+  fetchUser() {
+    this.loading = true;
+    this.activatedRoute.paramMap.subscribe((params) => {
+      const userId = params.get('id');
+      if (userId) {
+        this.userService.getUserInfo(userId).subscribe((user) => {
+          this.createUserForm.patchValue(user);
+          this.fetchUserTypes();
+          this.loading = false;
+        });
+      }
+    });
   }
 
   createForm() {
     this.createUserForm = this.formBuilder.group({
+      id: [null],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       email: ['', Validators.required],
@@ -53,9 +74,9 @@ export class CreateUserComponent implements OnInit{
       role: ['', Validators.required],
       department: ['', Validators.required],
       location: ['', Validators.required],
-      type: ['Select type', Validators.required],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
+      points: [null],
+      level: [null],
+      type: ['', Validators.required],
     });
   }
 
@@ -64,8 +85,6 @@ export class CreateUserComponent implements OnInit{
     this.isInvalid = false;
     this.isEmailInvalid = false;
     this.isPhoneNumberInvalid = false;
-    this.isTypeInvalid = false;
-    this.isPasswordInvalid = false;
   }
 
   checkInvalidEmail() {
@@ -80,24 +99,6 @@ export class CreateUserComponent implements OnInit{
 
     emailControl.setValidators(originalValidators);
     emailControl.updateValueAndValidity();
-
-    return isInvalid;
-  }
-
-  checkInvalidType() {
-    const typeControl = this.createUserForm.controls['type'];
-
-    const originalValidators = typeControl.validator;
-
-    typeControl.setValidators([
-      Validators.pattern('^(?!Select type$).*$') // Regex that rejects only "Select type"
-    ]);
-    typeControl.updateValueAndValidity();
-
-    const isInvalid = typeControl.invalid;
-
-    typeControl.setValidators(originalValidators);
-    typeControl.updateValueAndValidity();
 
     return isInvalid;
   }
@@ -121,22 +122,44 @@ export class CreateUserComponent implements OnInit{
     return isInvalid;
   }
 
-  checkInvalidPassword() {
-    return this.createUserForm.controls['password'].value !== this.createUserForm.controls['confirmPassword'].value
+  deleteUser() {
+    const dialogResponse = this.dialogBox.open(
+      ConfirmationDialogBoxComponent,
+      {
+        data: `Do you want to delete the user?`,
+        disableClose: true,
+        autoFocus: false,
+      },
+    );
+    dialogResponse.afterClosed().subscribe((response) => {
+      if (response) {
+        this.loading = true;
+        this.userService.deleteUser(this.createUserForm.get('id')?.value).subscribe({
+          next: () => {
+            this.notificationService.notify({
+              message: 'User deleted successfully!',
+              type: NotificationType.success,
+            });
+            this.loading = false;
+            this.navigateToUsersView();
+          },
+          error: (error) => {
+            this.notificationService.notify({
+              message: 'An error occurred! Please try again later!',
+              type: NotificationType.error,
+            });
+            this.loading = false;
+          }
+        });
+      }
+    });
   }
 
   validateUser() {
     if (this.createUserForm.invalid) {
       this.isInvalid = true;
       this.notificationService.notify({
-        message: 'Complete all the fields to create the user!',
-        type: NotificationType.error,
-      });
-      return false;
-    } else if(this.checkInvalidPassword()) {
-      this.isPasswordInvalid = true;
-      this.notificationService.notify({
-        message: 'Passwords do not match!',
+        message: 'Complete all the fields to update the user!',
         type: NotificationType.error,
       });
       return false;
@@ -154,46 +177,38 @@ export class CreateUserComponent implements OnInit{
         type: NotificationType.error,
       });
       return false;
-    } else if (this.checkInvalidType()) {
-      this.isTypeInvalid = true;
-      this.notificationService.notify({
-        message: 'Select a user type!',
-        type: NotificationType.error,
-      });
-      return false;
     }
     return true;
   }
 
-  createUser() {
+  updateUser() {
 
     if (!this.validateUser()) {
       return;
     }
 
-    const user : SaveUser = {
+    const user: User = {
+      id: this.createUserForm.get('id')?.value,
       email: this.createUserForm.get('email')?.value,
-      password: this.createUserForm.get('password')?.value,
       firstname: this.createUserForm.get('firstname')?.value,
       lastname: this.createUserForm.get('lastname')?.value,
       phoneNumber: this.createUserForm.get('phoneNumber')?.value,
       role: this.createUserForm.get('role')?.value,
       department: this.createUserForm.get('department')?.value,
       location: this.createUserForm.get('location')?.value,
-      level: 1,
-      points: 0,
+      level: this.createUserForm.get('level')?.value,
+      points: this.createUserForm.get('points')?.value,
       type: this.createUserForm.get('type')?.value,
     };
 
     this.saveUser(user);
-
   }
 
 
-  saveUser(user: SaveUser) {
+  saveUser(user: User) {
     this.loading = true;
     // Call the service to save the user
-    this.userService.createUser(user).subscribe({
+    this.userService.updateUser(user).subscribe({
       next: () => {
         this.notificationService.notify({
           message: 'User saved successfully!',
@@ -248,16 +263,13 @@ export class CreateUserComponent implements OnInit{
       );
       dialogResponse.afterClosed().subscribe((response) => {
         if (response) {
-          this.createUser();
-        }
-        else {
+          this.updateUser();
+        } else {
           this.navigateToUsersView();
         }
       });
-    }
-    else {
+    } else {
       this.navigateToUsersView();
     }
   }
-
 }
