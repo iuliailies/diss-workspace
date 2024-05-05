@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IndexComponent } from './index/index.component';
 import { TrainingComponent } from './training/training.component';
 import { TrainingsRoutingModule } from './trainings-routing.module';
 import { CreateTrainingComponent } from './create-training/create-training.component';
@@ -14,6 +13,7 @@ import {
   MatExpansionPanelHeader,
 } from '@angular/material/expansion';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import {IndexComponent} from "./index/index.component";
 
 @NgModule({
   declarations: [IndexComponent, TrainingComponent, CreateTrainingComponent],

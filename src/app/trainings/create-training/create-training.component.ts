@@ -8,15 +8,16 @@ import { NotificationType } from '../../data-types/notification.model';
 import { SaveTrainingDocument } from '../../data-types/training.model';
 import { TrainingService } from '../../services/training.service';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
-import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
-import { MatDialog } from '@angular/material/dialog';
+import {CanComponentDeactivate} from "../../core/unsaved-changes-guard.service";
+import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-create-training',
   templateUrl: './create-training.component.html',
   styleUrl: './create-training.component.sass',
 })
-export class CreateTrainingComponent {
+export class CreateTrainingComponent implements CanComponentDeactivate{
   userId = localStorage.getItem('userId');
   loading = false;
   protected readonly PATHS = PATHS;
@@ -35,7 +36,7 @@ export class CreateTrainingComponent {
     private formBuilder: FormBuilder,
     private notificationService: NotificationService,
     private trainingService: TrainingService,
-    private dialogBox: MatDialog,
+    private confirmationDialogService: ConfirmationDialogService,
     private router: Router,
   ) {
     this.createForm();
@@ -189,34 +190,41 @@ export class CreateTrainingComponent {
     }
   }
 
+  handleSuccess() {
+    this.notificationService.notify({
+      message: 'Training saved successfully! ',
+      type: NotificationType.success,
+    });
+    this.contentUpdated = false;
+    this.loading = false;
+    this.navigateToTrainingsView();
+  }
+
+  handleError(error: any) {
+    if (error.error instanceof ErrorEvent) {
+      this.isInvalid = true;
+      this.notificationService.notify({
+        message: 'An error occurred! Please try again later!',
+        type: NotificationType.error,
+      });
+    } else {
+      const errResponse: ErrorResponseModel =
+        error.error as ErrorResponseModel;
+      this.notificationService.notify({
+        message: errResponse.errorMessage,
+        type: NotificationType.error,
+      });
+    }
+  }
+
   saveTraining(training: SaveTrainingDocument) {
     this.trainingService.createTraining(training).subscribe({
       next: () => {
-        this.notificationService.notify({
-          message: 'Training saved successfully! ',
-          type: NotificationType.success,
-        });
-        this.contentUpdated = false;
-        this.loading = false;
-        this.navigateToTrainingsView();
+        this.handleSuccess();
       },
       error: (error: any) => {
-        if (error.error instanceof ErrorEvent) {
-          this.isInvalid = true;
-          this.notificationService.notify({
-            message: 'An error occurred! Please try again later!',
-            type: NotificationType.error,
-          });
-          this.loading = false;
-        } else {
-          const errResponse: ErrorResponseModel =
-            error.error as ErrorResponseModel;
-          this.notificationService.notify({
-            message: errResponse.errorMessage,
-            type: NotificationType.error,
-          });
-          this.loading = false;
-        }
+        this.handleError(error);
+        this.loading = false;
       },
     });
   }
@@ -230,25 +238,14 @@ export class CreateTrainingComponent {
     this.router.navigate([`trainings`]);
   }
 
-  goBack() {
-    if (this.contentUpdated || this.createTrainingForm.touched) {
-      const dialogResponse = this.dialogBox.open(
-        ConfirmationDialogBoxComponent,
-        {
-          data: `Do you want to save the changes?`,
-          disableClose: true,
-          autoFocus: false,
-        },
-      );
-      dialogResponse.afterClosed().subscribe((response) => {
-        if (response) {
-          this.createTraining();
-        } else {
-          this.navigateToTrainingsView();
-        }
-      });
-    } else {
-      this.navigateToTrainingsView();
+  // Method to determine whether navigation can occur
+  canDeactivate(): Observable<boolean> | boolean {
+
+    // If there are no unsaved changes, allow navigation immediately
+    if (!this.contentUpdated && !this.createTrainingForm.touched) {
+      return true;
     }
+
+    return this.confirmationDialogService.confirmNavigation();
   }
 }

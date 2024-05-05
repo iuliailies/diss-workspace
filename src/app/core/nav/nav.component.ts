@@ -54,6 +54,7 @@ export class NavComponent implements OnInit{
   logout(): void {
     this.logoutService.setLogoutInProgress(true); // Set logout state
     this.showNav = false;
+    this.router.navigate(['../login'])
     this.cookieService.delete('Token');
     localStorage.removeItem('userType');
     localStorage.removeItem('userId');

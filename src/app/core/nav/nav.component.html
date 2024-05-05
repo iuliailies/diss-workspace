@@ -21,7 +21,7 @@
       </a>
       <a
         class="nav-link"
-        [routerLink]="['trainings']"
+        [routerLink]="['/trainings']"
         routerLinkActive="is-active"
       >
         <img [src]="PATHS.ICONS + 'trainings.svg'" class="nav-icon" />
@@ -41,14 +41,14 @@
   </div>
 </nav>
 <div class="dropdown-container slimScroll" *ngIf="userDropdownOpened && showNav">
-  <div class="hd-links">
+  <div class="hd-links" *ngIf="!isAdmin()">
     <a class="hd-item" [routerLink]="['/profile']">
       <img [src]="PATHS.ICONS + 'medal.svg'" />
       <span>Check profile</span>
     </a>
   </div>
   <div class="hd-links">
-    <a class="hd-item" [routerLink]="['/login']" (click)="logout()">
+    <a class="hd-item" (click)="logout()">
       <img [src]="PATHS.ICONS + 'logout.svg'" />
       <span>Log out</span>
     </a>

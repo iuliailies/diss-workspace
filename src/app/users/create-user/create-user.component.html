@@ -2,7 +2,7 @@
   <div class="header-container">
     <div class="container is-fluid header-divider">
       <div class="header-left">
-        <h1 class="home-link" (click)="goBack()">Users</h1>
+        <h1 class="home-link" [routerLink]="['/users']">Users</h1>
         <img
           class="chevron-img"
           [src]="PATHS.ICONS + 'chevron-right.svg'"

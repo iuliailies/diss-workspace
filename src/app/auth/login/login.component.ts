@@ -9,6 +9,7 @@ import { parseJwt } from '../../utils/JWTParser';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import {LogoutService} from "../../services/logout.service";
+import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
 
 @Component({
   selector: 'app-login',
@@ -65,7 +66,11 @@ export class LoginComponent {
           localStorage.setItem('userLastname', user.lastname);
           localStorage.setItem('userPoints', String(user.points));
           localStorage.setItem('userLevel', String(user.level));
-          this.router.navigate(['/notes']);
+          if(user.type === 'ADMIN') {
+            this.router.navigate(['users']);
+          } else {
+            this.router.navigate(['notes']);
+          }
         });
     },
     error: (error: HttpErrorResponse) => {

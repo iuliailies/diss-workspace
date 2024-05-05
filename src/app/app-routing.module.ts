@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import {AlreadyAuthGuardService} from "./auth/shared/already-auth-guard.service";
 import {AuthGuardAdminService} from "./auth/shared/auth-guard-admin.service";
@@ -8,12 +8,6 @@ import {AuthGuardLoginService} from "./auth/shared/auth-guard-login.service";
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  {
-    path: 'notes',
-    loadChildren: () =>
-      import('./notes/notes.module').then((m) => m.NotesModule),
-    canActivate: [AlreadyAuthGuardService, AuthGuardOtherService],
-  },
   {
     path: 'users',
     loadChildren: () =>
@@ -26,6 +20,12 @@ const routes: Routes = [
       import('./company-documents/company-documents.module').then(
         (m) => m.CompanyDocumentsModule,
       ),
+    canActivate: [AlreadyAuthGuardService, AuthGuardOtherService],
+  },
+  {
+    path: 'notes',
+    loadChildren: () =>
+      import('./notes/notes.module').then((m) => m.NotesModule),
     canActivate: [AlreadyAuthGuardService, AuthGuardOtherService],
   },
   {
@@ -44,12 +44,14 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-    // canActivate: [AuthGuardLoginService],
+    canActivate: [AuthGuardLoginService],
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

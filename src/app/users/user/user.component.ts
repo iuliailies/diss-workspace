@@ -3,19 +3,20 @@ import { User, UserType } from '../../data-types/user.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotificationService } from '../../services/notification.service';
 import { UserService } from '../../services/user.service';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
-import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
 import { PATHS } from '../../app.constants';
+import {CanComponentDeactivate} from "../../core/unsaved-changes-guard.service";
+import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrl: './user.component.sass',
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, CanComponentDeactivate{
   userTypes: UserType[] = [];
   loading = false;
   createUserForm!: FormGroup;
@@ -30,7 +31,7 @@ export class UserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private notificationService: NotificationService,
     private userService: UserService,
-    private dialogBox: MatDialog,
+    private confirmationDialogService: ConfirmationDialogService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
   ) {
@@ -122,12 +123,8 @@ export class UserComponent implements OnInit {
   }
 
   deleteUser() {
-    const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent, {
-      data: `Do you want to delete the user?`,
-      disableClose: true,
-      autoFocus: false,
-    });
-    dialogResponse.afterClosed().subscribe((response) => {
+
+    this.confirmationDialogService.confirm("Do you want to delete the user?").subscribe((response) => {
       if (response) {
         this.loading = true;
         this.userService
@@ -205,13 +202,13 @@ export class UserComponent implements OnInit {
     this.loading = true;
     // Call the service to save the user
     this.userService.updateUser(user).subscribe({
-      next: () => {
+      next: (response) => {
         this.notificationService.notify({
           message: 'User saved successfully!',
           type: NotificationType.success,
         });
         this.loading = false;
-        this.navigateToUsersView();
+        this.navigateToUserView(response.id);
       },
       error: (error) => {
         if (error.error instanceof ErrorEvent) {
@@ -247,29 +244,22 @@ export class UserComponent implements OnInit {
     });
   }
 
-  navigateToUsersView(): void {
-    this.router.navigate([`users`]);
+  navigateToUserView(id: any): void {
+    this.router.navigate([`/users/${id}`]);
   }
 
-  goBack() {
-    if (this.createUserForm.touched) {
-      const dialogResponse = this.dialogBox.open(
-        ConfirmationDialogBoxComponent,
-        {
-          data: `Do you want to save the changes?`,
-          disableClose: true,
-          autoFocus: false,
-        },
-      );
-      dialogResponse.afterClosed().subscribe((response) => {
-        if (response) {
-          this.updateUser();
-        } else {
-          this.navigateToUsersView();
-        }
-      });
-    } else {
-      this.navigateToUsersView();
+  navigateToUsersView(): void {
+    this.router.navigate([`/users`]);
+  }
+
+  // Method to determine whether navigation can occur
+  canDeactivate(): Observable<boolean> | boolean {
+
+    // If there are no unsaved changes, allow navigation immediately
+    if (!this.createUserForm.touched) {
+      return true;
     }
+
+    return this.confirmationDialogService.confirmNavigation();
   }
 }

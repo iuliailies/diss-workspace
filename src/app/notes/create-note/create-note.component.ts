@@ -130,7 +130,7 @@ export class CreateNoteComponent implements CanComponentDeactivate{
     const text = this.noteContent.nativeElement.innerHTML;
 
     // If there are no unsaved changes, allow navigation immediately
-    if (!(this.contentUpdated || this.document.text !== text)) {
+    if(!this.contentUpdated && this.document.text === text) {
       return true;
     }
 

@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotificationService } from '../../services/notification.service';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
 import { PATHS } from '../../app.constants';
 import { SaveUser, UserType } from '../../data-types/user.model';
 import { NotificationType } from '../../data-types/notification.model';
 import { UserService } from '../../services/user.service';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
+import {Observable} from "rxjs";
+import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
+import {CanComponentDeactivate} from "../../core/unsaved-changes-guard.service";
 
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
   styleUrl: './create-user.component.sass',
 })
-export class CreateUserComponent implements OnInit {
+export class CreateUserComponent implements OnInit, CanComponentDeactivate{
   userTypes: UserType[] = [];
   loading = false;
   createUserForm!: FormGroup;
@@ -32,9 +33,9 @@ export class CreateUserComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private confirmationDialogService: ConfirmationDialogService,
     private notificationService: NotificationService,
     private userService: UserService,
-    private dialogBox: MatDialog,
     private router: Router,
   ) {
     this.createForm();
@@ -236,28 +237,19 @@ export class CreateUserComponent implements OnInit {
   }
 
   navigateToUsersView(): void {
-    this.router.navigate([`users`]);
+    this.router.navigate([`/users`]);
   }
 
-  goBack() {
-    if (this.createUserForm.touched) {
-      const dialogResponse = this.dialogBox.open(
-        ConfirmationDialogBoxComponent,
-        {
-          data: `Do you want to save the changes?`,
-          disableClose: true,
-          autoFocus: false,
-        },
-      );
-      dialogResponse.afterClosed().subscribe((response) => {
-        if (response) {
-          this.createUser();
-        } else {
-          this.navigateToUsersView();
-        }
-      });
-    } else {
-      this.navigateToUsersView();
+
+  // Method to determine whether navigation can occur
+  canDeactivate(): Observable<boolean> | boolean {
+
+    // If there are no unsaved changes, allow navigation immediately
+    if (!this.createUserForm.touched) {
+      return true;
     }
+
+    return this.confirmationDialogService.confirmNavigation();
   }
+
 }

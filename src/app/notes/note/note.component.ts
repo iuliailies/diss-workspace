@@ -64,6 +64,8 @@ export class NoteComponent implements OnInit, CanComponentDeactivate {
     } else {
       this.keywords = [];
     }
+
+    this.contentUpdated = false;
   }
 
   convertStringToArray(inputString: string): string[] {
@@ -208,7 +210,7 @@ export class NoteComponent implements OnInit, CanComponentDeactivate {
     const text = this.noteContent.nativeElement.innerHTML;
 
     // If there are no unsaved changes, allow navigation immediately
-    if (!(this.contentUpdated || this.document.text !== text)) {
+    if (!this.contentUpdated && this.document.text === text) {
       return true;
     }
 

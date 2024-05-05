@@ -27,7 +27,7 @@ export class AuthGuardAdminService {
     if(jwt['type'] === UserType.ADMIN){
       return true;
     } else {
-      this.router.navigate(['../notes']);
+      this.router.navigate(['/notes']);
     }
     return false;
   }
