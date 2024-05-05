@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IndexComponent } from './index/index.component';
-import {CreateUserComponent} from "./create-user/create-user.component";
-import {UserComponent} from "./user/user.component";
+import { CreateUserComponent } from './create-user/create-user.component';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: IndexComponent },

@@ -55,7 +55,11 @@
         </div>
       </div>
       <div class="header-right">
-        <div class="button" [class.disabled]="loading" (click)="createDocument()">
+        <div
+          class="button"
+          [class.disabled]="loading"
+          (click)="createDocument()"
+        >
           <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
           <span>Save changes</span>
         </div>
@@ -64,7 +68,12 @@
   </div>
   <div class="container subheader justify-start align-center">
     <div class="text">Created by</div>
-    <div class="user-icon" [style.background-color]="getUserName() | generateColor">{{ getUserInitials() | uppercase }}</div>
+    <div
+      class="user-icon"
+      [style.background-color]="getUserName() | generateColor"
+    >
+      {{ getUserInitials() | uppercase }}
+    </div>
   </div>
 </header>
 

@@ -1,21 +1,21 @@
-import {Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {NotificationService} from "../../services/notification.service";
-import {MatDialog} from "@angular/material/dialog";
-import {Router} from "@angular/router";
-import {ConfirmationDialogBoxComponent} from "../../core/confirmation-dialog-box/confirmation-dialog-box.component";
-import {PATHS} from "../../app.constants";
-import {SaveUser, UserType} from "../../data-types/user.model";
-import {NotificationType} from "../../data-types/notification.model";
-import {UserService} from "../../services/user.service";
-import {ErrorResponseModel} from "../../data-types/error-response.model";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NotificationService } from '../../services/notification.service';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
+import { PATHS } from '../../app.constants';
+import { SaveUser, UserType } from '../../data-types/user.model';
+import { NotificationType } from '../../data-types/notification.model';
+import { UserService } from '../../services/user.service';
+import { ErrorResponseModel } from '../../data-types/error-response.model';
 
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
-  styleUrl: './create-user.component.sass'
+  styleUrl: './create-user.component.sass',
 })
-export class CreateUserComponent implements OnInit{
+export class CreateUserComponent implements OnInit {
   userTypes: UserType[] = [];
   loading = false;
   createUserForm!: FormGroup;
@@ -59,7 +59,6 @@ export class CreateUserComponent implements OnInit{
     });
   }
 
-
   resetWarnings() {
     this.isInvalid = false;
     this.isEmailInvalid = false;
@@ -90,7 +89,7 @@ export class CreateUserComponent implements OnInit{
     const originalValidators = typeControl.validator;
 
     typeControl.setValidators([
-      Validators.pattern('^(?!Select type$).*$') // Regex that rejects only "Select type"
+      Validators.pattern('^(?!Select type$).*$'), // Regex that rejects only "Select type"
     ]);
     typeControl.updateValueAndValidity();
 
@@ -109,7 +108,7 @@ export class CreateUserComponent implements OnInit{
 
     phoneNumberControl.setValidators([
       Validators.required,
-      Validators.pattern(/^\+40[2-9][0-9]{8}$/)
+      Validators.pattern(/^\+40[2-9][0-9]{8}$/),
     ]);
     phoneNumberControl.updateValueAndValidity();
 
@@ -122,7 +121,10 @@ export class CreateUserComponent implements OnInit{
   }
 
   checkInvalidPassword() {
-    return this.createUserForm.controls['password'].value !== this.createUserForm.controls['confirmPassword'].value
+    return (
+      this.createUserForm.controls['password'].value !==
+      this.createUserForm.controls['confirmPassword'].value
+    );
   }
 
   validateUser() {
@@ -133,7 +135,7 @@ export class CreateUserComponent implements OnInit{
         type: NotificationType.error,
       });
       return false;
-    } else if(this.checkInvalidPassword()) {
+    } else if (this.checkInvalidPassword()) {
       this.isPasswordInvalid = true;
       this.notificationService.notify({
         message: 'Passwords do not match!',
@@ -166,12 +168,11 @@ export class CreateUserComponent implements OnInit{
   }
 
   createUser() {
-
     if (!this.validateUser()) {
       return;
     }
 
-    const user : SaveUser = {
+    const user: SaveUser = {
       email: this.createUserForm.get('email')?.value,
       password: this.createUserForm.get('password')?.value,
       firstname: this.createUserForm.get('firstname')?.value,
@@ -186,9 +187,7 @@ export class CreateUserComponent implements OnInit{
     };
 
     this.saveUser(user);
-
   }
-
 
   saveUser(user: SaveUser) {
     this.loading = true;
@@ -213,7 +212,11 @@ export class CreateUserComponent implements OnInit{
         } else {
           const errResponse: ErrorResponseModel =
             error.error as ErrorResponseModel;
-          if (errResponse.errorMessage.includes('There is an conflicting entry in the database.')) {
+          if (
+            errResponse.errorMessage.includes(
+              'There is an conflicting entry in the database.',
+            )
+          ) {
             this.notificationService.notify({
               message: 'There already exists an account with that email!',
               type: NotificationType.error,
@@ -228,7 +231,7 @@ export class CreateUserComponent implements OnInit{
             this.loading = false;
           }
         }
-      }
+      },
     });
   }
 
@@ -249,15 +252,12 @@ export class CreateUserComponent implements OnInit{
       dialogResponse.afterClosed().subscribe((response) => {
         if (response) {
           this.createUser();
-        }
-        else {
+        } else {
           this.navigateToUsersView();
         }
       });
-    }
-    else {
+    } else {
       this.navigateToUsersView();
     }
   }
-
 }

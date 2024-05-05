@@ -42,7 +42,10 @@
         </div>
       </div>
 
-      <div class="input-label-container" [class.error]="isInvalid || isEmailInvalid">
+      <div
+        class="input-label-container"
+        [class.error]="isInvalid || isEmailInvalid"
+      >
         <label class="subtitle-container">Email</label>
         <div class="input-container">
           <input
@@ -55,7 +58,9 @@
       </div>
 
       <div
-        class="input-label-container" [class.error]="isInvalid || isPasswordInvalid">
+        class="input-label-container"
+        [class.error]="isInvalid || isPasswordInvalid"
+      >
         <label class="subtitle-container">Password</label>
         <div class="input-container">
           <input
@@ -71,10 +76,10 @@
           >
             <img
               [src]="
-              hidePassword1
-                ? PATHS.ICONS + 'eye-slash-solid.svg'
-                : PATHS.ICONS + 'eye-solid.svg'
-            "
+                hidePassword1
+                  ? PATHS.ICONS + 'eye-slash-solid.svg'
+                  : PATHS.ICONS + 'eye-solid.svg'
+              "
               class="icon"
               alt=""
             />
@@ -105,7 +110,6 @@
           />
         </div>
       </div>
-
     </div>
 
     <div class="right-container">
@@ -121,16 +125,18 @@
         </div>
       </div>
 
-      <div class="input-label-container" [class.error]="isInvalid || isTypeInvalid">
+      <div
+        class="input-label-container"
+        [class.error]="isInvalid || isTypeInvalid"
+      >
         <label class="subtitle-container">Type</label>
         <div class="input-container">
           <select
             formControlName="type"
             (click)="resetWarnings()"
-            class="input-field custom-select">
-            <option selected disabled hidden>
-              Select type
-            </option>
+            class="input-field custom-select"
+          >
+            <option selected disabled hidden>Select type</option>
             <option *ngFor="let type of userTypes">
               {{ type }}
             </option>
@@ -139,7 +145,9 @@
       </div>
 
       <div
-        class="input-label-container" [class.error]="isInvalid || isPasswordInvalid">
+        class="input-label-container"
+        [class.error]="isInvalid || isPasswordInvalid"
+      >
         <label class="subtitle-container">Confirm password</label>
         <div class="input-container">
           <input
@@ -155,10 +163,10 @@
           >
             <img
               [src]="
-              hidePassword2
-                ? PATHS.ICONS + 'eye-slash-solid.svg'
-                : PATHS.ICONS + 'eye-solid.svg'
-            "
+                hidePassword2
+                  ? PATHS.ICONS + 'eye-slash-solid.svg'
+                  : PATHS.ICONS + 'eye-solid.svg'
+              "
               class="icon"
               alt=""
             />
@@ -178,7 +186,10 @@
         </div>
       </div>
 
-      <div class="input-label-container" [class.error]="isInvalid || isPhoneNumberInvalid">
+      <div
+        class="input-label-container"
+        [class.error]="isInvalid || isPhoneNumberInvalid"
+      >
         <label class="subtitle-container">Phone number</label>
         <div class="input-container">
           <input
@@ -189,7 +200,6 @@
           />
         </div>
       </div>
-
     </div>
   </form>
 </div>

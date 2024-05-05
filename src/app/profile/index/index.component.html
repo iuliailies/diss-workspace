@@ -3,8 +3,14 @@
     <div class="container is-fluid header-divider">
       <div class="header-left">
         <div class="align-center justify-center">
-          <div class="user-icon icon-size"
-               [style.background-color]="userFirstname + ' ' + userLastname | generateColor">{{ getUserInitials() }}</div>
+          <div
+            class="user-icon icon-size"
+            [style.background-color]="
+              userFirstname + ' ' + userLastname | generateColor
+            "
+          >
+            {{ getUserInitials() }}
+          </div>
           <div class="user-details-container">
             <h1 class="name">{{ userFirstname + ' ' + userLastname }}</h1>
             <span id="email-title" class="input">{{ userEmail }}</span>
@@ -17,13 +23,18 @@
           <div class="level-second-container">
             <span id="level-title" class="input">{{
               'Level ' + userLevel
-              }}</span>
+            }}</span>
             <span id="xp-title" class="input">{{ userPoints + ' xp' }}</span>
           </div>
-          <div class="user-icon level-icon" [style.background-color]="userLevel | levelColor">{{ userLevel }}</div>
+          <div
+            class="user-icon level-icon"
+            [style.background-color]="userLevel | levelColor"
+          >
+            {{ userLevel }}
+          </div>
         </div>
         <span id="remaining-xp-title" class="input"
-        >{{this.xpUntilNextLevel}}xp to go until next level</span
+          >{{ this.xpUntilNextLevel }}xp to go until next level</span
         >
       </div>
     </div>
@@ -38,7 +49,6 @@
   <mat-spinner *ngIf="loading"></mat-spinner>
 </div>
 
-
 <div class="container" *ngIf="!loading">
   <div class="badges-container card">
     <img
@@ -49,7 +59,7 @@
     />
     <ng-container *ngFor="let badge of displayedBadges">
       <img
-        matTooltip="{{badge.name}}"
+        matTooltip="{{ badge.name }}"
         [src]="PATHS.ICONS + 'badge.svg'"
         class="badge-icon"
         alt=""
@@ -63,7 +73,6 @@
     />
   </div>
 </div>
-
 
 <div class="container" *ngIf="!loading">
   <div class="table card">
@@ -80,8 +89,14 @@
     >
       <div class="column is-4">{{ document.title }}</div>
       <div class="column is-3">
-        <div class="user-icon"
-             [style.background-color]="userFirstname + ' ' + userLastname | generateColor">{{ getUserInitials() }}</div>
+        <div
+          class="user-icon"
+          [style.background-color]="
+            userFirstname + ' ' + userLastname | generateColor
+          "
+        >
+          {{ getUserInitials() }}
+        </div>
       </div>
       <div class="column is-4">
         {{ document.lastModified | date: 'medium' }}

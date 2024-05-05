@@ -48,5 +48,5 @@ export enum UserType {
   ADMIN = 'ADMIN',
   TRAINER = 'TRAINER',
   HR = 'HR',
-  EMPLOYEE = 'EMPLOYEE'
+  EMPLOYEE = 'EMPLOYEE',
 }

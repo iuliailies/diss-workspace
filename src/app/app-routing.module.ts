@@ -16,7 +16,9 @@ const routes: Routes = [
   {
     path: 'company-docs',
     loadChildren: () =>
-      import('./company-documents/company-documents.module').then((m) => m.CompanyDocumentsModule),
+      import('./company-documents/company-documents.module').then(
+        (m) => m.CompanyDocumentsModule,
+      ),
   },
   {
     path: 'trainings',
@@ -32,7 +34,7 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-  }
+  },
 ];
 
 @NgModule({

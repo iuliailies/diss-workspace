@@ -10,6 +10,6 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [IndexComponent, NoteComponent, CreateNoteComponent],
   exports: [NoteComponent],
-    imports: [CommonModule, NotesRoutingModule, CoreModule, MatProgressSpinner],
+  imports: [CommonModule, NotesRoutingModule, CoreModule, MatProgressSpinner],
 })
 export class NotesModule {}

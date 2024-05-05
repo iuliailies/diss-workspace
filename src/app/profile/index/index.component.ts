@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PATHS } from '../../app.constants';
 import { GetEmployeeDocument } from '../../data-types/notes.model';
 import { NoteService } from '../../services/note.service';
@@ -8,15 +8,15 @@ import { Router } from '@angular/router';
 import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
 import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
-import {Badge} from "../../data-types/badge.model";
-import {UserService} from "../../services/user.service";
+import { Badge } from '../../data-types/badge.model';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
   styleUrl: './index.component.sass',
 })
-export class IndexComponent implements OnInit{
+export class IndexComponent implements OnInit {
   protected readonly PATHS = PATHS;
   documents: GetEmployeeDocument[] = [];
   badges: Badge[] = [];
@@ -53,7 +53,10 @@ export class IndexComponent implements OnInit{
       this.xpUntilNextLevel = 200 - this.userPoints;
       this.userService.getUserBadges(this.userId).subscribe((badges) => {
         this.badges = badges;
-        this.displayedBadges = this.badges.slice(this.startIndex, this.endIndex)
+        this.displayedBadges = this.badges.slice(
+          this.startIndex,
+          this.endIndex,
+        );
         this.loading = false;
       });
     });
@@ -106,19 +109,19 @@ export class IndexComponent implements OnInit{
     this.router.navigate([`notes/${id}`]);
   }
 
-  previous(){
-    if(this.startIndex >= this.pageSize) {
+  previous() {
+    if (this.startIndex >= this.pageSize) {
       this.startIndex = this.startIndex - this.pageSize;
       this.endIndex = this.endIndex - this.pageSize;
-      this.displayedBadges = this.badges.slice(this.startIndex, this.endIndex)
+      this.displayedBadges = this.badges.slice(this.startIndex, this.endIndex);
     }
   }
 
-  next(){
-    if(this.startIndex + this.pageSize <= this.badges.length){
+  next() {
+    if (this.startIndex + this.pageSize <= this.badges.length) {
       this.endIndex = this.endIndex + this.pageSize;
       this.startIndex = this.startIndex + this.pageSize;
-      this.displayedBadges = this.badges.slice(this.startIndex, this.endIndex)
+      this.displayedBadges = this.badges.slice(this.startIndex, this.endIndex);
     }
   }
 }

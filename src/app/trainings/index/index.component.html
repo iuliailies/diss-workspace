@@ -25,19 +25,26 @@
   <div class="table card" [class.is-closed]="!isToDoOpen">
     <div class="columns is-header">
       <div class="column is-4 has-toggle">
-        <img [src]="PATHS.ICONS + 'chevron-right.svg'" class="toggle-arrow icon" (click)="isToDoOpen = !isToDoOpen" alt="" />
+        <img
+          [src]="PATHS.ICONS + 'chevron-right.svg'"
+          class="toggle-arrow icon"
+          (click)="isToDoOpen = !isToDoOpen"
+          alt=""
+        />
         <span>TODO</span>
       </div>
       <div class="column is-3">Required Level</div>
       <div class="column is-4">Reward</div>
       <div class="column is-1"></div>
     </div>
-    <div class="columns-wrapper" *ngFor="let training of todoTrainings;">
+    <div class="columns-wrapper" *ngFor="let training of todoTrainings">
       <div
-      class="columns"
-      (click)="toggleDetails(training.id)"
-      [class.enough-level-columns]="hasEnoughLevel(training.requiredLevel)"
-      [class.not-enough-level-columns]="!hasEnoughLevel(training.requiredLevel)"
+        class="columns"
+        (click)="toggleDetails(training.id)"
+        [class.enough-level-columns]="hasEnoughLevel(training.requiredLevel)"
+        [class.not-enough-level-columns]="
+          !hasEnoughLevel(training.requiredLevel)
+        "
       >
         <div class="column is-4">{{ training.title }}</div>
         <div class="column is-3">
@@ -61,17 +68,25 @@
           />
         </div>
       </div>
-      <div class="columns flex-column align-start"
-           [class.not-enough-level-rows]="!hasEnoughLevel(training.requiredLevel)"
-           *ngIf="expandedTrainingId === training.id">
+      <div
+        class="columns flex-column align-start"
+        [class.not-enough-level-rows]="!hasEnoughLevel(training.requiredLevel)"
+        *ngIf="expandedTrainingId === training.id"
+      >
         <div class="column">{{ training.text }}</div>
         <div class="column">
-          <div class="button"
-               [class.disabled]="!hasEnoughLevel(training.requiredLevel)"
-               (click)="hasEnoughLevel(training.requiredLevel) ? startTraining(training, $event) : null">
+          <div
+            class="button"
+            [class.disabled]="!hasEnoughLevel(training.requiredLevel)"
+            (click)="
+              hasEnoughLevel(training.requiredLevel)
+                ? startTraining(training, $event)
+                : null
+            "
+          >
             <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
             <span>Start training</span>
-        </div>
+          </div>
         </div>
       </div>
     </div>
@@ -82,21 +97,26 @@
   <div class="table card" [class.is-closed]="!isCompletedOpen">
     <div class="columns is-header">
       <div class="column is-4 has-toggle">
-        <img [src]="PATHS.ICONS + 'chevron-right.svg'" class="toggle-arrow icon" (click)="isCompletedOpen = !isCompletedOpen" alt="" />
+        <img
+          [src]="PATHS.ICONS + 'chevron-right.svg'"
+          class="toggle-arrow icon"
+          (click)="isCompletedOpen = !isCompletedOpen"
+          alt=""
+        />
         <span>Completed</span>
       </div>
       <div class="column is-3">Required Level</div>
       <div class="column is-4">Reward</div>
       <div class="column is-1"></div>
     </div>
-    <div class="columns-wrapper" *ngFor="let training of completedTrainings;">
-      <div
-      class="columns"
-      (click)="toggleDetails(training.id)"
-      >
+    <div class="columns-wrapper" *ngFor="let training of completedTrainings">
+      <div class="columns" (click)="toggleDetails(training.id)">
         <div class="column is-4">{{ training.title }}</div>
         <div class="column is-3">
-          <div class="points-required-icon icon-color" [style.background-color]="training.requiredLevel | levelColor">
+          <div
+            class="points-required-icon icon-color"
+            [style.background-color]="training.requiredLevel | levelColor"
+          >
             {{ training.requiredLevel }}
           </div>
         </div>
@@ -113,16 +133,18 @@
           />
         </div>
       </div>
-      <div class="columns flex-column align-start cursor-default" *ngIf="expandedTrainingId === training.id">
+      <div
+        class="columns flex-column align-start cursor-default"
+        *ngIf="expandedTrainingId === training.id"
+      >
         <div class="column">{{ training.text }}</div>
         <div class="column">
           <div class="button" (click)="viewTraining(training.id)">
             <img [src]="PATHS.ICONS + 'eye-solid.svg'" class="arrow" alt="" />
             <span>View training</span>
-        </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-

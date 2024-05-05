@@ -14,7 +14,11 @@
       </div>
 
       <div class="header-right">
-        <div class="button" [class.disabled]="loading" (click)="createTraining()">
+        <div
+          class="button"
+          [class.disabled]="loading"
+          (click)="createTraining()"
+        >
           <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
           <span>Save changes</span>
         </div>

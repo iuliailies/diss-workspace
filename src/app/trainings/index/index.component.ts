@@ -8,7 +8,7 @@ import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { PATHS } from '../../app.constants';
 import { GetTrainingDocument } from '../../data-types/training.model';
 import { TrainingService } from '../../services/training.service';
-import { UserType} from '../../data-types/user.model';
+import { UserType } from '../../data-types/user.model';
 import { Badge } from '../../data-types/badge.model';
 
 @Component({
@@ -63,7 +63,7 @@ export class IndexComponent implements OnInit {
     this.trainingService
       .getTodoTrainings(this.userId)
       .subscribe((trainings) => {
-        this.todoTrainings = trainings
+        this.todoTrainings = trainings;
         this.loading = false;
       });
   }

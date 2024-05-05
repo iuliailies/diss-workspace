@@ -96,7 +96,6 @@ export class NoteComponent implements OnInit {
   }
 
   updateDocument(): void {
-
     //TODO also find a way when a menu button is pressed, to display the pop up for saving the changes
     this.document.text = this.noteContent.nativeElement.innerHTML;
     this.document.userId = parseInt(this.userId || '-1');
@@ -219,8 +218,7 @@ export class NoteComponent implements OnInit {
           }
           this.navigateToNotesView();
         });
-      }
-      else {
+      } else {
         this.navigateToNotesView();
       }
     }

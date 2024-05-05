@@ -1,21 +1,21 @@
-import {Component, OnInit} from '@angular/core';
-import { User, UserType} from "../../data-types/user.model";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {NotificationService} from "../../services/notification.service";
-import {UserService} from "../../services/user.service";
-import {MatDialog} from "@angular/material/dialog";
-import {ActivatedRoute, Router} from "@angular/router";
-import {NotificationType} from "../../data-types/notification.model";
-import {ErrorResponseModel} from "../../data-types/error-response.model";
-import {ConfirmationDialogBoxComponent} from "../../core/confirmation-dialog-box/confirmation-dialog-box.component";
-import {PATHS} from "../../app.constants";
+import { Component, OnInit } from '@angular/core';
+import { User, UserType } from '../../data-types/user.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NotificationService } from '../../services/notification.service';
+import { UserService } from '../../services/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationType } from '../../data-types/notification.model';
+import { ErrorResponseModel } from '../../data-types/error-response.model';
+import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
+import { PATHS } from '../../app.constants';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrl: './user.component.sass'
+  styleUrl: './user.component.sass',
 })
-export class UserComponent implements OnInit{
+export class UserComponent implements OnInit {
   userTypes: UserType[] = [];
   loading = false;
   createUserForm!: FormGroup;
@@ -32,7 +32,7 @@ export class UserComponent implements OnInit{
     private userService: UserService,
     private dialogBox: MatDialog,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {
     this.createForm();
   }
@@ -43,7 +43,7 @@ export class UserComponent implements OnInit{
   }
 
   fetchUserTypes() {
-    if ( this.createUserForm.get('type')?.value === 'ADMIN') {
+    if (this.createUserForm.get('type')?.value === 'ADMIN') {
       this.userTypes = [UserType.ADMIN];
     } else {
       this.userTypes = [UserType.TRAINER, UserType.EMPLOYEE, UserType.HR];
@@ -80,7 +80,6 @@ export class UserComponent implements OnInit{
     });
   }
 
-
   resetWarnings() {
     this.isInvalid = false;
     this.isEmailInvalid = false;
@@ -110,7 +109,7 @@ export class UserComponent implements OnInit{
 
     phoneNumberControl.setValidators([
       Validators.required,
-      Validators.pattern(/^\+40[2-9][0-9]{8}$/)
+      Validators.pattern(/^\+40[2-9][0-9]{8}$/),
     ]);
     phoneNumberControl.updateValueAndValidity();
 
@@ -123,34 +122,33 @@ export class UserComponent implements OnInit{
   }
 
   deleteUser() {
-    const dialogResponse = this.dialogBox.open(
-      ConfirmationDialogBoxComponent,
-      {
-        data: `Do you want to delete the user?`,
-        disableClose: true,
-        autoFocus: false,
-      },
-    );
+    const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent, {
+      data: `Do you want to delete the user?`,
+      disableClose: true,
+      autoFocus: false,
+    });
     dialogResponse.afterClosed().subscribe((response) => {
       if (response) {
         this.loading = true;
-        this.userService.deleteUser(this.createUserForm.get('id')?.value).subscribe({
-          next: () => {
-            this.notificationService.notify({
-              message: 'User deleted successfully!',
-              type: NotificationType.success,
-            });
-            this.loading = false;
-            this.navigateToUsersView();
-          },
-          error: (error) => {
-            this.notificationService.notify({
-              message: 'An error occurred! Please try again later!',
-              type: NotificationType.error,
-            });
-            this.loading = false;
-          }
-        });
+        this.userService
+          .deleteUser(this.createUserForm.get('id')?.value)
+          .subscribe({
+            next: () => {
+              this.notificationService.notify({
+                message: 'User deleted successfully!',
+                type: NotificationType.success,
+              });
+              this.loading = false;
+              this.navigateToUsersView();
+            },
+            error: (error) => {
+              this.notificationService.notify({
+                message: 'An error occurred! Please try again later!',
+                type: NotificationType.error,
+              });
+              this.loading = false;
+            },
+          });
       }
     });
   }
@@ -182,7 +180,6 @@ export class UserComponent implements OnInit{
   }
 
   updateUser() {
-
     if (!this.validateUser()) {
       return;
     }
@@ -203,7 +200,6 @@ export class UserComponent implements OnInit{
 
     this.saveUser(user);
   }
-
 
   saveUser(user: User) {
     this.loading = true;
@@ -228,7 +224,11 @@ export class UserComponent implements OnInit{
         } else {
           const errResponse: ErrorResponseModel =
             error.error as ErrorResponseModel;
-          if (errResponse.errorMessage.includes('There is an conflicting entry in the database.')) {
+          if (
+            errResponse.errorMessage.includes(
+              'There is an conflicting entry in the database.',
+            )
+          ) {
             this.notificationService.notify({
               message: 'There already exists an account with that email!',
               type: NotificationType.error,
@@ -243,7 +243,7 @@ export class UserComponent implements OnInit{
             this.loading = false;
           }
         }
-      }
+      },
     });
   }
 

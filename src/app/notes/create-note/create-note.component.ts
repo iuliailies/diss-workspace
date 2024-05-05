@@ -94,11 +94,14 @@ export class CreateNoteComponent {
   goBack() {
     const text = this.noteContent.nativeElement.innerHTML;
     if (this.contentUpdated || this.document.text !== text) {
-      const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent, {
-        data: `Do you want to save the changes?`,
-        disableClose: true,
-        autoFocus: false,
-      });
+      const dialogResponse = this.dialogBox.open(
+        ConfirmationDialogBoxComponent,
+        {
+          data: `Do you want to save the changes?`,
+          disableClose: true,
+          autoFocus: false,
+        },
+      );
 
       dialogResponse.afterClosed().subscribe((response) => {
         if (response) {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PATHS } from '../../app.constants';
 import { ActivatedRoute, Router } from '@angular/router';
-import {User} from "../../data-types/user.model";
-import {UserService} from "../../services/user.service";
+import { User } from '../../data-types/user.model';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-index',
@@ -38,7 +38,6 @@ export class IndexComponent implements OnInit {
   getUserName(user: any): string {
     return user.firstname + ' ' + user.lastname;
   }
-
 
   viewUser(id: any) {
     this.router.navigate([`users/${id}`]);

@@ -1,23 +1,15 @@
-import {
-  Component,
-  ElementRef,
-  ViewChild,
-} from '@angular/core';
-import {PATHS} from '../../app.constants';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import {Router} from '@angular/router';
-import {File} from '../../data-types/file.model';
-import {NotificationService} from '../../services/notification.service';
-import {NotificationType} from '../../data-types/notification.model';
-import {SaveTrainingDocument} from '../../data-types/training.model';
-import {TrainingService} from '../../services/training.service';
-import {ErrorResponseModel} from '../../data-types/error-response.model';
-import {ConfirmationDialogBoxComponent} from "../../core/confirmation-dialog-box/confirmation-dialog-box.component";
-import {MatDialog} from "@angular/material/dialog";
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { PATHS } from '../../app.constants';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { File } from '../../data-types/file.model';
+import { NotificationService } from '../../services/notification.service';
+import { NotificationType } from '../../data-types/notification.model';
+import { SaveTrainingDocument } from '../../data-types/training.model';
+import { TrainingService } from '../../services/training.service';
+import { ErrorResponseModel } from '../../data-types/error-response.model';
+import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-training',
@@ -251,13 +243,11 @@ export class CreateTrainingComponent {
       dialogResponse.afterClosed().subscribe((response) => {
         if (response) {
           this.createTraining();
-        }
-        else {
+        } else {
           this.navigateToTrainingsView();
         }
       });
-    }
-    else {
+    } else {
       this.navigateToTrainingsView();
     }
   }

@@ -90,7 +90,7 @@ export class IndexComponent implements OnInit {
   }
 
   getUserName(document: any): string {
-    return document.user.firstname + ' ' +document.user.lastname;
+    return document.user.firstname + ' ' + document.user.lastname;
   }
 
   viewDocument(id: any) {
