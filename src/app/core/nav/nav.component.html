@@ -1,8 +1,8 @@
 <img *ngIf="showNav" [src]="PATHS.IMAGES + 'blob.png'" alt="" class="blob-background" />
 <nav *ngIf="showNav" class="nav-container slimScroll scroll-hidden">
-  <div class="nav-body">
+  <div class="nav-body" >
     <img [src]="PATHS.IMAGES + 'logo.svg'" alt="" class="logo" />
-    <div class="nav-link-container">
+    <div class="nav-link-container" *ngIf="!isAdmin()">
       <a
         class="nav-link"
         [routerLink]="['/notes']"

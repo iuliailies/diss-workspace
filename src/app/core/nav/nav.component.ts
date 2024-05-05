@@ -4,6 +4,7 @@ import { PATHS } from '../../app.constants';
 import { AuthService } from '../../auth/shared/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import {filter} from "rxjs";
+import {UserType} from "../../data-types/user.model";
 
 @Component({
   selector: 'app-nav',
@@ -13,9 +14,9 @@ import {filter} from "rxjs";
 export class NavComponent implements OnInit{
   PATHS = PATHS;
 
+  userName: any;
+  userType: any;
   userDropdownOpened = false;
-  userName = localStorage.getItem('userFirstname') + " " + localStorage.getItem('userLastname');
-  userType = localStorage.getItem('userType');
   showNav = false;
   hiddenRoutes = ['/login']
 
@@ -31,7 +32,13 @@ export class NavComponent implements OnInit{
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         this.showNav = !this.hiddenRoutes.includes(this.router.url);
+        this.userName = localStorage.getItem('userFirstname') + " " + localStorage.getItem('userLastname');
+        this.userType = localStorage.getItem('userType');
       });
+  }
+
+  isAdmin() {
+    return this.userType === UserType.ADMIN;
   }
 
   toggleUserDropdown(): void {
