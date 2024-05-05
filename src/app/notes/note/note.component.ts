@@ -2,20 +2,21 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { EmployeeDocument } from '../../data-types/notes.model';
 import { PATHS } from '../../app.constants';
 import { NoteService } from '../../services/note.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { NotificationService } from '../../services/notification.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
 import { File } from '../../data-types/file.model';
+import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
+import {CanComponentDeactivate} from "../../core/unsaved-changes-guard.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-note',
   templateUrl: './note.component.html',
   styleUrl: './note.component.sass',
 })
-export class NoteComponent implements OnInit {
+export class NoteComponent implements OnInit, CanComponentDeactivate {
   PATHS = PATHS;
   @ViewChild('noteContent') noteContent!: ElementRef;
 
@@ -30,8 +31,7 @@ export class NoteComponent implements OnInit {
   constructor(
     private noteService: NoteService,
     private notificationService: NotificationService,
-    private router: Router,
-    private dialogBox: MatDialog,
+    private confirmationDialogService: ConfirmationDialogService,
     private activatedRoute: ActivatedRoute,
   ) {}
 
@@ -96,7 +96,7 @@ export class NoteComponent implements OnInit {
   }
 
   updateDocument(): void {
-    //TODO also find a way when a menu button is pressed, to display the pop up for saving the changes
+    this.loading = true;
     this.document.text = this.noteContent.nativeElement.innerHTML;
     this.document.userId = parseInt(this.userId || '-1');
     if (this.fileChanged && this.document.file) {
@@ -113,30 +113,40 @@ export class NoteComponent implements OnInit {
     }
   }
 
+  handleError(error: any) {
+    if (error.error instanceof ErrorEvent) {
+      this.notificationService.notify({
+        message: 'An error occurred! Please try again later!',
+        type: NotificationType.error,
+      });
+    } else {
+      const errResponse: ErrorResponseModel =
+        error.error as ErrorResponseModel;
+      this.notificationService.notify({
+        message: errResponse.errorMessage,
+        type: NotificationType.error,
+      });
+    }
+  }
+
+  handleSuccess() {
+    this.notificationService.notify({
+      message: 'Changes successfully saved! ',
+      type: NotificationType.success,
+    });
+    this.fetchDocument();
+    this.contentUpdated = false;
+    this.loading = false;
+  }
+
   saveDocument(): void {
     this.noteService.updateDocument(this.document).subscribe({
       next: () => {
-        this.notificationService.notify({
-          message: 'Changes successfully saved! ',
-          type: NotificationType.success,
-        });
-        this.fetchDocument();
-        this.contentUpdated = false;
+        this.handleSuccess();
       },
       error: (error: any) => {
-        if (error.error instanceof ErrorEvent) {
-          this.notificationService.notify({
-            message: 'An error occurred! Please try again later!',
-            type: NotificationType.error,
-          });
-        } else {
-          const errResponse: ErrorResponseModel =
-            error.error as ErrorResponseModel;
-          this.notificationService.notify({
-            message: errResponse.errorMessage,
-            type: NotificationType.error,
-          });
-        }
+        this.handleError(error);
+        this.loading = false;
       },
     });
   }
@@ -193,35 +203,16 @@ export class NoteComponent implements OnInit {
     document.body.removeChild(anchor);
   }
 
-  navigateToNotesView(): void {
-    this.router.navigate(['/notes']);
-  }
+  // Method to determine whether navigation can occur
+  canDeactivate(): Observable<boolean> | boolean {
+    const text = this.noteContent.nativeElement.innerHTML;
 
-  goBack() {
-    if (this.readOnly) {
-      this.navigateToNotesView();
-    } else {
-      const text = this.noteContent.nativeElement.innerHTML;
-      if (this.contentUpdated || this.document.text !== text) {
-        const dialogResponse = this.dialogBox.open(
-          ConfirmationDialogBoxComponent,
-          {
-            data: `Do you want to save the changes?`,
-            disableClose: true,
-            autoFocus: false,
-          },
-        );
-
-        dialogResponse.afterClosed().subscribe((response) => {
-          if (response) {
-            this.updateDocument();
-          }
-          this.navigateToNotesView();
-        });
-      } else {
-        this.navigateToNotesView();
-      }
+    // If there are no unsaved changes, allow navigation immediately
+    if (!(this.contentUpdated || this.document.text !== text)) {
+      return true;
     }
+
+    return this.confirmationDialogService.confirmNavigation();
   }
 
   removeFile() {

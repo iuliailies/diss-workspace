@@ -48,9 +48,10 @@
     </a>
   </div>
   <div class="hd-links">
-    <a class="hd-item" (click)="logout()">
+    <a class="hd-item" [routerLink]="['/login']" (click)="logout()">
       <img [src]="PATHS.ICONS + 'logout.svg'" />
       <span>Log out</span>
     </a>
   </div>
 </div>
+

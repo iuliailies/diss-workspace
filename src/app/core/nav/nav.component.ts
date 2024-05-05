@@ -5,6 +5,8 @@ import { AuthService } from '../../auth/shared/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import {filter} from "rxjs";
 import {UserType} from "../../data-types/user.model";
+import {CanComponentDeactivate} from "../unsaved-changes-guard.service";
+import {LogoutService} from "../../services/logout.service";
 
 @Component({
   selector: 'app-nav',
@@ -22,7 +24,7 @@ export class NavComponent implements OnInit{
 
   constructor(
     private elementRef: ElementRef,
-    public auth: AuthService,
+    public logoutService: LogoutService,
     public router: Router,
     public cookieService: CookieService,
   ) {}
@@ -50,6 +52,8 @@ export class NavComponent implements OnInit{
   }
 
   logout(): void {
+    this.logoutService.setLogoutInProgress(true); // Set logout state
+    this.showNav = false;
     this.cookieService.delete('Token');
     localStorage.removeItem('userType');
     localStorage.removeItem('userId');
@@ -58,7 +62,6 @@ export class NavComponent implements OnInit{
     localStorage.removeItem('userLastname');
     localStorage.removeItem('userPoints');
     localStorage.removeItem('userLevel');
-    this.router.navigate(['/login']);
   }
 
   @HostListener('document:click', ['$event']) onDropdownBlur(

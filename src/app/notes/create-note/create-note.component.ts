@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {
   EmployeeDocument,
   SaveEmployeeDocument,
@@ -10,16 +10,16 @@ import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { NotificationService } from '../../services/notification.service';
 import { File } from '../../data-types/file.model';
-import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
-import { MatDialog } from '@angular/material/dialog';
-import { Location } from '@angular/common';
+import {CanComponentDeactivate} from "../../core/unsaved-changes-guard.service";
+import {Observable, of, switchMap} from "rxjs";
+import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
 
 @Component({
   selector: 'app-create-note',
   templateUrl: './create-note.component.html',
   styleUrl: './create-note.component.sass',
 })
-export class CreateNoteComponent {
+export class CreateNoteComponent implements CanComponentDeactivate{
   @ViewChild('noteContent') noteContent!: ElementRef;
 
   protected readonly PATHS = PATHS;
@@ -27,6 +27,11 @@ export class CreateNoteComponent {
   userFirstname = localStorage.getItem('userFirstname') || '';
   userLastname = localStorage.getItem('userLastname') || '';
   loading = false;
+  fileType: any;
+  fileName: any;
+  file: any;
+  contentUpdated = false;
+
   document: SaveEmployeeDocument = {
     title: 'New document',
     text: '',
@@ -35,18 +40,14 @@ export class CreateNoteComponent {
     userId: 16,
     visibility: false,
   };
-  fileType: any;
-  fileName: any;
-  file: any;
-  contentUpdated = false;
 
   constructor(
     private noteService: NoteService,
     private router: Router,
     private notificationService: NotificationService,
-    private dialogBox: MatDialog,
-    private location: Location,
+    private confirmationDialogService: ConfirmationDialogService
   ) {}
+
   changeDocumentName(event: Event): void {
     this.contentUpdated = true;
     const input = event.target as HTMLElement;
@@ -59,64 +60,49 @@ export class CreateNoteComponent {
       this.document.title = input.innerText;
     }
   }
+  handleError(error: any) {
+    const defaultMessage = 'An error occurred! Please try again later!';
+    if (error.error instanceof ErrorEvent) {
+      this.notificationService.notify({
+        message: defaultMessage,
+        type: NotificationType.error,
+      });
+    } else {
+      const errResponse: ErrorResponseModel = error.error as ErrorResponseModel;
+      this.notificationService.notify({
+        message: errResponse.errorMessage || defaultMessage,
+        type: NotificationType.error,
+      });
+    }
+  }
+
+  handleSuccess(response: EmployeeDocument) {
+    this.notificationService.notify({
+      message: 'Document saved successfully! ',
+      type: NotificationType.success,
+    });
+    this.contentUpdated = false;
+    this.loading = false;
+
+    this.navigateToNoteView(response);
+  }
 
   saveDocument(): void {
     this.noteService.createNote(this.document).subscribe({
       next: (response: EmployeeDocument) => {
-        this.notificationService.notify({
-          message: 'Document saved successfully! ',
-          type: NotificationType.success,
-        });
-        this.contentUpdated = false;
-        this.loading = false;
-        this.navigateToNoteView(response);
+        this.handleSuccess(response);
       },
       error: (error: any) => {
-        if (error.error instanceof ErrorEvent) {
-          this.notificationService.notify({
-            message: 'An error occurred! Please try again later!',
-            type: NotificationType.error,
-          });
+          this.handleError(error)
           this.loading = false;
-        } else {
-          const errResponse: ErrorResponseModel =
-            error.error as ErrorResponseModel;
-          this.notificationService.notify({
-            message: errResponse.errorMessage,
-            type: NotificationType.error,
-          });
-          this.loading = false;
-        }
-      },
-    });
-  }
-
-  goBack() {
-    const text = this.noteContent.nativeElement.innerHTML;
-    if (this.contentUpdated || this.document.text !== text) {
-      const dialogResponse = this.dialogBox.open(
-        ConfirmationDialogBoxComponent,
-        {
-          data: `Do you want to save the changes?`,
-          disableClose: true,
-          autoFocus: false,
         },
-      );
-
-      dialogResponse.afterClosed().subscribe((response) => {
-        if (response) {
-          this.createDocument();
-        }
-        this.location.back();
-      });
-    } else {
-      this.location.back();
-    }
+    });
   }
 
   createDocument() {
     this.document.text = this.noteContent.nativeElement.innerHTML;
     this.document.userId = this.userId;
+
     if (this.file) {
       //there is a file
       this.file.arrayBuffer().then((buff: ArrayBuffer) => {
@@ -137,6 +123,18 @@ export class CreateNoteComponent {
 
   navigateToNoteView(document: any): void {
     this.router.navigate([`notes/${document.id}`]);
+  }
+
+  // Method to determine whether navigation can occur
+  canDeactivate(): Observable<boolean> | boolean {
+    const text = this.noteContent.nativeElement.innerHTML;
+
+    // If there are no unsaved changes, allow navigation immediately
+    if (!(this.contentUpdated || this.document.text !== text)) {
+      return true;
+    }
+
+    return this.confirmationDialogService.confirmNavigation();
   }
 
   changeVisibility(): void {
