@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
-import {BehaviorSubject, Observable, of, switchMap} from "rxjs";
+import {Observable, of, switchMap} from "rxjs";
 import {ConfirmationDialogBoxComponent} from "../core/confirmation-dialog-box/confirmation-dialog-box.component";
 
 @Injectable({
@@ -10,14 +10,6 @@ export class ConfirmationDialogService {
 
   private isLogoutInProgress = false;
   constructor(private dialog: MatDialog) {}
-
-  setLogoutInProgress(value: boolean): void {
-    this.isLogoutInProgress = value;
-  }
-
-  getLogoutInProgress(): boolean {
-    return this.isLogoutInProgress;
-  }
 
   public confirm(
     message: string

@@ -11,7 +11,7 @@ import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { NotificationService } from '../../services/notification.service';
 import { File } from '../../data-types/file.model';
 import {CanComponentDeactivate} from "../../core/unsaved-changes-guard.service";
-import {Observable, of, switchMap} from "rxjs";
+import {Observable} from "rxjs";
 import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
 
 @Component({

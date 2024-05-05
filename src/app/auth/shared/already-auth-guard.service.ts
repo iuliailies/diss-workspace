@@ -5,7 +5,6 @@ import {
   Router,
 } from '@angular/router';
 import {CookieService} from "ngx-cookie-service";
-import {parseJwt} from "../../utils/JWTParser";
 
 @Injectable({ providedIn: 'root' })
 export class AlreadyAuthGuardService {

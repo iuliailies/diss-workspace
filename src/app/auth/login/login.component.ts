@@ -9,7 +9,6 @@ import { parseJwt } from '../../utils/JWTParser';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import {LogoutService} from "../../services/logout.service";
-import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
 
 @Component({
   selector: 'app-login',
