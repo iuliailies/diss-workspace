@@ -78,8 +78,8 @@ export class IndexComponent implements OnInit {
       });
   }
 
-  matchesUserId(trainingUserId: number): boolean {
-    return trainingUserId.toString() === this.userId;
+  matchesUserIdAndIsTrainer(trainingUserId: number): boolean {
+    return trainingUserId.toString() === this.userId && this.userType === UserType.TRAINER;
   }
 
   deleteTraining(event: any, training: GetTrainingDocument) {

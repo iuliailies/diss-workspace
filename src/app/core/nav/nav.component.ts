@@ -1,19 +1,23 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
 import { PATHS } from '../../app.constants';
 import { AuthService } from '../../auth/shared/auth.service';
 import { CookieService } from 'ngx-cookie-service';
+import {filter} from "rxjs";
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.sass',
 })
-export class NavComponent {
+export class NavComponent implements OnInit{
   PATHS = PATHS;
 
   userDropdownOpened = false;
-  userName = 'Iulia Ilies';
+  userName = localStorage.getItem('userFirstname') + " " + localStorage.getItem('userLastname');
+  userType = localStorage.getItem('userType');
+  showNav = false;
+  hiddenRoutes = ['/login']
 
   constructor(
     private elementRef: ElementRef,
@@ -22,8 +26,20 @@ export class NavComponent {
     public cookieService: CookieService,
   ) {}
 
+  ngOnInit(): void {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.showNav = !this.hiddenRoutes.includes(this.router.url);
+      });
+  }
+
   toggleUserDropdown(): void {
     this.userDropdownOpened = !this.userDropdownOpened;
+  }
+
+  getUserInitials() {
+    return localStorage.getItem('userFirstname')!.charAt(0) + localStorage.getItem('userLastname')!.charAt(0);
   }
 
   logout(): void {

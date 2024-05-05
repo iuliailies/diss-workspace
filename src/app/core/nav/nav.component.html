@@ -1,5 +1,5 @@
-<img [src]="PATHS.IMAGES + 'blob.png'" alt="" class="blob-background" />
-<nav class="nav-container slimScroll scroll-hidden">
+<img *ngIf="showNav" [src]="PATHS.IMAGES + 'blob.png'" alt="" class="blob-background" />
+<nav *ngIf="showNav" class="nav-container slimScroll scroll-hidden">
   <div class="nav-body">
     <img [src]="PATHS.IMAGES + 'logo.svg'" alt="" class="logo" />
     <div class="nav-link-container">
@@ -30,14 +30,13 @@
     </div>
   </div>
   <div class="nav-footer">
-    <!-- TODO: replace with user initials -->
     <div
       class="user-icon"
       [class.is-active]="userDropdownOpened"
       (click)="toggleUserDropdown()"
       [style.background-color]="userName | generateColor"
     >
-      II
+      {{getUserInitials()}}
     </div>
   </div>
 </nav>

@@ -64,7 +64,7 @@
             class="icon"
             alt=""
             (click)="deleteTraining($event, training)"
-            *ngIf="matchesUserId(training.user.id)"
+            *ngIf="matchesUserIdAndIsTrainer(training.user.id)"
           />
         </div>
       </div>
@@ -129,7 +129,7 @@
             class="icon"
             alt=""
             (click)="deleteTraining($event, training)"
-            *ngIf="matchesUserId(training.user.id)"
+            *ngIf="matchesUserIdAndIsTrainer(training.user.id)"
           />
         </div>
       </div>
