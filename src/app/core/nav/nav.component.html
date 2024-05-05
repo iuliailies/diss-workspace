@@ -40,7 +40,7 @@
     </div>
   </div>
 </nav>
-<div class="dropdown-container slimScroll" *ngIf="userDropdownOpened">
+<div class="dropdown-container slimScroll" *ngIf="userDropdownOpened && showNav">
   <div class="hd-links">
     <a class="hd-item" [routerLink]="['/profile']">
       <img [src]="PATHS.ICONS + 'medal.svg'" />

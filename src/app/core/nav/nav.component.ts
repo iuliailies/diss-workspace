@@ -61,12 +61,18 @@ export class NavComponent implements OnInit{
     e: MouseEvent,
   ): void {
     if (this.userDropdownOpened) {
-      const userItem: HTMLElement =
-        this.elementRef.nativeElement.querySelector('.user-icon');
-      if (e.target === userItem || userItem.contains(e.target as Node)) {
+      try {
+        const userItem: HTMLElement =
+          this.elementRef.nativeElement.querySelector('.user-icon');
+        if (e.target === userItem || userItem.contains(e.target as Node)) {
+          return;
+        }
+        this.userDropdownOpened = false;
+      }
+      catch (e) {
+        this.userDropdownOpened = false;
         return;
       }
-      this.userDropdownOpened = false;
     }
   }
 }
