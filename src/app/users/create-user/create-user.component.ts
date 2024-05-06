@@ -31,6 +31,8 @@ export class CreateUserComponent implements OnInit, CanComponentDeactivate{
   isTypeInvalid = false;
   isPasswordInvalid = false;
 
+  saving = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private confirmationDialogService: ConfirmationDialogService,
@@ -43,6 +45,7 @@ export class CreateUserComponent implements OnInit, CanComponentDeactivate{
 
   ngOnInit() {
     this.userTypes = Object.values(UserType);
+    this.saving = false;
   }
 
   createForm() {
@@ -191,16 +194,17 @@ export class CreateUserComponent implements OnInit, CanComponentDeactivate{
   }
 
   saveUser(user: SaveUser) {
+    this.saving = true;
     this.loading = true;
     // Call the service to save the user
     this.userService.createUser(user).subscribe({
-      next: () => {
+      next: (response) => {
         this.notificationService.notify({
           message: 'User saved successfully!',
           type: NotificationType.success,
         });
         this.loading = false;
-        this.navigateToUsersView();
+        this.navigateToUserView(response);
       },
       error: (error) => {
         if (error.error instanceof ErrorEvent) {
@@ -236,8 +240,8 @@ export class CreateUserComponent implements OnInit, CanComponentDeactivate{
     });
   }
 
-  navigateToUsersView(): void {
-    this.router.navigate([`/users`]);
+  navigateToUserView(user: any): void {
+    this.router.navigate([`users/${user.id}`]);
   }
 
 
@@ -245,7 +249,7 @@ export class CreateUserComponent implements OnInit, CanComponentDeactivate{
   canDeactivate(): Observable<boolean> | boolean {
 
     // If there are no unsaved changes, allow navigation immediately
-    if (!this.createUserForm.touched) {
+    if (!this.createUserForm.touched || this.saving) {
       return true;
     }
 
@@ -253,3 +257,4 @@ export class CreateUserComponent implements OnInit, CanComponentDeactivate{
   }
 
 }
+

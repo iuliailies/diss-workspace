@@ -29,6 +29,7 @@ export class CreateTrainingComponent implements CanComponentDeactivate{
   keywords: any;
   isInvalid = false;
   contentUpdated = false;
+  saving = false;
 
   @ViewChild('dragZoneRef') dragZone!: ElementRef;
 
@@ -40,6 +41,7 @@ export class CreateTrainingComponent implements CanComponentDeactivate{
     private router: Router,
   ) {
     this.createForm();
+    this.saving = false;
   }
 
   createForm() {
@@ -218,6 +220,7 @@ export class CreateTrainingComponent implements CanComponentDeactivate{
   }
 
   saveTraining(training: SaveTrainingDocument) {
+    this.saving = true;
     this.trainingService.createTraining(training).subscribe({
       next: () => {
         this.handleSuccess();
@@ -241,8 +244,9 @@ export class CreateTrainingComponent implements CanComponentDeactivate{
   // Method to determine whether navigation can occur
   canDeactivate(): Observable<boolean> | boolean {
 
+
     // If there are no unsaved changes, allow navigation immediately
-    if (!this.contentUpdated && !this.createTrainingForm.touched) {
+    if ((!this.contentUpdated && !this.createTrainingForm.touched) || this.saving) {
       return true;
     }
 

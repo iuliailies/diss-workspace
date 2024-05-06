@@ -208,7 +208,7 @@ export class UserComponent implements OnInit, CanComponentDeactivate{
           type: NotificationType.success,
         });
         this.loading = false;
-        this.navigateToUserView(response.id);
+        this.navigateToUserView(response);
       },
       error: (error) => {
         if (error.error instanceof ErrorEvent) {
@@ -244,12 +244,12 @@ export class UserComponent implements OnInit, CanComponentDeactivate{
     });
   }
 
-  navigateToUserView(id: any): void {
-    this.router.navigate([`/users/${id}`]);
+  navigateToUserView(user: any): void {
+    this.router.navigate([`users/${user.id}`]);
   }
 
   navigateToUsersView(): void {
-    this.router.navigate([`/users`]);
+    this.router.navigate([`users`]);
   }
 
   // Method to determine whether navigation can occur
