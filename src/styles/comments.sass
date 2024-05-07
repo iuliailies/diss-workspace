@@ -1,0 +1,44 @@
+.comments-toggle
+    position: absolute
+    right: 15px
+    top: 30px
+    border-radius: 50%
+    padding: 15px
+    background: $blue-primary
+    cursor: pointer
+    transition: all $transition-duration
+
+    &.is-active
+        &::before 
+            content: ''
+            position: absolute
+            top: 50%
+            right: 91%
+            margin-top: -15px
+            border-top: 15px solid transparent
+            border-bottom: 15px solid transparent
+            border-right: 15px solid $blue-dark
+            transition: all $transition-duration
+
+    &:not(.is-active)
+        &::after 
+            content: ''
+            position: absolute
+            top: 50%
+            left: 91%
+            margin-top: -15px
+            border-top: 15px solid transparent
+            border-bottom: 15px solid transparent
+            border-left: 15px solid $blue-primary
+            transition: all $transition-duration
+
+    &:hover, &.is-active
+        background: $blue-dark
+
+        &::after
+            border-left: 15px solid $blue-dark
+
+    img
+        filter: $filter-white
+        height: 25px
+        padding-top: 5px

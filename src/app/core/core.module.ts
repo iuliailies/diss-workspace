@@ -16,6 +16,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { GenerateColorPipe } from './pipes/generate-color.pipe';
 import { LevelColorPipe } from './pipes/level-color.pipe';
+import { CommentsComponent } from './comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { LevelColorPipe } from './pipes/level-color.pipe';
     SearchBarComponent,
     GenerateColorPipe,
     LevelColorPipe,
+    CommentsComponent,
   ],
   exports: [
     NavComponent,
@@ -38,6 +40,7 @@ import { LevelColorPipe } from './pipes/level-color.pipe';
     SearchBarComponent,
     GenerateColorPipe,
     LevelColorPipe,
+    CommentsComponent
   ],
   imports: [
     CommonModule,

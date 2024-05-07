@@ -27,6 +27,7 @@ export class NoteComponent implements OnInit, CanComponentDeactivate {
   document: any;
   fileChanged = false;
   contentUpdated = false;
+  commentsToggled = false;
 
   constructor(
     private noteService: NoteService,

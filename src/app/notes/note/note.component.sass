@@ -2,13 +2,14 @@
 @import "typography"
 @import "colours"
 
-$note-padding: 10px
+$note-padding: 20px
 
 .card
     margin-top: 20px
     width: calc(100% - 2*$note-padding)
-    height: calc(100vh - 240px)
+    min-height: calc(100vh - 290px)
     padding: $note-padding
+    padding-top: 2 * $note-padding
     border: 1px solid transparent
     cursor: text !important
     outline: none
@@ -75,3 +76,10 @@ $note-padding: 10px
 
 .file-input
   display: none
+
+.content-area
+  display: flex
+
+  .doc-area
+    width: 100%
+    position: relative

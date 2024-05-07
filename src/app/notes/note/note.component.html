@@ -112,12 +112,20 @@
       [keywords]="keywords"
       (keywordsChanged)="keywordsChanged($event)"
     ></app-keywords>
-    <div
-      class="card"
-      #noteContent
-      [contentEditable]="!readOnly ? 'true' : 'false'"
-      [innerHTML]="document.text"
-    ></div>
+    <div class="content-area">
+      <div class="doc-area">
+        <div
+          class="card"
+          #noteContent
+          [contentEditable]="!readOnly ? 'true' : 'false'"
+          [innerHTML]="document.text"
+        ></div>
+        <div class="comments-toggle" [class.is-active]="commentsToggled" (click)="commentsToggled = !commentsToggled">
+          <img [src]="PATHS.ICONS + 'comments.svg'" class="arrow" alt="" />
+        </div>
+      </div>
+      <app-comments *ngIf="commentsToggled"></app-comments>
+    </div>
   </div>
 </div>
 
