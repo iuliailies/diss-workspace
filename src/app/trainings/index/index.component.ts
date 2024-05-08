@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { NotificationService } from '../../services/notification.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
-import { NotificationType } from '../../data-types/notification.model';
-import { ErrorResponseModel } from '../../data-types/error-response.model';
-import { PATHS } from '../../app.constants';
-import { GetTrainingDocument } from '../../data-types/training.model';
-import { TrainingService } from '../../services/training.service';
-import { UserType } from '../../data-types/user.model';
-import { Badge } from '../../data-types/badge.model';
-import {forkJoin, Subscription} from "rxjs";
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {NotificationService} from '../../services/notification.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ConfirmationDialogBoxComponent} from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
+import {NotificationType} from '../../data-types/notification.model';
+import {ErrorResponseModel} from '../../data-types/error-response.model';
+import {PATHS} from '../../app.constants';
+import {GetTrainingDocument} from '../../data-types/training.model';
+import {TrainingService} from '../../services/training.service';
+import {UserType} from '../../data-types/user.model';
+import {Badge} from '../../data-types/badge.model';
+import {forkJoin, map, Subscription} from "rxjs";
 import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
 
 @Component({
@@ -37,7 +37,8 @@ export class IndexComponent implements OnInit {
     private notificationService: NotificationService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-  ) {}
+  ) {
+  }
 
   isUserTrainer() {
     return this.userType === UserType.TRAINER;
@@ -50,6 +51,7 @@ export class IndexComponent implements OnInit {
       this.expandedTrainingId = trainingId;
     }
   }
+
   ngOnInit() {
     this.activatedRoute.params.subscribe(() => {
       this.fetchAllTrainings();
@@ -57,21 +59,26 @@ export class IndexComponent implements OnInit {
   }
 
   fetchAllTrainings() {
-    this.subscription = forkJoin([
-      this.trainingService.getTodoTrainings(this.userId),
-      this.trainingService.getCompletedTrainings(this.userId)
-    ]).subscribe({
-      next: ([todoResponse, completedResponse]) => {
-        this.todoTrainings = todoResponse;
-        this.completedTrainings = completedResponse;
-        this.loading = false;
-      },
-      error: (error) => {
-        this.loading = false;
-      },
-      complete: () => {
-      }
-    });
+    this.loading = true;
+
+    const todoTrainings$ = this.trainingService.getTodoTrainings(this.userId);
+    const completedTrainings$ = this.trainingService.getCompletedTrainings(this.userId);
+
+    forkJoin([todoTrainings$, completedTrainings$])
+      .pipe(map(([todoResponse, completedResponse]) => {
+          return {todoResponse, completedResponse};
+        })
+      )
+      .subscribe({
+        next: ({todoResponse, completedResponse}) => {
+          this.todoTrainings = todoResponse;
+          this.completedTrainings = completedResponse;
+          this.loading = false;
+        },
+        error: (error) => {
+          this.loading = false;
+        },
+      });
   }
 
   hasEnoughLevel(requiredLevel: number): boolean {
