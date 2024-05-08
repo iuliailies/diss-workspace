@@ -35,7 +35,6 @@ export class IndexComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe(() => {
       this.fetchDocuments();
-      console.log(this.cookieService.get('Token'));
     });
   }
 

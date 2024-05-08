@@ -57,7 +57,6 @@ export class LoginComponent {
       localStorage.setItem('userType', jwt['type']);
       localStorage.setItem('userId', jwt['id']);
       localStorage.setItem('userEmail', jwt['email']);
-      console.log(this.cookieService.get('Token'));
       this.logoutService.setLogoutInProgress(false);
       this.userService
         .getUserInfo(localStorage.getItem('userId'))
