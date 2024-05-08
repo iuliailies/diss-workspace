@@ -40,3 +40,8 @@ $diss-workspace-theme: mat.define-light-theme(
 .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic {
   stroke: $gray-light !important;
 }
+
+//.cdk-global-scrollblock
+//  top: 0px !important
+//  overflow-y: hidden !important
+

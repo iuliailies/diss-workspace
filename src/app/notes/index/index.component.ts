@@ -8,6 +8,7 @@ import { NotificationService } from '../../services/notification.service';
 import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-index',
@@ -26,11 +27,13 @@ export class IndexComponent implements OnInit {
     private notificationService: NotificationService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private cookieService: CookieService
   ) {}
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(() => {
       this.fetchDocuments();
+      console.log(this.cookieService.get('Token'));
     });
   }
 

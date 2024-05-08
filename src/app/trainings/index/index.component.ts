@@ -10,6 +10,7 @@ import { GetTrainingDocument } from '../../data-types/training.model';
 import { TrainingService } from '../../services/training.service';
 import { UserType } from '../../data-types/user.model';
 import { Badge } from '../../data-types/badge.model';
+import {forkJoin, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-index',
@@ -27,6 +28,7 @@ export class IndexComponent implements OnInit {
   isToDoOpen = true;
   isCompletedOpen = false;
   loading = true;
+  subscription!: Subscription;
 
   constructor(
     private trainingService: TrainingService,
@@ -49,8 +51,26 @@ export class IndexComponent implements OnInit {
   }
   ngOnInit() {
     this.activatedRoute.params.subscribe(() => {
-      this.fetchTodoTrainings();
-      this.fetchCompletedTrainings();
+      this.fetchAllTrainings();
+    });
+  }
+
+  fetchAllTrainings() {
+    this.subscription = forkJoin([
+      this.trainingService.getTodoTrainings(this.userId),
+      this.trainingService.getCompletedTrainings(this.userId)
+    ]).subscribe({
+      next: ([todoResponse, completedResponse]) => {
+        this.todoTrainings = todoResponse;
+        this.completedTrainings = completedResponse;
+        this.loading = false;
+      },
+      error: (error) => {
+        this.loading = false;
+        console.error('Error loading trainings', error);
+      },
+      complete: () => {
+      }
     });
   }
 
