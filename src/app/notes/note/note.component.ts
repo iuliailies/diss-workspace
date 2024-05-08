@@ -236,4 +236,5 @@ export class NoteComponent implements OnInit, CanComponentDeactivate {
       this.fileChanged = true;
     }
   }
+
 }

@@ -9,6 +9,7 @@ import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import {CookieService} from "ngx-cookie-service";
+import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
 
 @Component({
   selector: 'app-index',
@@ -27,6 +28,7 @@ export class IndexComponent implements OnInit {
     private notificationService: NotificationService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private confirmationDialogService: ConfirmationDialogService,
     private cookieService: CookieService
   ) {}
 
@@ -52,13 +54,9 @@ export class IndexComponent implements OnInit {
   deleteDocument(event: any, document: GetEmployeeDocument) {
     event.stopPropagation();
 
-    const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent, {
-      data: `Are you sure you want to delete document: ${document.title} ?`,
-      disableClose: true,
-      autoFocus: false,
-    });
+    const dialogResponse = this.confirmationDialogService.confirm(`Are you sure you want to delete document: ${document.title} ?`);
 
-    dialogResponse.afterClosed().subscribe((response) => {
+    dialogResponse.subscribe((response) => {
       if (response) {
         this.noteService.deleteDocument(document.id).subscribe({
           next: () => {

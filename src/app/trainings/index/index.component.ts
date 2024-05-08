@@ -11,6 +11,7 @@ import { TrainingService } from '../../services/training.service';
 import { UserType } from '../../data-types/user.model';
 import { Badge } from '../../data-types/badge.model';
 import {forkJoin, Subscription} from "rxjs";
+import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
 
 @Component({
   selector: 'app-index',
@@ -32,7 +33,7 @@ export class IndexComponent implements OnInit {
 
   constructor(
     private trainingService: TrainingService,
-    private dialogBox: MatDialog,
+    private confirmationDialogService: ConfirmationDialogService,
     private notificationService: NotificationService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -67,7 +68,6 @@ export class IndexComponent implements OnInit {
       },
       error: (error) => {
         this.loading = false;
-        console.error('Error loading trainings', error);
       },
       complete: () => {
       }
@@ -105,13 +105,9 @@ export class IndexComponent implements OnInit {
   deleteTraining(event: any, training: GetTrainingDocument) {
     event.stopPropagation();
 
-    const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent, {
-      data: `Are you sure you want to delete training: ${training.title} ?`,
-      disableClose: true,
-      autoFocus: false,
-    });
+    const dialogResponse = this.confirmationDialogService.confirm(`Are you sure you want to delete document: ${document.title} ?`);
 
-    dialogResponse.afterClosed().subscribe((response) => {
+    dialogResponse.subscribe((response) => {
       if (response) {
         this.trainingService.deleteTraining(training.id).subscribe({
           next: () => {
@@ -123,19 +119,7 @@ export class IndexComponent implements OnInit {
             });
           },
           error: (error: any) => {
-            if (error.error instanceof ErrorEvent) {
-              this.notificationService.notify({
-                message: 'An error occurred! Please try again later!',
-                type: NotificationType.error,
-              });
-            } else {
-              const errResponse: ErrorResponseModel =
-                error.error as ErrorResponseModel;
-              this.notificationService.notify({
-                message: errResponse.errorMessage,
-                type: NotificationType.error,
-              });
-            }
+            this.handleError(error);
           },
         });
       }
@@ -154,19 +138,7 @@ export class IndexComponent implements OnInit {
         this.router.navigate([`trainings/${training.id}`]);
       },
       error: (error: any) => {
-        if (error.error instanceof ErrorEvent) {
-          this.notificationService.notify({
-            message: 'An error occurred! Please try again later!',
-            type: NotificationType.error,
-          });
-        } else {
-          const errResponse: ErrorResponseModel =
-            error.error as ErrorResponseModel;
-          this.notificationService.notify({
-            message: errResponse.errorMessage,
-            type: NotificationType.error,
-          });
-        }
+        this.handleError(error);
       },
     });
   }
@@ -174,4 +146,21 @@ export class IndexComponent implements OnInit {
   viewTraining(id: any) {
     this.router.navigate([`trainings/${id}`]);
   }
+
+  handleError(error: any) {
+    if (error.error instanceof ErrorEvent) {
+      this.notificationService.notify({
+        message: 'An error occurred! Please try again later!',
+        type: NotificationType.error,
+      });
+    } else {
+      const errResponse: ErrorResponseModel =
+        error.error as ErrorResponseModel;
+      this.notificationService.notify({
+        message: errResponse.errorMessage,
+        type: NotificationType.error,
+      });
+    }
+  }
+
 }

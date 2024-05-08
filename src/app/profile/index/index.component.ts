@@ -11,6 +11,7 @@ import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { Badge } from '../../data-types/badge.model';
 import { UserService } from '../../services/user.service';
 import {forkJoin, map} from "rxjs";
+import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
 
 @Component({
   selector: 'app-index',
@@ -40,8 +41,8 @@ export class IndexComponent implements OnInit {
   constructor(
     private noteService: NoteService,
     private userService: UserService,
-    private dialogBox: MatDialog,
     private notificationService: NotificationService,
+    private confirmationDialogService: ConfirmationDialogService,
     private router: Router,
   ) {}
 
@@ -74,12 +75,12 @@ export class IndexComponent implements OnInit {
           this.loading = false;
         },
         error: (error) => {
-          this.displayError(error);
+          this.handleError(error);
         },
       });
   }
 
-  displayError(error: any) {
+  handleError(error: any) {
     if (error.error instanceof ErrorEvent) {
       this.notificationService.notify({
         message: 'An error occurred! Please try again later!',
@@ -106,13 +107,9 @@ export class IndexComponent implements OnInit {
   deleteDocument(event: any, document: GetEmployeeDocument) {
     event.stopPropagation();
 
-    const dialogResponse = this.dialogBox.open(ConfirmationDialogBoxComponent, {
-      data: `Are you sure you want to delete document: ${document.title} ?`,
-      disableClose: true,
-      autoFocus: false,
-    });
+    const dialogResponse = this.confirmationDialogService.confirm(`Are you sure you want to delete document: ${document.title} ?`);
 
-    dialogResponse.afterClosed().subscribe((response) => {
+    dialogResponse.subscribe((response) => {
       if (response) {
         this.noteService.deleteDocument(document.id).subscribe({
           next: () => {
@@ -123,7 +120,7 @@ export class IndexComponent implements OnInit {
             });
           },
           error: (error: any) => {
-            this.displayError(error);
+            this.handleError(error);
           },
         });
       }

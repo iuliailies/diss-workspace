@@ -219,6 +219,7 @@ export class CreateTrainingComponent implements CanComponentDeactivate{
     }
   }
 
+
   saveTraining(training: SaveTrainingDocument) {
     this.saving = true;
     this.trainingService.createTraining(training).subscribe({
