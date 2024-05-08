@@ -10,6 +10,7 @@ import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { Badge } from '../../data-types/badge.model';
 import { UserService } from '../../services/user.service';
+import {forkJoin, map} from "rxjs";
 
 @Component({
   selector: 'app-index',
@@ -26,6 +27,8 @@ export class IndexComponent implements OnInit {
   pageSize = 10;
   xpUntilNextLevel = 0;
   loading = true;
+  existBadges = false;
+  loadingDocuments = false;
 
   userEmail = localStorage.getItem('userEmail') || '';
   userFirstname = localStorage.getItem('userFirstname') || '';
@@ -42,24 +45,62 @@ export class IndexComponent implements OnInit {
     private router: Router,
   ) {}
 
-  ngOnInit() {
-    this.fetchDocuments();
+  ngOnInit(): void {
+    this.fetchDocumentsAndBadges();
+  }
+
+  fetchDocumentsAndBadges(): void {
+    this.loading = true;
+
+    const documents$ = this.noteService.getOwnDocuments(this.userId);
+    const badges$ = this.userService.getUserBadges(this.userId);
+
+    forkJoin([documents$, badges$])
+      .pipe(
+        map(([documents, badges]) => {
+          return {
+            documents,
+            badges,
+          };
+        })
+      )
+      .subscribe({
+        next: ({ documents, badges }) => {
+          this.documents = documents;
+          this.xpUntilNextLevel = 200 - this.userPoints;
+          this.badges = badges;
+          this.displayedBadges = this.badges.slice(this.startIndex, this.endIndex);
+          this.existBadges = this.badges.length > 0;
+          this.loading = false;
+        },
+        error: (error) => {
+          this.displayError(error);
+        },
+      });
+  }
+
+  displayError(error: any) {
+    if (error.error instanceof ErrorEvent) {
+      this.notificationService.notify({
+        message: 'An error occurred! Please try again later!',
+        type: NotificationType.error,
+      });
+    } else {
+      const errResponse: ErrorResponseModel =
+        error.error as ErrorResponseModel;
+      this.notificationService.notify({
+        message: errResponse.errorMessage,
+        type: NotificationType.error,
+      });
+    }
   }
 
   fetchDocuments(): void {
-    this.loading = true;
-    this.noteService.getOwnDocuments(this.userId).subscribe((documents) => {
-      this.documents = documents;
-      this.xpUntilNextLevel = 200 - this.userPoints;
-      this.userService.getUserBadges(this.userId).subscribe((badges) => {
-        this.badges = badges;
-        this.displayedBadges = this.badges.slice(
-          this.startIndex,
-          this.endIndex,
-        );
-        this.loading = false;
+      this.loadingDocuments = true;
+      this.noteService.getOwnDocuments(this.userId).subscribe((documents) => {
+        this.documents = documents;
+        this.loadingDocuments = false;
       });
-    });
   }
 
   deleteDocument(event: any, document: GetEmployeeDocument) {
@@ -82,19 +123,7 @@ export class IndexComponent implements OnInit {
             });
           },
           error: (error: any) => {
-            if (error.error instanceof ErrorEvent) {
-              this.notificationService.notify({
-                message: 'An error occurred! Please try again later!',
-                type: NotificationType.error,
-              });
-            } else {
-              const errResponse: ErrorResponseModel =
-                error.error as ErrorResponseModel;
-              this.notificationService.notify({
-                message: errResponse.errorMessage,
-                type: NotificationType.error,
-              });
-            }
+            this.displayError(error);
           },
         });
       }

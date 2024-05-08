@@ -23,7 +23,7 @@
           <div class="level-second-container">
             <span id="level-title" class="input">{{
               'Level ' + userLevel
-            }}</span>
+              }}</span>
             <span id="xp-title" class="input">{{ userPoints + ' xp' }}</span>
           </div>
           <div
@@ -34,7 +34,7 @@
           </div>
         </div>
         <span id="remaining-xp-title" class="input"
-          >{{ this.xpUntilNextLevel }}xp to go until next level</span
+        >{{ this.xpUntilNextLevel }}xp to go until next level</span
         >
       </div>
     </div>
@@ -65,6 +65,11 @@
         alt=""
       />
     </ng-container>
+    <ng-container>
+      <span class="badges-title" *ngIf="!existBadges">
+        You didn't earn any badges yet!
+      </span>
+    </ng-container>
     <img
       [src]="PATHS.ICONS + 'chevron-right.svg'"
       class="icon icon-right"
@@ -74,7 +79,7 @@
   </div>
 </div>
 
-<div class="container" *ngIf="!loading">
+<div class="container" *ngIf="!loading && !loadingDocuments">
   <div class="table card">
     <div class="columns is-header">
       <div class="column is-4"></div>
