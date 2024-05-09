@@ -32,6 +32,8 @@ export class CreateNoteComponent implements CanComponentDeactivate{
   file: any;
   contentUpdated = false;
 
+  textNoteContent = '';
+
   document: SaveEmployeeDocument = {
     title: 'New document',
     text: '',
@@ -83,7 +85,6 @@ export class CreateNoteComponent implements CanComponentDeactivate{
     });
     this.contentUpdated = false;
     this.loading = false;
-
     this.navigateToNoteView(response);
   }
 
@@ -100,7 +101,8 @@ export class CreateNoteComponent implements CanComponentDeactivate{
   }
 
   createDocument() {
-    this.document.text = this.noteContent.nativeElement.innerHTML;
+    this.textNoteContent = this.noteContent.nativeElement.innerHTML;
+    this.document.text = this.textNoteContent;
     this.document.userId = this.userId;
 
     if (this.file) {
@@ -127,10 +129,12 @@ export class CreateNoteComponent implements CanComponentDeactivate{
 
   // Method to determine whether navigation can occur
   canDeactivate(): Observable<boolean> | boolean {
-    const text = this.noteContent.nativeElement.innerHTML;
+    console.log("intra in can deactivate")
+    console.log("text notita: " + this.textNoteContent)
 
     // If there are no unsaved changes, allow navigation immediately
-    if(!this.contentUpdated && this.document.text === text) {
+    if(!this.contentUpdated && this.document.text === this.textNoteContent) {
+      console.log("merge pe navigation imediat")
       return true;
     }
 
