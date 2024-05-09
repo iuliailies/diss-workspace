@@ -51,4 +51,18 @@ export class TrainingService {
   updateUserProgress(user: any): Observable<any> {
     return this.http.put(`${this.requestURL}/update-user-progress`, user);
   }
+
+  searchTodoTrainings(searchKey: any): Observable<any> {
+    return this.http.post<TrainingDocument[]>(
+      `${this.requestURL}/search-todo-trainings`,
+      searchKey,
+    );
+  }
+
+  searchCompletedTrainings(searchKey: any): Observable<any> {
+    return this.http.post<TrainingDocument[]>(
+      `${this.requestURL}/search-completed-trainings`,
+      searchKey,
+    );
+  }
 }

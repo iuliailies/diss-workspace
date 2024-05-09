@@ -40,4 +40,8 @@ export class UserService {
   public deleteUser(id: any): Observable<any> {
     return this.httpClient.delete(`${this.userUrl}/${id}`);
   }
+
+  public searchUsers(searchKey: any): Observable<any> {
+    return this.httpClient.get(`${this.userUrl}/search-users/${searchKey}`);
+  }
 }

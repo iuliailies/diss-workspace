@@ -21,6 +21,24 @@ export class IndexComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
   ) {}
 
+
+  triggerSearchUsers(searchString: any): void {
+    searchString = searchString.trim();
+    if(searchString !== null && searchString !== "")
+      this.searchUsers(searchString);
+    else
+      this.fetchUsers();
+  }
+
+  searchUsers(searchString: any): void {
+    this.loading = true;
+    this.userService.searchUsers(searchString).subscribe((users) => {
+      this.users = users;
+      this.loading = false;
+    });
+  }
+
+
   ngOnInit() {
     this.activatedRoute.params.subscribe(() => {
       this.fetchUsers();

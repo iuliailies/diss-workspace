@@ -12,6 +12,7 @@ import { Badge } from '../../data-types/badge.model';
 import { UserService } from '../../services/user.service';
 import {forkJoin, map} from "rxjs";
 import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
+import {SearchDocument} from "../../data-types/search.model";
 
 @Component({
   selector: 'app-index',
@@ -48,6 +49,26 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchDocumentsAndBadges();
+  }
+
+  triggerSearchDocuments(searchString: any): void {
+    searchString = searchString.trim();
+    if(searchString !== null && searchString !== "")
+      this.searchDocuments(searchString);
+    else
+      this.fetchDocuments();
+  }
+
+  searchDocuments(searchString: any): void {
+    this.loading = true;
+    const searchRequest : SearchDocument = {
+      searchKey: searchString,
+      userId: this.userId
+    }
+    this.noteService.searchOwnedDocuments(searchRequest).subscribe((documents) => {
+      this.documents = documents;
+      this.loading = false;
+    });
   }
 
   fetchDocumentsAndBadges(): void {

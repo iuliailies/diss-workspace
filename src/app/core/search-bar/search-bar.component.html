@@ -1,6 +1,6 @@
 <div class="search-container">
-  <button class="search-button">
+  <button class="search-button" (click)="triggerSearch(searchInput.value)">
     <img [src]="PATHS.ICONS + 'search.svg'" class="icon" />
   </button>
-  <input type="text" class="search-input" />
+  <input type="text" #searchInput class="search-input" (keydown.enter)="triggerSearch(searchInput.value)" />
 </div>

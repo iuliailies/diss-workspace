@@ -13,7 +13,9 @@
     </div>
   </div>
   <div class="container">
-    <app-search-bar></app-search-bar>
+    <app-search-bar
+      (search)="triggerSearchUsers($event)"
+    ></app-search-bar>
   </div>
 </header>
 

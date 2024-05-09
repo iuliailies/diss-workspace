@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PATHS } from '../../app.constants';
-import { GetEmployeeDocument } from '../../data-types/notes.model';
+import {GetEmployeeDocument} from '../../data-types/notes.model';
 import { NoteService } from '../../services/note.service';
-import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationService } from '../../services/notification.service';
 import { NotificationType } from '../../data-types/notification.model';
@@ -10,6 +9,7 @@ import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import {CookieService} from "ngx-cookie-service";
 import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
+import {SearchDocument} from "../../data-types/search.model";
 
 @Component({
   selector: 'app-index',
@@ -19,7 +19,7 @@ import {ConfirmationDialogService} from "../../services/confirmation-dialog.serv
 export class IndexComponent implements OnInit {
   PATHS = PATHS;
   documents: GetEmployeeDocument[] = [];
-  userId = localStorage.getItem('userId');
+  userId = parseInt(localStorage.getItem('userId') || '-1');
   loading = true;
 
   constructor(
@@ -39,12 +39,32 @@ export class IndexComponent implements OnInit {
   }
 
   matchesUserId(documentUserId: number): boolean {
-    return documentUserId.toString() === this.userId;
+    return documentUserId.toString() === this.userId.toString();
   }
 
   fetchDocuments(): void {
     this.loading = true;
     this.noteService.getDocuments().subscribe((documents) => {
+      this.documents = documents;
+      this.loading = false;
+    });
+  }
+
+  triggerSearchDocuments(searchString: any): void {
+    searchString = searchString.trim();
+    if(searchString !== null && searchString !== "")
+      this.searchDocuments(searchString);
+    else
+      this.fetchDocuments();
+  }
+
+  searchDocuments(searchString: any): void {
+    this.loading = true;
+    const searchRequest : SearchDocument = {
+      searchKey: searchString,
+      userId: this.userId
+    }
+    this.noteService.searchDocuments(searchRequest).subscribe((documents) => {
       this.documents = documents;
       this.loading = false;
     });

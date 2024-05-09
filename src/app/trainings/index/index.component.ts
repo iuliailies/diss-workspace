@@ -12,6 +12,7 @@ import {UserType} from '../../data-types/user.model';
 import {Badge} from '../../data-types/badge.model';
 import {forkJoin, map, Subscription} from "rxjs";
 import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
+import {SearchDocument} from "../../data-types/search.model";
 
 @Component({
   selector: 'app-index',
@@ -50,6 +51,42 @@ export class IndexComponent implements OnInit {
     } else {
       this.expandedTrainingId = trainingId;
     }
+  }
+
+  triggerSearchTrainings(searchString: any): void {
+    searchString = searchString.trim();
+    if(searchString !== null && searchString !== "")
+      this.searchTrainings(searchString);
+    else
+      this.fetchAllTrainings();
+  }
+
+  searchTrainings(searchString: any) {
+    this.loading = true;
+
+    const searchRequest : SearchDocument = {
+      searchKey: searchString,
+      userId: parseInt(this.userId || '-1')
+    }
+
+    const todoTrainings$ = this.trainingService.searchTodoTrainings(searchRequest);
+    const completedTrainings$ = this.trainingService.searchCompletedTrainings(searchRequest);
+
+    forkJoin([todoTrainings$, completedTrainings$])
+      .pipe(map(([todoResponse, completedResponse]) => {
+          return {todoResponse, completedResponse};
+        })
+      )
+      .subscribe({
+        next: ({todoResponse, completedResponse}) => {
+          this.todoTrainings = todoResponse;
+          this.completedTrainings = completedResponse;
+          this.loading = false;
+        },
+        error: (error) => {
+          this.loading = false;
+        },
+      });
   }
 
   ngOnInit() {

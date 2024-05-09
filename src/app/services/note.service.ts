@@ -1,11 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import {
   SaveEmployeeDocument,
   EmployeeDocument,
   GetEmployeeDocument,
 } from '../data-types/notes.model';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,8 @@ import { Observable } from 'rxjs';
 export class NoteService {
   private requestURL = 'http://localhost:8090/employee-document';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   createNote(note: SaveEmployeeDocument): Observable<EmployeeDocument> {
     return this.http.post<EmployeeDocument>(
@@ -49,5 +50,13 @@ export class NoteService {
       `${this.requestURL}/update-document`,
       document,
     );
+  }
+
+  searchDocuments(searchRequest: any): Observable<any> {
+    return this.http.post<GetEmployeeDocument[]>(`${this.requestURL}/search-documents`, searchRequest);
+  }
+
+  searchOwnedDocuments(searchRequest: any): Observable<any> {
+    return this.http.post<GetEmployeeDocument[]>(`${this.requestURL}/search-owned-documents`, searchRequest);
   }
 }

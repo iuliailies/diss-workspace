@@ -41,7 +41,9 @@
   </div>
 
   <div class="container">
-    <app-search-bar></app-search-bar>
+    <app-search-bar
+      (search)="triggerSearchDocuments($event)"
+    ></app-search-bar>
   </div>
 </header>
 
