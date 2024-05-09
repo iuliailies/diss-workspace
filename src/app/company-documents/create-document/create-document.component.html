@@ -1,0 +1,76 @@
+<header class="header">
+    <div class="header-container">
+      <div class="container is-fluid header-divider">
+        <div class="header-left">
+          <h1 class="home-link" [routerLink]="['/notes']">Documents</h1>
+          <img [src]="PATHS.ICONS + 'chevron-right.svg'" alt="" />
+  
+          <span
+            appContentEditable
+            #nameInput
+            class="input"
+            (blur)="changeDocumentName($event)"
+            >{{ !loading ? 'New document' : 'Loading...' }}</span
+          >
+          <input
+            type="file"
+            class="file-input"
+            (change)="onFileSelected($event)"
+            #fileUpload
+          />
+  
+          <img
+            loading="eager"
+            [src]="PATHS.ICONS + 'upload-solid.svg'"
+            class="visibility-icon"
+            (click)="fileUpload.click()"
+            alt=""
+          />
+  
+          <div *ngIf="fileName" class="container-file-title">
+            <p (click)="downloadDocument()" class="file-title">{{ fileName }}</p>
+            <div class="container-delete-file-img" (click)="removeFile()">
+              <img
+                id="delete-file-img"
+                [src]="PATHS.ICONS + 'x-solid.svg'"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+        <div class="header-right">
+          <div
+            class="button"
+            [class.disabled]="loading"
+            (click)="createDocument()"
+          >
+            <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
+            <span>Save changes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container subheader justify-start align-center">
+      <div class="text">Created by</div>
+      <div
+        class="user-icon"
+        [style.background-color]="getUserName() | generateColor"
+      >
+        {{ getUserInitials() | uppercase }}
+      </div>
+    </div>
+  </header>
+  
+  <div class="loading-spinner" [class.not-loading]="!loading">
+    <mat-spinner *ngIf="loading"></mat-spinner>
+  </div>
+  
+  <div class="container" *ngIf="!loading">
+    <app-keywords
+      [readOnly]="false"
+      [keywords]="[]"
+      (keywordsChanged)="keywordsChanged($event)"
+    ></app-keywords>
+    <div class="card" #noteContent contenteditable></div>
+  </div>
+  
