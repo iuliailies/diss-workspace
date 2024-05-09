@@ -31,6 +31,8 @@ export class CreateDocumentComponent implements CanComponentDeactivate {
   file: any;
   contentUpdated = false;
 
+  textNoteContent = '';
+
   document: SaveCompanyDocument = {
     title: 'New document',
     text: '',
@@ -99,7 +101,8 @@ export class CreateDocumentComponent implements CanComponentDeactivate {
   }
 
   createCompanyDocument() {
-    this.document.text = this.documentContent.nativeElement.innerHTML;
+    this.textNoteContent = this.documentContent.nativeElement.innerHTML;
+    this.document.text = this.textNoteContent;
     this.document.userId = this.userId;
 
     if (this.file) {
@@ -126,10 +129,9 @@ export class CreateDocumentComponent implements CanComponentDeactivate {
 
   // Method to determine whether navigation can occur
   canDeactivate(): Observable<boolean> | boolean {
-    const text = this.documentContent.nativeElement.innerHTML;
 
     // If there are no unsaved changes, allow navigation immediately
-    if (!this.contentUpdated && this.document.text === text) {
+    if (!this.contentUpdated && this.document.text === this.textNoteContent) {
       return true;
     }
 
