@@ -1,14 +1,14 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { CanComponentDeactivate } from '../../core/unsaved-changes-guard.service';
-import { PATHS } from '../../app.constants';
-import { NotificationService } from '../../services/notification.service';
-import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
 import { ActivatedRoute } from '@angular/router';
-import { NotificationType } from '../../data-types/notification.model';
-import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { Observable } from 'rxjs';
-import { CompanyDocService } from '../../services/company-doc.service';
+import { PATHS } from '../../app.constants';
+import { CanComponentDeactivate } from '../../core/unsaved-changes-guard.service';
 import { CompanyDocument } from '../../data-types/company-doc.model';
+import { ErrorResponseModel } from '../../data-types/error-response.model';
+import { NotificationType } from '../../data-types/notification.model';
+import { CompanyDocService } from '../../services/company-doc.service';
+import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-document',
@@ -122,8 +122,7 @@ export class DocumentComponent implements OnInit, CanComponentDeactivate {
         type: NotificationType.error,
       });
     } else {
-      const errResponse: ErrorResponseModel =
-        error.error as ErrorResponseModel;
+      const errResponse: ErrorResponseModel = error.error as ErrorResponseModel;
       this.notificationService.notify({
         message: errResponse.errorMessage,
         type: NotificationType.error,
@@ -142,15 +141,15 @@ export class DocumentComponent implements OnInit, CanComponentDeactivate {
   }
 
   saveDocument(): void {
-    // this.noteService.updateDocument(this.document).subscribe({
-    //   next: () => {
-    //     this.handleSuccess();
-    //   },
-    //   error: (error: any) => {
-    //     this.handleError(error);
-    //     this.loading = false;
-    //   },
-    // });
+    this.documentService.updateDocument(this.document).subscribe({
+      next: () => {
+        this.handleSuccess();
+      },
+      error: (error: any) => {
+        this.handleError(error);
+        this.loading = false;
+      },
+    });
   }
 
   getUserInitials(): string {

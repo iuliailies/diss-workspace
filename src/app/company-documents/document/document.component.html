@@ -1,117 +1,120 @@
 <div *ngIf="!loading">
-    <header class="header">
-      <div class="header-container">
-        <div class="container is-fluid header-divider">
-          <div class="header-left">
-            <h1 class="home-link" [routerLink]="['/notes']">Documents</h1>
-            <img [src]="PATHS.ICONS + 'chevron-right.svg'" alt="" />
-  
-            <span
-              appContentEditable
-              #nameInput
-              *ngIf="!readOnly"
-              class="input"
-              (blur)="changeDocumentName($event)"
-              >{{ !loading ? document.title : 'Loading...' }}</span
+  <header class="header">
+    <div class="header-container">
+      <div class="container is-fluid header-divider">
+        <div class="header-left">
+          <h1 class="home-link" [routerLink]="['/company-docs']">Company policies</h1>
+          <img [src]="PATHS.ICONS + 'chevron-right.svg'" alt="" />
+
+          <span
+            appContentEditable
+            #nameInput
+            *ngIf="!readOnly"
+            class="input"
+            (blur)="changeDocumentName($event)"
+            >{{ !loading ? document.title : 'Loading...' }}</span
+          >
+
+          <h2 class="input" *ngIf="readOnly">
+            {{ !loading ? document.title : 'Loading...' }}
+          </h2>
+
+          <input
+            type="file"
+            class="file-input"
+            (change)="onFileSelected($event)"
+            #fileUpload
+          />
+
+          <img
+            loading="eager"
+            [src]="PATHS.ICONS + 'upload-solid.svg'"
+            *ngIf="!readOnly"
+            class="visibility-icon"
+            (click)="fileUpload.click()"
+            alt=""
+          />
+
+          <img
+            *ngIf="readOnly && this.document.file"
+            loading="eager"
+            [src]="PATHS.ICONS + 'download-solid.svg'"
+            class="visibility-icon"
+            (click)="downloadDocument()"
+            alt=""
+          />
+
+          <div *ngIf="this.document.file" class="container-file-title">
+            <p
+              (click)="!readOnly ? downloadDocument() : null"
+              class="file-title"
             >
-  
-            <h2 class="input" *ngIf="readOnly">
-              {{ !loading ? document.title : 'Loading...' }}
-            </h2>
-  
-            <input
-              type="file"
-              class="file-input"
-              (change)="onFileSelected($event)"
-              #fileUpload
-            />
-  
-            <img
-              loading="eager"
-              [src]="PATHS.ICONS + 'upload-solid.svg'"
+              {{ this.document.file.name }}
+            </p>
+            <div
               *ngIf="!readOnly"
-              class="visibility-icon"
-              (click)="fileUpload.click()"
-              alt=""
-            />
-  
-            <img
-              *ngIf="readOnly && this.document.file"
-              loading="eager"
-              [src]="PATHS.ICONS + 'download-solid.svg'"
-              class="visibility-icon"
-              (click)="downloadDocument()"
-              alt=""
-            />
-  
-            <div *ngIf="this.document.file" class="container-file-title">
-              <p
-                (click)="!readOnly ? downloadDocument() : null"
-                class="file-title"
-              >
-                {{ this.document.file.name }}
-              </p>
-              <div
-                *ngIf="!readOnly"
-                class="container-delete-file-img"
-                (click)="removeFile()"
-              >
-                <img
-                  id="delete-file-img"
-                  [src]="PATHS.ICONS + 'x-solid.svg'"
-                  alt=""
-                />
-              </div>
-            </div>
-          </div>
-  
-          <div *ngIf="!readOnly" class="header-right">
-            <div class="button" (click)="updateDocument()">
-              <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
-              <span>Save changes</span>
+              class="container-delete-file-img"
+              (click)="removeFile()"
+            >
+              <img
+                id="delete-file-img"
+                [src]="PATHS.ICONS + 'x-solid.svg'"
+                alt=""
+              />
             </div>
           </div>
         </div>
-      </div>
-  
-      <div class="container subheader justify-start align-center">
-        <div class="text">Created by</div>
-        <div
-          class="user-icon"
-          [style.background-color]="getUserName() | generateColor"
-        >
-          {{ getUserInitials() | uppercase }}
-        </div>
-        <div class="text">
-          Last modified: {{ document.lastModified | date: 'medium' }}
-        </div>
-      </div>
-    </header>
-  
-    <div class="container">
-      <app-keywords
-        [readOnly]="readOnly"
-        [keywords]="keywords"
-        (keywordsChanged)="keywordsChanged($event)"
-      ></app-keywords>
-      <div class="content-area">
-        <div class="doc-area">
-          <div
-            class="card"
-            #noteContent
-            [contentEditable]="!readOnly ? 'true' : 'false'"
-            [innerHTML]="document.text"
-          ></div>
-          <div class="comments-toggle" [class.is-active]="commentsToggled" (click)="commentsToggled = !commentsToggled">
-            <img [src]="PATHS.ICONS + 'comments.svg'" class="arrow" alt="" />
+
+        <div *ngIf="!readOnly" class="header-right">
+          <div class="button" (click)="updateDocument()">
+            <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
+            <span>Save changes</span>
           </div>
         </div>
-        <app-comments *ngIf="commentsToggled"></app-comments>
       </div>
     </div>
+
+    <div class="container subheader justify-start align-center">
+      <div class="text">Created by</div>
+      <div
+        class="user-icon"
+        [style.background-color]="getUserName() | generateColor"
+      >
+        {{ getUserInitials() | uppercase }}
+      </div>
+      <div class="text">
+        Last modified: {{ document.lastModified | date: 'medium' }}
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <app-keywords
+      [readOnly]="readOnly"
+      [keywords]="keywords"
+      (keywordsChanged)="keywordsChanged($event)"
+    ></app-keywords>
+    <div class="content-area">
+      <div class="doc-area">
+        <div
+          class="card"
+          #documentContent
+          [contentEditable]="!readOnly ? 'true' : 'false'"
+          [innerHTML]="document.text"
+        ></div>
+        <div
+          class="comments-toggle"
+          [class.is-active]="commentsToggled"
+          (click)="commentsToggled = !commentsToggled"
+        >
+          <img [src]="PATHS.ICONS + 'comments.svg'" class="arrow" alt="" />
+        </div>
+      </div>
+      <app-comments *ngIf="commentsToggled"></app-comments>
+    </div>
   </div>
-  
-  <div class="loading-spinner" [class.not-loading]="!loading">
-    <mat-spinner *ngIf="loading"></mat-spinner>
-  </div>
-  
+</div>
+
+<div class="loading-spinner" [class.not-loading]="!loading">
+  <mat-spinner *ngIf="loading"></mat-spinner>
+</div>

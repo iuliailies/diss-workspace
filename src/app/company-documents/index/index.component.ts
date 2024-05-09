@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { PATHS } from '../../app.constants';
 import { MatDialog } from '@angular/material/dialog';
-import { NotificationService } from '../../services/notification.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
 import { CookieService } from 'ngx-cookie-service';
+import { PATHS } from '../../app.constants';
 import { GetCompanyDocument } from '../../data-types/company-doc.model';
-import { CompanyDocService } from '../../services/company-doc.service';
-import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
+import { NotificationType } from '../../data-types/notification.model';
+import { CompanyDocService } from '../../services/company-doc.service';
+import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-index',
@@ -28,7 +28,7 @@ export class IndexComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private confirmationDialogService: ConfirmationDialogService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +51,9 @@ export class IndexComponent implements OnInit {
 
   deleteDocument(event: any, document: GetCompanyDocument) {
     event.stopPropagation();
-    const dialogResponse = this.confirmationDialogService.confirm(`Are you sure you want to delete document: ${document.title} ?`);
+    const dialogResponse = this.confirmationDialogService.confirm(
+      `Are you sure you want to delete document: ${document.title} ?`,
+    );
 
     dialogResponse.subscribe((response) => {
       if (response) {
@@ -92,6 +94,6 @@ export class IndexComponent implements OnInit {
   }
 
   viewDocument(id: any) {
-    this.router.navigate([`'company-docs/${id}`]);
+    this.router.navigate([`company-docs/${id}`]);
   }
 }

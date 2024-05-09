@@ -1,14 +1,19 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IndexComponent } from './index/index.component';
-import { DocumentComponent } from './document/document.component';
-import { CompanyDocumentsRoutingModule } from './company-documents-routing.module';
-import { CoreModule } from "../core/core.module";
+import { NgModule } from '@angular/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { CoreModule } from '../core/core.module';
+import { CompanyDocumentsRoutingModule } from './company-documents-routing.module';
 import { CreateDocumentComponent } from './create-document/create-document.component';
+import { DocumentComponent } from './document/document.component';
+import { IndexComponent } from './index/index.component';
 
 @NgModule({
-    declarations: [IndexComponent, DocumentComponent, CreateDocumentComponent],
-    imports: [CommonModule, CompanyDocumentsRoutingModule, CoreModule, MatProgressSpinner]
+  declarations: [IndexComponent, DocumentComponent, CreateDocumentComponent],
+  imports: [
+    CommonModule,
+    CompanyDocumentsRoutingModule,
+    CoreModule,
+    MatProgressSpinner,
+  ],
 })
 export class CompanyDocumentsModule {}

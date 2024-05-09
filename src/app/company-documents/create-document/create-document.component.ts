@@ -1,21 +1,24 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { CanComponentDeactivate } from '../../core/unsaved-changes-guard.service';
-import { PATHS } from '../../app.constants';
-import { CompanyDocument, SaveCompanyDocument } from '../../data-types/company-doc.model';
 import { Router } from '@angular/router';
-import { NotificationService } from '../../services/notification.service';
-import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
-import { NotificationType } from '../../data-types/notification.model';
-import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { Observable } from 'rxjs';
+import { PATHS } from '../../app.constants';
+import { CanComponentDeactivate } from '../../core/unsaved-changes-guard.service';
+import {
+  CompanyDocument,
+  SaveCompanyDocument,
+} from '../../data-types/company-doc.model';
+import { ErrorResponseModel } from '../../data-types/error-response.model';
+import { NotificationType } from '../../data-types/notification.model';
 import { CompanyDocService } from '../../services/company-doc.service';
+import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-create-document',
   templateUrl: './create-document.component.html',
-  styleUrl: './create-document.component.sass'
+  styleUrl: './create-document.component.sass',
 })
-export class CreateDocumentComponent implements CanComponentDeactivate{
+export class CreateDocumentComponent implements CanComponentDeactivate {
   @ViewChild('documentContent') documentContent!: ElementRef;
 
   protected readonly PATHS = PATHS;
@@ -40,7 +43,7 @@ export class CreateDocumentComponent implements CanComponentDeactivate{
     private documentService: CompanyDocService,
     private router: Router,
     private notificationService: NotificationService,
-    private confirmationDialogService: ConfirmationDialogService
+    private confirmationDialogService: ConfirmationDialogService,
   ) {}
 
   changeDocumentName(event: Event): void {
@@ -89,9 +92,9 @@ export class CreateDocumentComponent implements CanComponentDeactivate{
         this.handleSuccess(response);
       },
       error: (error: any) => {
-          this.handleError(error)
-          this.loading = false;
-        },
+        this.handleError(error);
+        this.loading = false;
+      },
     });
   }
 
@@ -119,14 +122,14 @@ export class CreateDocumentComponent implements CanComponentDeactivate{
 
   navigateToDocumentView(document: any): void {
     this.router.navigate([`company-docs/${document.id}`]);
-  }  
+  }
 
   // Method to determine whether navigation can occur
   canDeactivate(): Observable<boolean> | boolean {
     const text = this.documentContent.nativeElement.innerHTML;
 
     // If there are no unsaved changes, allow navigation immediately
-    if(!this.contentUpdated && this.document.text === text) {
+    if (!this.contentUpdated && this.document.text === text) {
       return true;
     }
 

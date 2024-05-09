@@ -1,10 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CompanyDocument, GetCompanyDocument, SaveCompanyDocument } from '../data-types/company-doc.model';
 import { Observable } from 'rxjs';
+import {
+  CompanyDocument,
+  GetCompanyDocument,
+  SaveCompanyDocument,
+} from '../data-types/company-doc.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CompanyDocService {
   private requestURL = 'http://localhost:8090/company-document';
