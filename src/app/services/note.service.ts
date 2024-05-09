@@ -50,4 +50,9 @@ export class NoteService {
       document,
     );
   }
+
+  searchDocuments(searchRequest: any) : Observable<any>
+  {
+    return this.http.post<GetEmployeeDocument[]>(`${this.requestURL}/search-document`, searchRequest);
+  }
 }
