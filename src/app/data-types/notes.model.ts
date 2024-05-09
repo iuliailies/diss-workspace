@@ -29,11 +29,6 @@ export interface SaveEmployeeDocument {
   file?: File;
 }
 
-export interface SearchEmployeeDocument {
-  searchKey: string;
-  userId: number;
-}
-
 export const newDocumentData = (d: EmployeeDocument): SaveEmployeeDocument => {
   const doc: SaveEmployeeDocument = {
     title: d.title,

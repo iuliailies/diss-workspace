@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PATHS } from '../../app.constants';
-import {GetEmployeeDocument, SearchEmployeeDocument} from '../../data-types/notes.model';
+import {GetEmployeeDocument} from '../../data-types/notes.model';
 import { NoteService } from '../../services/note.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationService } from '../../services/notification.service';
@@ -9,6 +9,7 @@ import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import {CookieService} from "ngx-cookie-service";
 import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
+import {SearchDocument} from "../../data-types/search.model";
 
 @Component({
   selector: 'app-index',
@@ -49,9 +50,17 @@ export class IndexComponent implements OnInit {
     });
   }
 
+  triggerSearchDocuments(searchString: any): void {
+    searchString = searchString.trim();
+    if(searchString !== null && searchString !== "")
+      this.searchDocuments(searchString);
+    else
+      this.fetchDocuments();
+  }
+
   searchDocuments(searchString: any): void {
     this.loading = true;
-    const searchRequest : SearchEmployeeDocument = {
+    const searchRequest : SearchDocument = {
       searchKey: searchString,
       userId: this.userId
     }
