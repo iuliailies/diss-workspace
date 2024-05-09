@@ -1,1 +1,60 @@
-<p>company-docs index works!</p>
+<header class="header">
+  <div class="header-container">
+    <div class="container is-fluid header-divider">
+      <div class="header-left">
+        <h1 class="home-link">Company policies</h1>
+      </div>
+      <div class="header-right">
+        <div class="button" [routerLink]="['new']">
+          <img [src]="PATHS.ICONS + 'plus.svg'" class="arrow" alt="" />
+          <span>Add new</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <app-search-bar></app-search-bar>
+  </div>
+</header>
+
+<div class="loading-spinner" [class.not-loading]="!loading">
+  <mat-spinner *ngIf="loading"></mat-spinner>
+</div>
+
+<div class="container" *ngIf="!loading">
+  <div class="table card">
+    <div class="columns is-header">
+      <div class="column is-4"></div>
+      <div class="column is-3">Author</div>
+      <div class="column is-4">Last modified</div>
+      <div class="column is-1"></div>
+    </div>
+    <div
+      class="columns"
+      *ngFor="let document of companyDocuments"
+      (click)="viewCompanyDocument(document.id)"
+    >
+      <div class="column is-4">{{ document.title }}</div>
+      <div class="column is-3">
+        <div
+          class="user-icon"
+          [style.background-color]="getUserName(document) | generateColor"
+        >
+          {{ getUserInitials(document) | uppercase }}
+        </div>
+      </div>
+      <div class="column is-4">
+        {{ document.lastModified | date: 'medium' }}
+      </div>
+      <div class="column is-1">
+        <img
+          [src]="PATHS.ICONS + 'trash-solid.svg'"
+          class="icon"
+          alt=""
+          (click)="deleteCompanyDocument($event, document)"
+          *ngIf="matchesUserId(document.user.id)"
+        />
+      </div>
+    </div>
+  </div>
+</div>
