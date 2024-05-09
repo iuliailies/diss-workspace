@@ -9,7 +9,7 @@
           appContentEditable
           #nameInput
           class="input"
-          (blur)="changeDocumentName($event)"
+          (blur)="changeCompanyDocumentName($event)"
           >{{ !loading ? 'New document' : 'Loading...' }}</span
         >
         <input
@@ -42,7 +42,7 @@
         <div
           class="button"
           [class.disabled]="loading"
-          (click)="createDocument()"
+          (click)="createCompanyDocument()"
         >
           <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
           <span>Save changes</span>

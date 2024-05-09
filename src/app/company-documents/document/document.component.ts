@@ -29,22 +29,22 @@ export class DocumentComponent implements OnInit, CanComponentDeactivate {
   commentsToggled = false;
 
   constructor(
-    private documentService: CompanyDocService,
+    private companyDocumentService: CompanyDocService,
     private notificationService: NotificationService,
     private confirmationDialogService: ConfirmationDialogService,
     private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
-    this.fetchDocument();
+    this.fetchCompanyDocument();
   }
 
-  fetchDocument() {
+  fetchCompanyDocument() {
     this.loading = true;
     this.activatedRoute.paramMap.subscribe((params) => {
       const documentId = params.get('id');
       if (documentId) {
-        this.documentService.getDocument(documentId).subscribe((document) => {
+        this.companyDocumentService.getCompanyDocument(documentId).subscribe((document) => {
           this.document = document as CompanyDocument;
           this.initializeFields();
           this.loading = false;
@@ -84,7 +84,7 @@ export class DocumentComponent implements OnInit, CanComponentDeactivate {
     );
   }
 
-  changeDocumentName(event: Event): void {
+  changeCompanyDocumentName(event: Event): void {
     this.contentUpdated = true;
     const input = event.target as HTMLElement;
     const inputText = input.innerText.trim();
@@ -97,7 +97,7 @@ export class DocumentComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  updateDocument(): void {
+  updateCompanyDocument(): void {
     this.loading = true;
     this.document.text = this.documentContent.nativeElement.innerHTML;
     this.document.userId = parseInt(this.userId || '-1');
@@ -108,10 +108,10 @@ export class DocumentComponent implements OnInit, CanComponentDeactivate {
           ...this.document.file,
           buffer: Array.from(x),
         };
-        this.saveDocument();
+        this.saveCompanyDocument();
       });
     } else {
-      this.saveDocument();
+      this.saveCompanyDocument();
     }
   }
 
@@ -135,13 +135,13 @@ export class DocumentComponent implements OnInit, CanComponentDeactivate {
       message: 'Changes successfully saved! ',
       type: NotificationType.success,
     });
-    this.fetchDocument();
+    this.fetchCompanyDocument();
     this.contentUpdated = false;
     this.loading = false;
   }
 
-  saveDocument(): void {
-    this.documentService.updateDocument(this.document).subscribe({
+  saveCompanyDocument(): void {
+    this.companyDocumentService.updateCompanyDocument(this.document).subscribe({
       next: () => {
         this.handleSuccess();
       },

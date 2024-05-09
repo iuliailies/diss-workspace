@@ -22,34 +22,32 @@ export class IndexComponent implements OnInit {
   loading = true;
 
   constructor(
-    private documentService: CompanyDocService,
-    private dialogBox: MatDialog,
+    private companyDocumentService: CompanyDocService,
     private notificationService: NotificationService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private confirmationDialogService: ConfirmationDialogService,
-    private cookieService: CookieService,
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(() => {
-      this.fetchDocuments();
+      this.fetchCompanyDocuments();
     });
   }
 
-  matchesUserId(documentUserId: number): boolean {
-    return documentUserId.toString() === this.userId;
+  matchesUserId(companyDocumentUserId: number): boolean {
+    return companyDocumentUserId.toString() === this.userId;
   }
 
-  fetchDocuments(): void {
+  fetchCompanyDocuments(): void {
     this.loading = true;
-    this.documentService.getDocuments().subscribe((documents) => {
+    this.companyDocumentService.getCompanyDocuments().subscribe((documents) => {
       this.companyDocuments = documents;
       this.loading = false;
     });
   }
 
-  deleteDocument(event: any, document: GetCompanyDocument) {
+  deleteCompanyDocument(event: any, document: GetCompanyDocument) {
     event.stopPropagation();
     const dialogResponse = this.confirmationDialogService.confirm(
       `Are you sure you want to delete document: ${document.title} ?`,
@@ -57,9 +55,9 @@ export class IndexComponent implements OnInit {
 
     dialogResponse.subscribe((response) => {
       if (response) {
-        this.documentService.deleteDocument(document.id).subscribe({
+        this.companyDocumentService.deleteCompanyDocument(document.id).subscribe({
           next: () => {
-            this.fetchDocuments();
+            this.fetchCompanyDocuments();
             this.notificationService.notify({
               message: 'Document deleted successfully!',
               type: NotificationType.error,
@@ -93,7 +91,7 @@ export class IndexComponent implements OnInit {
     return document.user.firstname + ' ' + document.user.lastname;
   }
 
-  viewDocument(id: any) {
+  viewCompanyDocument(id: any) {
     this.router.navigate([`company-docs/${id}`]);
   }
 }

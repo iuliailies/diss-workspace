@@ -40,13 +40,13 @@ export class CreateDocumentComponent implements CanComponentDeactivate {
   };
 
   constructor(
-    private documentService: CompanyDocService,
+    private companyDocumentService: CompanyDocService,
     private router: Router,
     private notificationService: NotificationService,
     private confirmationDialogService: ConfirmationDialogService,
   ) {}
 
-  changeDocumentName(event: Event): void {
+  changeCompanyDocumentName(event: Event): void {
     this.contentUpdated = true;
     const input = event.target as HTMLElement;
     const inputText = input.innerText.trim();
@@ -82,12 +82,12 @@ export class CreateDocumentComponent implements CanComponentDeactivate {
     });
     this.contentUpdated = false;
     this.loading = false;
-
-    this.navigateToDocumentView(response);
+    console.log(response);
+    this.navigateToCompanyDocumentView(response);
   }
 
-  saveDocument(): void {
-    this.documentService.createDocument(this.document).subscribe({
+  saveCompanyDocument(): void {
+    this.companyDocumentService.createCompanyDocument(this.document).subscribe({
       next: (response: CompanyDocument) => {
         this.handleSuccess(response);
       },
@@ -98,7 +98,7 @@ export class CreateDocumentComponent implements CanComponentDeactivate {
     });
   }
 
-  createDocument() {
+  createCompanyDocument() {
     this.document.text = this.documentContent.nativeElement.innerHTML;
     this.document.userId = this.userId;
 
@@ -112,15 +112,15 @@ export class CreateDocumentComponent implements CanComponentDeactivate {
           type: this.fileType,
           buffer: Array.from(x),
         };
-        this.saveDocument();
+        this.saveCompanyDocument();
       });
     } else {
       this.document.file = undefined;
-      this.saveDocument();
+      this.saveCompanyDocument();
     }
   }
 
-  navigateToDocumentView(document: any): void {
+  navigateToCompanyDocumentView(document: any): void {
     this.router.navigate([`company-docs/${document.id}`]);
   }
 
