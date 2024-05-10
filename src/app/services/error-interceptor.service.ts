@@ -32,6 +32,13 @@ export class ErrorInterceptor implements HttpInterceptor {
         const errResponse: ErrorResponseModel = error.error as ErrorResponseModel;
         if (error.status === 401 && errResponse.errorMessage === 'Unable to process request due to an invalid token. Please retry or contact support if the issue persists.') {
           this.cookieService.delete('Token');
+          localStorage.removeItem('userType');
+          localStorage.removeItem('userId');
+          localStorage.removeItem('userEmail');
+          localStorage.removeItem('userFirstname');
+          localStorage.removeItem('userLastname');
+          localStorage.removeItem('userPoints');
+          localStorage.removeItem('userLevel');
           this.router.navigate(['/login']);
           this.notificationService.notify({
             message: "Session ended. Please login in again!",

@@ -31,7 +31,7 @@
   <form [formGroup]="createUserForm" class="create-training-form">
     <div class="left-container">
       <div class="input-label-container" [class.error]="isInvalid">
-        <label class="subtitle-container">Firstname</label>
+        <label class="subtitle-container">Firstname *</label>
         <div class="input-container">
           <input
             (click)="resetWarnings()"
@@ -46,7 +46,7 @@
         class="input-label-container"
         [class.error]="isInvalid || isEmailInvalid"
       >
-        <label class="subtitle-container">Email</label>
+        <label class="subtitle-container">Email *</label>
         <div class="input-container">
           <input
             (click)="resetWarnings()"
@@ -61,7 +61,7 @@
         class="input-label-container"
         [class.error]="isInvalid || isPasswordInvalid"
       >
-        <label class="subtitle-container">Password</label>
+        <label class="subtitle-container">Password *</label>
         <div class="input-container">
           <input
             class="input-field"
@@ -88,7 +88,7 @@
       </div>
 
       <div class="input-label-container" [class.error]="isInvalid">
-        <label class="subtitle-container">Role</label>
+        <label class="subtitle-container">Role *</label>
         <div class="input-container">
           <input
             (click)="resetWarnings()"
@@ -100,7 +100,7 @@
       </div>
 
       <div class="input-label-container" [class.error]="isInvalid">
-        <label class="subtitle-container">Location</label>
+        <label class="subtitle-container">Location *</label>
         <div class="input-container">
           <input
             (click)="resetWarnings()"
@@ -114,7 +114,7 @@
 
     <div class="right-container">
       <div class="input-label-container" [class.error]="isInvalid">
-        <label class="subtitle-container">Lastname</label>
+        <label class="subtitle-container">Lastname *</label>
         <div class="input-container">
           <input
             (click)="resetWarnings()"
@@ -129,7 +129,7 @@
         class="input-label-container"
         [class.error]="isInvalid || isTypeInvalid"
       >
-        <label class="subtitle-container">Type</label>
+        <label class="subtitle-container">Type *</label>
         <div class="input-container">
           <select
             formControlName="type"
@@ -148,7 +148,7 @@
         class="input-label-container"
         [class.error]="isInvalid || isPasswordInvalid"
       >
-        <label class="subtitle-container">Confirm password</label>
+        <label class="subtitle-container">Confirm password *</label>
         <div class="input-container">
           <input
             class="input-field"
@@ -175,7 +175,7 @@
       </div>
 
       <div class="input-label-container" [class.error]="isInvalid">
-        <label class="subtitle-container">Department</label>
+        <label class="subtitle-container">Department *</label>
         <div class="input-container">
           <input
             (click)="resetWarnings()"
@@ -190,7 +190,7 @@
         class="input-label-container"
         [class.error]="isInvalid || isPhoneNumberInvalid"
       >
-        <label class="subtitle-container">Phone number</label>
+        <label class="subtitle-container">Phone number *</label>
         <div class="input-container">
           <input
             (click)="resetWarnings()"

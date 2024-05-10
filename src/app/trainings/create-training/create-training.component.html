@@ -43,7 +43,7 @@
   <form [formGroup]="createTrainingForm" class="create-training-form">
     <div class="left-container">
       <div class="input-label-container" [class.error]="isInvalid">
-        <label class="subtitle-container">Name</label>
+        <label class="subtitle-container">Name *</label>
         <div class="bigger-input-container input-container">
           <input
             (click)="resetWarnings()"
@@ -56,10 +56,11 @@
 
       <div class="two-inputs-container">
         <div class="input-label-container" [class.error]="isInvalid">
-          <label class="subtitle-container">Required Level</label>
+          <label class="subtitle-container">Required Level *</label>
           <div class="smaller-input-container input-container">
             <input
               (click)="resetWarnings()"
+              (keydown)="numericOnly($event)"
               class="input-field"
               type="text"
               formControlName="requiredLevel"
@@ -67,10 +68,11 @@
           </div>
         </div>
         <div class="input-label-container" [class.error]="isInvalid">
-          <label class="subtitle-container">Reward XP</label>
+          <label class="subtitle-container">Reward XP *</label>
           <div class="smaller-input-container input-container">
             <input
               (click)="resetWarnings()"
+              (keydown)="numericOnly($event)"
               class="input-field"
               type="text"
               formControlName="reward"
@@ -80,7 +82,7 @@
       </div>
 
       <div class="input-label-container" [class.error]="isInvalid">
-        <label class="subtitle-container">Description</label>
+        <label class="subtitle-container">Description *</label>
         <div class="text-area-container error">
           <textarea
             (click)="resetWarnings()"
@@ -95,7 +97,7 @@
       </div>
 
       <div class="input-label-container" [class.error]="isInvalid">
-        <label class="subtitle-container">Upload file</label>
+        <label class="subtitle-container">Upload file *</label>
 
         <div
           class="drag-zone"

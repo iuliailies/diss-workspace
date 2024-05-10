@@ -144,21 +144,7 @@ export class CreateTrainingComponent implements CanComponentDeactivate{
   }
 
   createTraining() {
-    if (this.createTrainingForm.controls['requiredLevel'].invalid) {
-      this.isInvalid = true;
-      this.notificationService.notify({
-        message: 'Required level must be a number!',
-        type: NotificationType.error,
-      });
-      return;
-    } else if (this.createTrainingForm.controls['reward'].invalid) {
-      this.isInvalid = true;
-      this.notificationService.notify({
-        message: 'Reward must be a number!',
-        type: NotificationType.error,
-      });
-      return;
-    } else if (this.createTrainingForm.invalid) {
+    if (this.createTrainingForm.invalid) {
       this.isInvalid = true;
       this.notificationService.notify({
         message: 'Complete all the fields to create the training!',
@@ -200,6 +186,19 @@ export class CreateTrainingComponent implements CanComponentDeactivate{
     this.contentUpdated = false;
     this.loading = false;
     this.navigateToTrainingsView();
+  }
+
+  numericOnly(event: any): boolean {
+    let regex = /^([0-9])$/;
+    let result = regex.test(event.key);
+
+    // Allow control keys: backspace, delete, arrows
+    if (result || (event.key === "Delete" || event.key === "Backspace" || event.key === "Tab" || event.keyCode === 37 || event.keyCode === 39)) {
+      return true;  // Allow normal behavior
+    } else {
+      event.preventDefault();  // Prevent character input
+      return false;  // Suppress key press
+    }
   }
 
   handleError(error: any) {
