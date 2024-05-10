@@ -1,1 +1,12 @@
-<p>comments works!</p>
+<div class="comment-wrapper card">
+    <div class="input" #commentContent appContentEditable placeholder="Add comment..." (unfocused)="addComment()"></div>
+</div>
+<div class="comment-wrapper card" *ngFor="let comment of comments">
+  <div
+      class="user-icon"
+      [style.background-color]="getUserName(comment) | generateColor"
+    >
+      {{getUserInitials(comment)}}
+    </div>
+  <span class="text  slimScroll scroll-hidden">{{replaceText(comment.text)}}</span>
+</div>

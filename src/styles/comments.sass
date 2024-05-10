@@ -42,3 +42,42 @@
         filter: $filter-white
         height: 25px
         padding-top: 5px
+
+.comment-wrapper
+    width: 300px
+    min-height: 60px
+    margin: 20px 0 20px 20px
+    padding: 0 0 10px 10px
+    display: flex
+    position: relative
+
+    &:not(&:first-child)
+        max-height: 200px
+
+    .input
+        width: 100%
+        padding: 15px 15px 0 0 
+        outline: none !important
+        border: none
+
+        &:focus, &:hover
+            border: none
+
+    span
+        white-space: break-spaces
+        padding: 15px 20px 0 0 
+        width: 100%
+
+    .user-icon
+        position: absolute
+        right: 5px
+        top: 5px
+        width: 25px
+        height: 25px
+
+    [contenteditable=true]:empty:before 
+        content: attr(placeholder)
+        pointer-events: none
+        color: $gray-secondary
+        display: block
+    

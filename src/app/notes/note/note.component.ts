@@ -21,6 +21,7 @@ export class NoteComponent implements OnInit, CanComponentDeactivate {
   @ViewChild('noteContent') noteContent!: ElementRef;
 
   userId = localStorage.getItem('userId');
+  documentId!: number;
   loading = false;
   readOnly = false;
   keywords: string[] = [];
@@ -37,15 +38,19 @@ export class NoteComponent implements OnInit, CanComponentDeactivate {
   ) {}
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe((params) => {
+      if(params.get('id') !== null) {
+        this.documentId = +params.get('id')!
+      }
+    })
     this.fetchDocument();
   }
 
   fetchDocument() {
     this.loading = true;
     this.activatedRoute.paramMap.subscribe((params) => {
-      const documentId = params.get('id');
-      if (documentId) {
-        this.noteService.getDocument(documentId).subscribe((document) => {
+      if (this.documentId) {
+        this.noteService.getDocument(this.documentId).subscribe((document) => {
           this.document = document as EmployeeDocument;
           this.initializeFields();
           this.loading = false;
@@ -237,4 +242,9 @@ export class NoteComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
+  isCommentsToggleVisible() : boolean {
+    // TODO: recheck
+    // return this.document.visibility || this.document.userId === this.userId;
+    return this.document.visibility;
+  }
 }

@@ -120,11 +120,11 @@
           [contentEditable]="!readOnly ? 'true' : 'false'"
           [innerHTML]="document.text"
         ></div>
-        <div class="comments-toggle" [class.is-active]="commentsToggled" (click)="commentsToggled = !commentsToggled">
+        <div class="comments-toggle" *ngIf="isCommentsToggleVisible()" [class.is-active]="commentsToggled" (click)="commentsToggled = !commentsToggled">
           <img [src]="PATHS.ICONS + 'comments.svg'" class="arrow" alt="" />
         </div>
       </div>
-      <app-comments *ngIf="commentsToggled"></app-comments>
+      <app-comments [documentId]="documentId" *ngIf="commentsToggled && isCommentsToggleVisible()"></app-comments>
     </div>
   </div>
 </div>
