@@ -2,3 +2,9 @@
     background-color: $white
     border-radius: $border-radius-floating
     box-shadow: $box-shadow-card
+    border: 1px solid transparent
+    transition: all $transition-duration
+
+    &.is-active
+        box-shadow: $box-shadow-card-active
+        border: 1px dashed $blue-primary

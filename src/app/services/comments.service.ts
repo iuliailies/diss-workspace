@@ -20,7 +20,7 @@ export class CommentService {
   }
 
   deleteComment(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/delete-comment/${id}`);
+    return this.http.delete(`${this.baseUrl}/get-comments/${id}`);
   }
 
   updateComment(comment: UpdateComment): Observable<Comment> {

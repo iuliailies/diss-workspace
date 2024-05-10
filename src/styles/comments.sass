@@ -49,6 +49,7 @@
     margin: 20px 0 20px 20px
     padding: 0 0 10px 10px
     display: flex
+    flex-direction: column
     position: relative
 
     &:not(&:first-child)
@@ -64,8 +65,9 @@
             border: none
 
     span
-        white-space: break-spaces
-        padding: 15px 20px 0 0 
+        white-space: break-spaces !important
+        margin: 15px 20px 20px 0 
+        padding: 0 !important
         width: 100%
 
     .user-icon
@@ -74,6 +76,29 @@
         top: 5px
         width: 25px
         height: 25px
+
+    .icon
+        filter: $filter-gray-secondary
+        position: absolute
+        bottom: 0px
+        right: 0px
+        height: 15px
+        cursor: pointer
+
+        &:hover
+            opacity: .9
+
+    .action-toolbar
+        .icon
+            &:first-child
+                left: -4px
+
+            &:nth-child(2)
+                left: 25px
+
+                &:hover
+                    filter: $filter-red
+
 
     [contenteditable=true]:empty:before 
         content: attr(placeholder)
