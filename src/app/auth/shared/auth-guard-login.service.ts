@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-import {CookieService} from "ngx-cookie-service";
-import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
-import {parseJwt} from "../../utils/JWTParser";
-import {UserType} from "../../data-types/user.model";
+import { CookieService } from 'ngx-cookie-service';
+import {
+  ActivatedRouteSnapshot,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
+import { parseJwt } from '../../utils/JWTParser';
+import { UserType } from '../../data-types/user.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuardLoginService {
   constructor(

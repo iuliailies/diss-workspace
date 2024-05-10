@@ -10,9 +10,9 @@ import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { Badge } from '../../data-types/badge.model';
 import { UserService } from '../../services/user.service';
-import {forkJoin, map} from "rxjs";
-import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
-import {SearchDocument} from "../../data-types/search.model";
+import { forkJoin, map } from 'rxjs';
+import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
+import { SearchDocument } from '../../data-types/search.model';
 
 @Component({
   selector: 'app-index',
@@ -53,22 +53,23 @@ export class IndexComponent implements OnInit {
 
   triggerSearchDocuments(searchString: any): void {
     searchString = searchString.trim();
-    if(searchString !== null && searchString !== "")
+    if (searchString !== null && searchString !== '')
       this.searchDocuments(searchString);
-    else
-      this.fetchDocuments();
+    else this.fetchDocuments();
   }
 
   searchDocuments(searchString: any): void {
     this.loading = true;
-    const searchRequest : SearchDocument = {
+    const searchRequest: SearchDocument = {
       searchKey: searchString,
-      userId: this.userId
-    }
-    this.noteService.searchOwnedDocuments(searchRequest).subscribe((documents) => {
-      this.documents = documents;
-      this.loading = false;
-    });
+      userId: this.userId,
+    };
+    this.noteService
+      .searchOwnedDocuments(searchRequest)
+      .subscribe((documents) => {
+        this.documents = documents;
+        this.loading = false;
+      });
   }
 
   fetchDocumentsAndBadges(): void {
@@ -84,14 +85,17 @@ export class IndexComponent implements OnInit {
             documents,
             badges,
           };
-        })
+        }),
       )
       .subscribe({
         next: ({ documents, badges }) => {
           this.documents = documents;
           this.xpUntilNextLevel = 200 - this.userPoints;
           this.badges = badges;
-          this.displayedBadges = this.badges.slice(this.startIndex, this.endIndex);
+          this.displayedBadges = this.badges.slice(
+            this.startIndex,
+            this.endIndex,
+          );
           this.existBadges = this.badges.length > 0;
           this.loading = false;
         },
@@ -108,8 +112,7 @@ export class IndexComponent implements OnInit {
         type: NotificationType.error,
       });
     } else {
-      const errResponse: ErrorResponseModel =
-        error.error as ErrorResponseModel;
+      const errResponse: ErrorResponseModel = error.error as ErrorResponseModel;
       this.notificationService.notify({
         message: errResponse.errorMessage,
         type: NotificationType.error,
@@ -118,17 +121,19 @@ export class IndexComponent implements OnInit {
   }
 
   fetchDocuments(): void {
-      this.loadingDocuments = true;
-      this.noteService.getOwnDocuments(this.userId).subscribe((documents) => {
-        this.documents = documents;
-        this.loadingDocuments = false;
-      });
+    this.loadingDocuments = true;
+    this.noteService.getOwnDocuments(this.userId).subscribe((documents) => {
+      this.documents = documents;
+      this.loadingDocuments = false;
+    });
   }
 
   deleteDocument(event: any, document: GetEmployeeDocument) {
     event.stopPropagation();
 
-    const dialogResponse = this.confirmationDialogService.confirm(`Are you sure you want to delete document: ${document.title} ?`);
+    const dialogResponse = this.confirmationDialogService.confirm(
+      `Are you sure you want to delete document: ${document.title} ?`,
+    );
 
     dialogResponse.subscribe((response) => {
       if (response) {

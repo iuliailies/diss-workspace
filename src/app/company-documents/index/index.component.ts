@@ -55,30 +55,32 @@ export class IndexComponent implements OnInit {
 
     dialogResponse.subscribe((response) => {
       if (response) {
-        this.companyDocumentService.deleteCompanyDocument(document.id).subscribe({
-          next: () => {
-            this.fetchCompanyDocuments();
-            this.notificationService.notify({
-              message: 'Document deleted successfully!',
-              type: NotificationType.error,
-            });
-          },
-          error: (error: any) => {
-            if (error.error instanceof ErrorEvent) {
+        this.companyDocumentService
+          .deleteCompanyDocument(document.id)
+          .subscribe({
+            next: () => {
+              this.fetchCompanyDocuments();
               this.notificationService.notify({
-                message: 'An error occurred! Please try again later!',
+                message: 'Document deleted successfully!',
                 type: NotificationType.error,
               });
-            } else {
-              const errResponse: ErrorResponseModel =
-                error.error as ErrorResponseModel;
-              this.notificationService.notify({
-                message: errResponse.errorMessage,
-                type: NotificationType.error,
-              });
-            }
-          },
-        });
+            },
+            error: (error: any) => {
+              if (error.error instanceof ErrorEvent) {
+                this.notificationService.notify({
+                  message: 'An error occurred! Please try again later!',
+                  type: NotificationType.error,
+                });
+              } else {
+                const errResponse: ErrorResponseModel =
+                  error.error as ErrorResponseModel;
+                this.notificationService.notify({
+                  message: errResponse.errorMessage,
+                  type: NotificationType.error,
+                });
+              }
+            },
+          });
       }
     });
   }

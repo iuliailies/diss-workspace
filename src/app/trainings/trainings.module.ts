@@ -13,7 +13,7 @@ import {
   MatExpansionPanelHeader,
 } from '@angular/material/expansion';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import {IndexComponent} from "./index/index.component";
+import { IndexComponent } from './index/index.component';
 
 @NgModule({
   declarations: [IndexComponent, TrainingComponent, CreateTrainingComponent],

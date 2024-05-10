@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
-import {AlreadyAuthGuardService} from "./auth/shared/already-auth-guard.service";
-import {AuthGuardAdminService} from "./auth/shared/auth-guard-admin.service";
-import {AuthGuardOtherService} from "./auth/shared/auth-guard-other.service";
-import {AuthGuardLoginService} from "./auth/shared/auth-guard-login.service";
+import { AlreadyAuthGuardService } from './auth/shared/already-auth-guard.service';
+import { AuthGuardAdminService } from './auth/shared/auth-guard-admin.service';
+import { AuthGuardOtherService } from './auth/shared/auth-guard-other.service';
+import { AuthGuardLoginService } from './auth/shared/auth-guard-login.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -50,7 +50,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
   exports: [RouterModule],
 })

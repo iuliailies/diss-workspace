@@ -1,27 +1,56 @@
 <div class="comment-wrapper card">
-    <div class="input" #commentContent appContentEditable placeholder="Add comment..." (unfocused)="addComment()"></div>
-    <img [src]="PATHS.ICONS + 'send.svg'" class="icon" (click)="addComment()"/>
-</div>
-<div class="comment-wrapper card" [class.is-active]="commentIndexEdit === i" *ngFor="let comment of comments; let i = index">
   <div
-      class="user-icon"
-      [style.background-color]="getUserName(comment) | generateColor"
-    >
-      {{getUserInitials(comment)}}
-    </div>
-  <span class="text  slimScroll scroll-hidden" *ngIf="commentIndexEdit !== i">{{replaceText(comment.text)}}</span>
+    class="input"
+    #commentContent
+    appContentEditable
+    placeholder="Add comment..."
+    (unfocused)="addComment()"
+  ></div>
+  <img [src]="PATHS.ICONS + 'send.svg'" class="icon" (click)="addComment()" />
+</div>
+<div
+  class="comment-wrapper card"
+  [class.is-active]="commentIndexEdit === i"
+  *ngFor="let comment of comments; let i = index"
+>
+  <div
+    class="user-icon"
+    [style.background-color]="getUserName(comment) | generateColor"
+  >
+    {{ getUserInitials(comment) }}
+  </div>
+  <span class="text slimScroll scroll-hidden" *ngIf="commentIndexEdit !== i">{{
+    replaceText(comment.text)
+  }}</span>
   <span
     appContentEditable
     #commentText
     *ngIf="commentIndexEdit === i"
     class="input"
-    >{{replaceText(comment.text)}}</span
+    >{{ replaceText(comment.text) }}</span
   >
 
-  <img [src]="PATHS.ICONS + 'pen.svg'" class="icon" *ngIf="isCommentEditable(comment)" (click)="commentIndexEdit = i"/>
+  <img
+    [src]="PATHS.ICONS + 'pen.svg'"
+    class="icon"
+    *ngIf="isCommentEditable(comment)"
+    (click)="commentIndexEdit = i"
+  />
   <div class="action-toolbar space-between" *ngIf="commentIndexEdit === i">
-    <img [src]="PATHS.ICONS + 'x-solid.svg'" class="icon" (click)="commentIndexEdit = -1"/>
-    <img [src]="PATHS.ICONS + 'trash-solid.svg'" class="icon" (click)="deleteComment(comment, i)"/>
-    <img [src]="PATHS.ICONS + 'check.svg'" class="icon" (click)="updateComment(comment)"/>
+    <img
+      [src]="PATHS.ICONS + 'x-solid.svg'"
+      class="icon"
+      (click)="commentIndexEdit = -1"
+    />
+    <img
+      [src]="PATHS.ICONS + 'trash-solid.svg'"
+      class="icon"
+      (click)="deleteComment(comment, i)"
+    />
+    <img
+      [src]="PATHS.ICONS + 'check.svg'"
+      class="icon"
+      (click)="updateComment(comment)"
+    />
   </div>
 </div>

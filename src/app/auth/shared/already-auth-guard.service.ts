@@ -4,7 +4,7 @@ import {
   RouterStateSnapshot,
   Router,
 } from '@angular/router';
-import {CookieService} from "ngx-cookie-service";
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({ providedIn: 'root' })
 export class AlreadyAuthGuardService {

@@ -2,5 +2,10 @@
   <button class="search-button" (click)="triggerSearch(searchInput.value)">
     <img [src]="PATHS.ICONS + 'search.svg'" class="icon" />
   </button>
-  <input type="text" #searchInput class="search-input" (keydown.enter)="triggerSearch(searchInput.value)" />
+  <input
+    type="text"
+    #searchInput
+    class="search-input"
+    (keydown.enter)="triggerSearch(searchInput.value)"
+  />
 </div>

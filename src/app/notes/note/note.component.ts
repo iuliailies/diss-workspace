@@ -7,9 +7,9 @@ import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { NotificationService } from '../../services/notification.service';
 import { File } from '../../data-types/file.model';
-import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
-import {CanComponentDeactivate} from "../../core/unsaved-changes-guard.service";
-import {Observable} from "rxjs";
+import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
+import { CanComponentDeactivate } from '../../core/unsaved-changes-guard.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-note',
@@ -39,10 +39,10 @@ export class NoteComponent implements OnInit, CanComponentDeactivate {
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {
-      if(params.get('id') !== null) {
-        this.documentId = +params.get('id')!
+      if (params.get('id') !== null) {
+        this.documentId = +params.get('id')!;
       }
-    })
+    });
     this.fetchDocument();
   }
 
@@ -128,8 +128,7 @@ export class NoteComponent implements OnInit, CanComponentDeactivate {
         type: NotificationType.error,
       });
     } else {
-      const errResponse: ErrorResponseModel =
-        error.error as ErrorResponseModel;
+      const errResponse: ErrorResponseModel = error.error as ErrorResponseModel;
       this.notificationService.notify({
         message: errResponse.errorMessage,
         type: NotificationType.error,
@@ -242,7 +241,7 @@ export class NoteComponent implements OnInit, CanComponentDeactivate {
     }
   }
 
-  isCommentsToggleVisible() : boolean {
+  isCommentsToggleVisible(): boolean {
     // TODO: recheck
     // return this.document.visibility || this.document.userId === this.userId;
     return this.document.visibility;

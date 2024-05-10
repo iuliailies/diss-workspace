@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SaveComment, Comment, UpdateComment } from '../data-types/comments.model';
+import {
+  SaveComment,
+  Comment,
+  UpdateComment,
+} from '../data-types/comments.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +20,9 @@ export class CommentService {
   }
 
   getComments(documentId: number): Observable<Comment[]> {
-    return this.http.get<Comment[]>(`${this.baseUrl}/get-comments/${documentId}`);
+    return this.http.get<Comment[]>(
+      `${this.baseUrl}/get-comments/${documentId}`,
+    );
   }
 
   deleteComment(id: number): Observable<any> {

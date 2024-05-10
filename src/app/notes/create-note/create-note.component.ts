@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import {
   EmployeeDocument,
   SaveEmployeeDocument,
@@ -10,16 +10,16 @@ import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { NotificationService } from '../../services/notification.service';
 import { File } from '../../data-types/file.model';
-import {CanComponentDeactivate} from "../../core/unsaved-changes-guard.service";
-import {Observable} from "rxjs";
-import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
+import { CanComponentDeactivate } from '../../core/unsaved-changes-guard.service';
+import { Observable } from 'rxjs';
+import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
 
 @Component({
   selector: 'app-create-note',
   templateUrl: './create-note.component.html',
   styleUrl: './create-note.component.sass',
 })
-export class CreateNoteComponent implements CanComponentDeactivate{
+export class CreateNoteComponent implements CanComponentDeactivate {
   @ViewChild('noteContent') noteContent!: ElementRef;
 
   protected readonly PATHS = PATHS;
@@ -47,7 +47,7 @@ export class CreateNoteComponent implements CanComponentDeactivate{
     private noteService: NoteService,
     private router: Router,
     private notificationService: NotificationService,
-    private confirmationDialogService: ConfirmationDialogService
+    private confirmationDialogService: ConfirmationDialogService,
   ) {}
 
   changeDocumentName(event: Event): void {
@@ -94,9 +94,9 @@ export class CreateNoteComponent implements CanComponentDeactivate{
         this.handleSuccess(response);
       },
       error: (error: any) => {
-          this.handleError(error)
-          this.loading = false;
-        },
+        this.handleError(error);
+        this.loading = false;
+      },
     });
   }
 
@@ -129,12 +129,12 @@ export class CreateNoteComponent implements CanComponentDeactivate{
 
   // Method to determine whether navigation can occur
   canDeactivate(): Observable<boolean> | boolean {
-    console.log("intra in can deactivate")
-    console.log("text notita: " + this.textNoteContent)
+    console.log('intra in can deactivate');
+    console.log('text notita: ' + this.textNoteContent);
 
     // If there are no unsaved changes, allow navigation immediately
-    if(!this.contentUpdated && this.document.text === this.textNoteContent) {
-      console.log("merge pe navigation imediat")
+    if (!this.contentUpdated && this.document.text === this.textNoteContent) {
+      console.log('merge pe navigation imediat');
       return true;
     }
 

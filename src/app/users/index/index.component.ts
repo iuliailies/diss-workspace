@@ -21,13 +21,11 @@ export class IndexComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
   ) {}
 
-
   triggerSearchUsers(searchString: any): void {
     searchString = searchString.trim();
-    if(searchString !== null && searchString !== "")
+    if (searchString !== null && searchString !== '')
       this.searchUsers(searchString);
-    else
-      this.fetchUsers();
+    else this.fetchUsers();
   }
 
   searchUsers(searchString: any): void {
@@ -37,7 +35,6 @@ export class IndexComponent implements OnInit {
       this.loading = false;
     });
   }
-
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(() => {

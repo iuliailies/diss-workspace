@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { PATHS } from '../../app.constants';
-import {GetEmployeeDocument} from '../../data-types/notes.model';
+import { GetEmployeeDocument } from '../../data-types/notes.model';
 import { NoteService } from '../../services/note.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationService } from '../../services/notification.service';
 import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import {CookieService} from "ngx-cookie-service";
-import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
-import {SearchDocument} from "../../data-types/search.model";
+import { CookieService } from 'ngx-cookie-service';
+import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
+import { SearchDocument } from '../../data-types/search.model';
 
 @Component({
   selector: 'app-index',
@@ -29,7 +29,7 @@ export class IndexComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private confirmationDialogService: ConfirmationDialogService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
   ) {}
 
   ngOnInit() {
@@ -52,18 +52,17 @@ export class IndexComponent implements OnInit {
 
   triggerSearchDocuments(searchString: any): void {
     searchString = searchString.trim();
-    if(searchString !== null && searchString !== "")
+    if (searchString !== null && searchString !== '')
       this.searchDocuments(searchString);
-    else
-      this.fetchDocuments();
+    else this.fetchDocuments();
   }
 
   searchDocuments(searchString: any): void {
     this.loading = true;
-    const searchRequest : SearchDocument = {
+    const searchRequest: SearchDocument = {
       searchKey: searchString,
-      userId: this.userId
-    }
+      userId: this.userId,
+    };
     this.noteService.searchDocuments(searchRequest).subscribe((documents) => {
       this.documents = documents;
       this.loading = false;
@@ -73,7 +72,9 @@ export class IndexComponent implements OnInit {
   deleteDocument(event: any, document: GetEmployeeDocument) {
     event.stopPropagation();
 
-    const dialogResponse = this.confirmationDialogService.confirm(`Are you sure you want to delete document: ${document.title} ?`);
+    const dialogResponse = this.confirmationDialogService.confirm(
+      `Are you sure you want to delete document: ${document.title} ?`,
+    );
 
     dialogResponse.subscribe((response) => {
       if (response) {

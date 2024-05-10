@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { PATHS } from '../../app.constants';
-import {FormControl} from "@angular/forms";
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-search-bar',
@@ -13,8 +13,7 @@ export class SearchBarComponent {
   @Output() search: EventEmitter<any> = new EventEmitter();
 
   triggerSearch(searchString: any) {
-    console.log(searchString)
+    console.log(searchString);
     this.search.emit(searchString);
   }
-
 }

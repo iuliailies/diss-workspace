@@ -7,16 +7,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { PATHS } from '../../app.constants';
-import {CanComponentDeactivate} from "../../core/unsaved-changes-guard.service";
-import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
-import {Observable} from "rxjs";
+import { CanComponentDeactivate } from '../../core/unsaved-changes-guard.service';
+import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrl: './user.component.sass',
 })
-export class UserComponent implements OnInit, CanComponentDeactivate{
+export class UserComponent implements OnInit, CanComponentDeactivate {
   userTypes: UserType[] = [];
   loading = false;
   createUserForm!: FormGroup;
@@ -123,31 +123,32 @@ export class UserComponent implements OnInit, CanComponentDeactivate{
   }
 
   deleteUser() {
-
-    this.confirmationDialogService.confirm("Are you sure to delete this user?").subscribe((response) => {
-      if (response) {
-        this.loading = true;
-        this.userService
-          .deleteUser(this.createUserForm.get('id')?.value)
-          .subscribe({
-            next: () => {
-              this.notificationService.notify({
-                message: 'User deleted successfully!',
-                type: NotificationType.success,
-              });
-              this.loading = false;
-              this.navigateToUsersView();
-            },
-            error: (error) => {
-              this.notificationService.notify({
-                message: 'An error occurred! Please try again later!',
-                type: NotificationType.error,
-              });
-              this.loading = false;
-            },
-          });
-      }
-    });
+    this.confirmationDialogService
+      .confirm('Are you sure to delete this user?')
+      .subscribe((response) => {
+        if (response) {
+          this.loading = true;
+          this.userService
+            .deleteUser(this.createUserForm.get('id')?.value)
+            .subscribe({
+              next: () => {
+                this.notificationService.notify({
+                  message: 'User deleted successfully!',
+                  type: NotificationType.success,
+                });
+                this.loading = false;
+                this.navigateToUsersView();
+              },
+              error: (error) => {
+                this.notificationService.notify({
+                  message: 'An error occurred! Please try again later!',
+                  type: NotificationType.error,
+                });
+                this.loading = false;
+              },
+            });
+        }
+      });
   }
 
   validateUser() {
@@ -254,7 +255,6 @@ export class UserComponent implements OnInit, CanComponentDeactivate{
 
   // Method to determine whether navigation can occur
   canDeactivate(): Observable<boolean> | boolean {
-
     // If there are no unsaved changes, allow navigation immediately
     if (!this.createUserForm.touched) {
       return true;

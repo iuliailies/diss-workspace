@@ -7,16 +7,16 @@ import { SaveUser, UserType } from '../../data-types/user.model';
 import { NotificationType } from '../../data-types/notification.model';
 import { UserService } from '../../services/user.service';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
-import {Observable} from "rxjs";
-import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
-import {CanComponentDeactivate} from "../../core/unsaved-changes-guard.service";
+import { Observable } from 'rxjs';
+import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
+import { CanComponentDeactivate } from '../../core/unsaved-changes-guard.service';
 
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
   styleUrl: './create-user.component.sass',
 })
-export class CreateUserComponent implements OnInit, CanComponentDeactivate{
+export class CreateUserComponent implements OnInit, CanComponentDeactivate {
   userTypes: UserType[] = [];
   loading = false;
   createUserForm!: FormGroup;
@@ -244,10 +244,8 @@ export class CreateUserComponent implements OnInit, CanComponentDeactivate{
     this.router.navigate([`users/${user.id}`]);
   }
 
-
   // Method to determine whether navigation can occur
   canDeactivate(): Observable<boolean> | boolean {
-
     // If there are no unsaved changes, allow navigation immediately
     if (!this.createUserForm.touched || this.saving) {
       return true;
@@ -255,6 +253,4 @@ export class CreateUserComponent implements OnInit, CanComponentDeactivate{
 
     return this.confirmationDialogService.confirmNavigation();
   }
-
 }
-

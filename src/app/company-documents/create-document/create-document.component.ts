@@ -129,7 +129,6 @@ export class CreateDocumentComponent implements CanComponentDeactivate {
 
   // Method to determine whether navigation can occur
   canDeactivate(): Observable<boolean> | boolean {
-
     // If there are no unsaved changes, allow navigation immediately
     if (!this.contentUpdated && this.document.text === this.textNoteContent) {
       return true;

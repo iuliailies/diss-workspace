@@ -8,7 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { parseJwt } from '../../utils/JWTParser';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
-import {LogoutService} from "../../services/logout.service";
+import { LogoutService } from '../../services/logout.service';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +30,7 @@ export class LoginComponent {
     private router: Router,
     private userService: UserService,
     private cookieService: CookieService,
-    private logoutService: LogoutService
+    private logoutService: LogoutService,
   ) {}
 
   resetWarnings() {
@@ -65,7 +65,7 @@ export class LoginComponent {
           localStorage.setItem('userLastname', user.lastname);
           localStorage.setItem('userPoints', String(user.points));
           localStorage.setItem('userLevel', String(user.level));
-          if(user.type === 'ADMIN') {
+          if (user.type === 'ADMIN') {
             this.router.navigate(['users']);
           } else {
             this.router.navigate(['notes']);

@@ -15,7 +15,9 @@ export class CompanyDocService {
 
   constructor(private http: HttpClient) {}
 
-  createCompanyDocument(note: SaveCompanyDocument): Observable<CompanyDocument> {
+  createCompanyDocument(
+    note: SaveCompanyDocument,
+  ): Observable<CompanyDocument> {
     return this.http.post<CompanyDocument>(
       this.requestURL + '/create-document',
       note,
@@ -38,7 +40,9 @@ export class CompanyDocService {
     );
   }
 
-  updateCompanyDocument(document: CompanyDocument): Observable<CompanyDocument> {
+  updateCompanyDocument(
+    document: CompanyDocument,
+  ): Observable<CompanyDocument> {
     return this.http.put<CompanyDocument>(
       `${this.requestURL}/update-document`,
       document,

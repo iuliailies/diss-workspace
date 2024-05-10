@@ -1,18 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
-import {NotificationService} from '../../services/notification.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ConfirmationDialogBoxComponent} from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
-import {NotificationType} from '../../data-types/notification.model';
-import {ErrorResponseModel} from '../../data-types/error-response.model';
-import {PATHS} from '../../app.constants';
-import {GetTrainingDocument} from '../../data-types/training.model';
-import {TrainingService} from '../../services/training.service';
-import {UserType} from '../../data-types/user.model';
-import {Badge} from '../../data-types/badge.model';
-import {forkJoin, map, Subscription} from "rxjs";
-import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
-import {SearchDocument} from "../../data-types/search.model";
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { NotificationService } from '../../services/notification.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationDialogBoxComponent } from '../../core/confirmation-dialog-box/confirmation-dialog-box.component';
+import { NotificationType } from '../../data-types/notification.model';
+import { ErrorResponseModel } from '../../data-types/error-response.model';
+import { PATHS } from '../../app.constants';
+import { GetTrainingDocument } from '../../data-types/training.model';
+import { TrainingService } from '../../services/training.service';
+import { UserType } from '../../data-types/user.model';
+import { Badge } from '../../data-types/badge.model';
+import { forkJoin, map, Subscription } from 'rxjs';
+import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
+import { SearchDocument } from '../../data-types/search.model';
 
 @Component({
   selector: 'app-index',
@@ -38,8 +38,7 @@ export class IndexComponent implements OnInit {
     private notificationService: NotificationService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-  ) {
-  }
+  ) {}
 
   isUserTrainer() {
     return this.userType === UserType.TRAINER;
@@ -55,30 +54,32 @@ export class IndexComponent implements OnInit {
 
   triggerSearchTrainings(searchString: any): void {
     searchString = searchString.trim();
-    if(searchString !== null && searchString !== "")
+    if (searchString !== null && searchString !== '')
       this.searchTrainings(searchString);
-    else
-      this.fetchAllTrainings();
+    else this.fetchAllTrainings();
   }
 
   searchTrainings(searchString: any) {
     this.loading = true;
 
-    const searchRequest : SearchDocument = {
+    const searchRequest: SearchDocument = {
       searchKey: searchString,
-      userId: parseInt(this.userId || '-1')
-    }
+      userId: parseInt(this.userId || '-1'),
+    };
 
-    const todoTrainings$ = this.trainingService.searchTodoTrainings(searchRequest);
-    const completedTrainings$ = this.trainingService.searchCompletedTrainings(searchRequest);
+    const todoTrainings$ =
+      this.trainingService.searchTodoTrainings(searchRequest);
+    const completedTrainings$ =
+      this.trainingService.searchCompletedTrainings(searchRequest);
 
     forkJoin([todoTrainings$, completedTrainings$])
-      .pipe(map(([todoResponse, completedResponse]) => {
-          return {todoResponse, completedResponse};
-        })
+      .pipe(
+        map(([todoResponse, completedResponse]) => {
+          return { todoResponse, completedResponse };
+        }),
       )
       .subscribe({
-        next: ({todoResponse, completedResponse}) => {
+        next: ({ todoResponse, completedResponse }) => {
           this.todoTrainings = todoResponse;
           this.completedTrainings = completedResponse;
           this.loading = false;
@@ -99,15 +100,18 @@ export class IndexComponent implements OnInit {
     this.loading = true;
 
     const todoTrainings$ = this.trainingService.getTodoTrainings(this.userId);
-    const completedTrainings$ = this.trainingService.getCompletedTrainings(this.userId);
+    const completedTrainings$ = this.trainingService.getCompletedTrainings(
+      this.userId,
+    );
 
     forkJoin([todoTrainings$, completedTrainings$])
-      .pipe(map(([todoResponse, completedResponse]) => {
-          return {todoResponse, completedResponse};
-        })
+      .pipe(
+        map(([todoResponse, completedResponse]) => {
+          return { todoResponse, completedResponse };
+        }),
       )
       .subscribe({
-        next: ({todoResponse, completedResponse}) => {
+        next: ({ todoResponse, completedResponse }) => {
           this.todoTrainings = todoResponse;
           this.completedTrainings = completedResponse;
           this.loading = false;
@@ -143,13 +147,18 @@ export class IndexComponent implements OnInit {
   }
 
   matchesUserIdAndIsTrainer(trainingUserId: number): boolean {
-    return trainingUserId.toString() === this.userId && this.userType === UserType.TRAINER;
+    return (
+      trainingUserId.toString() === this.userId &&
+      this.userType === UserType.TRAINER
+    );
   }
 
   deleteTraining(event: any, training: GetTrainingDocument) {
     event.stopPropagation();
 
-    const dialogResponse = this.confirmationDialogService.confirm(`Are you sure you want to delete document: ${document.title} ?`);
+    const dialogResponse = this.confirmationDialogService.confirm(
+      `Are you sure you want to delete document: ${document.title} ?`,
+    );
 
     dialogResponse.subscribe((response) => {
       if (response) {
@@ -198,13 +207,11 @@ export class IndexComponent implements OnInit {
         type: NotificationType.error,
       });
     } else {
-      const errResponse: ErrorResponseModel =
-        error.error as ErrorResponseModel;
+      const errResponse: ErrorResponseModel = error.error as ErrorResponseModel;
       this.notificationService.notify({
         message: errResponse.errorMessage,
         type: NotificationType.error,
       });
     }
   }
-
 }

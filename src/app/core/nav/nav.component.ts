@@ -1,26 +1,26 @@
-import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { PATHS } from '../../app.constants';
 import { AuthService } from '../../auth/shared/auth.service';
 import { CookieService } from 'ngx-cookie-service';
-import {filter} from "rxjs";
-import {UserType} from "../../data-types/user.model";
-import {CanComponentDeactivate} from "../unsaved-changes-guard.service";
-import {LogoutService} from "../../services/logout.service";
+import { filter } from 'rxjs';
+import { UserType } from '../../data-types/user.model';
+import { CanComponentDeactivate } from '../unsaved-changes-guard.service';
+import { LogoutService } from '../../services/logout.service';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.sass',
 })
-export class NavComponent implements OnInit{
+export class NavComponent implements OnInit {
   PATHS = PATHS;
 
   userName: any;
   userType: any;
   userDropdownOpened = false;
   showNav = false;
-  hiddenRoutes = ['/login']
+  hiddenRoutes = ['/login'];
 
   constructor(
     private elementRef: ElementRef,
@@ -31,10 +31,13 @@ export class NavComponent implements OnInit{
 
   ngOnInit(): void {
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.showNav = !this.hiddenRoutes.includes(this.router.url);
-        this.userName = localStorage.getItem('userFirstname') + " " + localStorage.getItem('userLastname');
+        this.userName =
+          localStorage.getItem('userFirstname') +
+          ' ' +
+          localStorage.getItem('userLastname');
         this.userType = localStorage.getItem('userType');
       });
   }
@@ -48,13 +51,16 @@ export class NavComponent implements OnInit{
   }
 
   getUserInitials() {
-    return localStorage.getItem('userFirstname')!.charAt(0) + localStorage.getItem('userLastname')!.charAt(0);
+    return (
+      localStorage.getItem('userFirstname')!.charAt(0) +
+      localStorage.getItem('userLastname')!.charAt(0)
+    );
   }
 
   logout(): void {
     this.logoutService.setLogoutInProgress(true); // Set logout state
     this.showNav = false;
-    this.router.navigate(['../login'])
+    this.router.navigate(['../login']);
     this.cookieService.delete('Token');
     localStorage.removeItem('userType');
     localStorage.removeItem('userId');
@@ -76,8 +82,7 @@ export class NavComponent implements OnInit{
           return;
         }
         this.userDropdownOpened = false;
-      }
-      catch (e) {
+      } catch (e) {
         this.userDropdownOpened = false;
         return;
       }

@@ -8,16 +8,16 @@ import { NotificationType } from '../../data-types/notification.model';
 import { SaveTrainingDocument } from '../../data-types/training.model';
 import { TrainingService } from '../../services/training.service';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
-import {CanComponentDeactivate} from "../../core/unsaved-changes-guard.service";
-import {ConfirmationDialogService} from "../../services/confirmation-dialog.service";
-import {Observable} from "rxjs";
+import { CanComponentDeactivate } from '../../core/unsaved-changes-guard.service';
+import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-create-training',
   templateUrl: './create-training.component.html',
   styleUrl: './create-training.component.sass',
 })
-export class CreateTrainingComponent implements CanComponentDeactivate{
+export class CreateTrainingComponent implements CanComponentDeactivate {
   userId = localStorage.getItem('userId');
   loading = false;
   protected readonly PATHS = PATHS;
@@ -193,11 +193,18 @@ export class CreateTrainingComponent implements CanComponentDeactivate{
     let result = regex.test(event.key);
 
     // Allow control keys: backspace, delete, arrows
-    if (result || (event.key === "Delete" || event.key === "Backspace" || event.key === "Tab" || event.keyCode === 37 || event.keyCode === 39)) {
-      return true;  // Allow normal behavior
+    if (
+      result ||
+      event.key === 'Delete' ||
+      event.key === 'Backspace' ||
+      event.key === 'Tab' ||
+      event.keyCode === 37 ||
+      event.keyCode === 39
+    ) {
+      return true; // Allow normal behavior
     } else {
-      event.preventDefault();  // Prevent character input
-      return false;  // Suppress key press
+      event.preventDefault(); // Prevent character input
+      return false; // Suppress key press
     }
   }
 
@@ -209,15 +216,13 @@ export class CreateTrainingComponent implements CanComponentDeactivate{
         type: NotificationType.error,
       });
     } else {
-      const errResponse: ErrorResponseModel =
-        error.error as ErrorResponseModel;
+      const errResponse: ErrorResponseModel = error.error as ErrorResponseModel;
       this.notificationService.notify({
         message: errResponse.errorMessage,
         type: NotificationType.error,
       });
     }
   }
-
 
   saveTraining(training: SaveTrainingDocument) {
     this.saving = true;
@@ -243,10 +248,11 @@ export class CreateTrainingComponent implements CanComponentDeactivate{
 
   // Method to determine whether navigation can occur
   canDeactivate(): Observable<boolean> | boolean {
-
-
     // If there are no unsaved changes, allow navigation immediately
-    if ((!this.contentUpdated && !this.createTrainingForm.touched) || this.saving) {
+    if (
+      (!this.contentUpdated && !this.createTrainingForm.touched) ||
+      this.saving
+    ) {
       return true;
     }
 

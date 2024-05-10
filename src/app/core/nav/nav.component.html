@@ -1,6 +1,11 @@
-<img *ngIf="showNav" [src]="PATHS.IMAGES + 'blob.png'" alt="" class="blob-background" />
+<img
+  *ngIf="showNav"
+  [src]="PATHS.IMAGES + 'blob.png'"
+  alt=""
+  class="blob-background"
+/>
 <nav *ngIf="showNav" class="nav-container slimScroll scroll-hidden">
-  <div class="nav-body" >
+  <div class="nav-body">
     <img [src]="PATHS.IMAGES + 'logo.svg'" alt="" class="logo" />
     <div class="nav-link-container" *ngIf="!isAdmin()">
       <a
@@ -36,11 +41,14 @@
       (click)="toggleUserDropdown()"
       [style.background-color]="userName | generateColor"
     >
-      {{getUserInitials()}}
+      {{ getUserInitials() }}
     </div>
   </div>
 </nav>
-<div class="dropdown-container slimScroll" *ngIf="userDropdownOpened && showNav">
+<div
+  class="dropdown-container slimScroll"
+  *ngIf="userDropdownOpened && showNav"
+>
   <div class="hd-links" *ngIf="!isAdmin()">
     <a class="hd-item" [routerLink]="['/profile']">
       <img [src]="PATHS.ICONS + 'medal.svg'" />
@@ -54,4 +62,3 @@
     </a>
   </div>
 </div>
-

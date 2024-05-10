@@ -44,11 +44,13 @@ export class DocumentComponent implements OnInit, CanComponentDeactivate {
     this.activatedRoute.paramMap.subscribe((params) => {
       const documentId = params.get('id');
       if (documentId) {
-        this.companyDocumentService.getCompanyDocument(documentId).subscribe((document) => {
-          this.document = document as CompanyDocument;
-          this.initializeFields();
-          this.loading = false;
-        });
+        this.companyDocumentService
+          .getCompanyDocument(documentId)
+          .subscribe((document) => {
+            this.document = document as CompanyDocument;
+            this.initializeFields();
+            this.loading = false;
+          });
       }
     });
   }

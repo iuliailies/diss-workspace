@@ -15,7 +15,7 @@
 
       <div class="header-right">
         <div class="button" [class.disabled]="loading" (click)="updateUser()">
-          <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt=""/>
+          <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
           <span>Save changes</span>
         </div>
       </div>
@@ -56,7 +56,6 @@
     </div>
 
     <div class="main-container">
-
       <div
         class="input-label-container"
         [class.error]="isInvalid || isEmailInvalid"
@@ -72,7 +71,6 @@
         </div>
       </div>
 
-
       <div class="input-label-container" [class.error]="isInvalid">
         <label class="subtitle-container">Type *</label>
         <div class="input-container">
@@ -87,7 +85,6 @@
           </select>
         </div>
       </div>
-
     </div>
 
     <div class="main-container">
@@ -114,11 +111,9 @@
           />
         </div>
       </div>
-
     </div>
 
     <div class="main-container">
-
       <div class="input-label-container" [class.error]="isInvalid">
         <label class="subtitle-container">Location *</label>
         <div class="input-container">
@@ -155,7 +150,7 @@
     [class.disabled]="loading"
     (click)="deleteUser()"
   >
-    <img [src]="PATHS.ICONS + 'trash-solid.svg'" class="arrow" alt=""/>
+    <img [src]="PATHS.ICONS + 'trash-solid.svg'" class="arrow" alt="" />
     <span>Delete user</span>
   </div>
 </div>

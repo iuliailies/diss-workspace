@@ -40,7 +40,7 @@ import { CommentsComponent } from './comments/comments.component';
     SearchBarComponent,
     GenerateColorPipe,
     LevelColorPipe,
-    CommentsComponent
+    CommentsComponent,
   ],
   imports: [
     CommonModule,
