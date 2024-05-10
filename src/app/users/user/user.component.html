@@ -15,7 +15,7 @@
 
       <div class="header-right">
         <div class="button" [class.disabled]="loading" (click)="updateUser()">
-          <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt="" />
+          <img [src]="PATHS.ICONS + 'pen.svg'" class="arrow" alt=""/>
           <span>Save changes</span>
         </div>
       </div>
@@ -29,9 +29,9 @@
 
 <div class="card" *ngIf="!loading">
   <form [formGroup]="createUserForm" class="create-training-form">
-    <div class="left-container">
+    <div class="main-container">
       <div class="input-label-container" [class.error]="isInvalid">
-        <label class="subtitle-container">Firstname</label>
+        <label class="subtitle-container">Firstname *</label>
         <div class="input-container">
           <input
             (click)="resetWarnings()"
@@ -42,11 +42,26 @@
         </div>
       </div>
 
+      <div class="input-label-container" [class.error]="isInvalid">
+        <label class="subtitle-container">Lastname *</label>
+        <div class="input-container">
+          <input
+            (click)="resetWarnings()"
+            class="input-field"
+            type="text"
+            formControlName="lastname"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="main-container">
+
       <div
         class="input-label-container"
         [class.error]="isInvalid || isEmailInvalid"
       >
-        <label class="subtitle-container">Email</label>
+        <label class="subtitle-container">Email *</label>
         <div class="input-container">
           <input
             (click)="resetWarnings()"
@@ -57,46 +72,9 @@
         </div>
       </div>
 
-      <div class="input-label-container" [class.error]="isInvalid">
-        <label class="subtitle-container">Role</label>
-        <div class="input-container">
-          <input
-            (click)="resetWarnings()"
-            class="input-field"
-            type="text"
-            formControlName="role"
-          />
-        </div>
-      </div>
 
       <div class="input-label-container" [class.error]="isInvalid">
-        <label class="subtitle-container">Location</label>
-        <div class="input-container">
-          <input
-            (click)="resetWarnings()"
-            class="input-field"
-            type="text"
-            formControlName="location"
-          />
-        </div>
-      </div>
-    </div>
-
-    <div class="right-container">
-      <div class="input-label-container" [class.error]="isInvalid">
-        <label class="subtitle-container">Lastname</label>
-        <div class="input-container">
-          <input
-            (click)="resetWarnings()"
-            class="input-field"
-            type="text"
-            formControlName="lastname"
-          />
-        </div>
-      </div>
-
-      <div class="input-label-container" [class.error]="isInvalid">
-        <label class="subtitle-container">Type</label>
+        <label class="subtitle-container">Type *</label>
         <div class="input-container">
           <select
             formControlName="type"
@@ -110,8 +88,23 @@
         </div>
       </div>
 
+    </div>
+
+    <div class="main-container">
       <div class="input-label-container" [class.error]="isInvalid">
-        <label class="subtitle-container">Department</label>
+        <label class="subtitle-container">Role *</label>
+        <div class="input-container">
+          <input
+            (click)="resetWarnings()"
+            class="input-field"
+            type="text"
+            formControlName="role"
+          />
+        </div>
+      </div>
+
+      <div class="input-label-container" [class.error]="isInvalid">
+        <label class="subtitle-container">Department *</label>
         <div class="input-container">
           <input
             (click)="resetWarnings()"
@@ -122,11 +115,27 @@
         </div>
       </div>
 
+    </div>
+
+    <div class="main-container">
+
+      <div class="input-label-container" [class.error]="isInvalid">
+        <label class="subtitle-container">Location *</label>
+        <div class="input-container">
+          <input
+            (click)="resetWarnings()"
+            class="input-field"
+            type="text"
+            formControlName="location"
+          />
+        </div>
+      </div>
+
       <div
         class="input-label-container"
         [class.error]="isInvalid || isPhoneNumberInvalid"
       >
-        <label class="subtitle-container">Phone number</label>
+        <label class="subtitle-container">Phone number *</label>
         <div class="input-container">
           <input
             (click)="resetWarnings()"
@@ -146,7 +155,7 @@
     [class.disabled]="loading"
     (click)="deleteUser()"
   >
-    <img [src]="PATHS.ICONS + 'trash-solid.svg'" class="arrow" alt="" />
+    <img [src]="PATHS.ICONS + 'trash-solid.svg'" class="arrow" alt=""/>
     <span>Delete user</span>
   </div>
 </div>

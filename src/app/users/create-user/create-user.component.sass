@@ -30,23 +30,24 @@ $input-width: calc($card-width - 40px)
 
 .create-training-form
   display: flex
-  flex-direction: row
+  flex-direction: column
   height: 100%
   width: 100%
 
-.left-container
-  width: $containers-width
+.main-container
   display: flex
-  flex-direction: column
-  padding-left: $form-padding
+  flex-direction: row
+  justify-content: center
+  align-items: center
+  width: $card-width
   padding-right: 20px
+  padding-left: 20px
 
-.right-container
-  width: $containers-width
-  display: flex
-  flex-direction: column
-  padding-right: 20px
+.input-label-container
+  width: 700px
 
 .input-label-container.error label
   color: $red
+
+
 

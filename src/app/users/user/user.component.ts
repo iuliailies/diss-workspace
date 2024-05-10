@@ -124,7 +124,7 @@ export class UserComponent implements OnInit, CanComponentDeactivate{
 
   deleteUser() {
 
-    this.confirmationDialogService.confirm("Do you want to delete the user?").subscribe((response) => {
+    this.confirmationDialogService.confirm("Are you sure to delete this user?").subscribe((response) => {
       if (response) {
         this.loading = true;
         this.userService
