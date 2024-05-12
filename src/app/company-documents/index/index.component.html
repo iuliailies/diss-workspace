@@ -4,7 +4,7 @@
       <div class="header-left">
         <h1 class="home-link">Company policies</h1>
       </div>
-      <div class="header-right">
+      <div class="header-right" *ngIf="isUserHR()">
         <div class="button" [routerLink]="['new']">
           <img [src]="PATHS.ICONS + 'plus.svg'" class="arrow" alt="" />
           <span>Add new</span>

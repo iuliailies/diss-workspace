@@ -9,6 +9,7 @@ import { NotificationType } from '../../data-types/notification.model';
 import { CompanyDocService } from '../../services/company-doc.service';
 import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
 import { NotificationService } from '../../services/notification.service';
+import { UserType } from '../../data-types/user.model';
 
 @Component({
   selector: 'app-index',
@@ -19,6 +20,7 @@ export class IndexComponent implements OnInit {
   PATHS = PATHS;
   companyDocuments: GetCompanyDocument[] = [];
   userId = localStorage.getItem('userId');
+  userType = localStorage.getItem('userType');
   loading = true;
 
   constructor(
@@ -95,5 +97,9 @@ export class IndexComponent implements OnInit {
 
   viewCompanyDocument(id: any) {
     this.router.navigate([`company-docs/${id}`]);
+  }
+
+  isUserHR() {
+    return this.userType === UserType.HR;
   }
 }

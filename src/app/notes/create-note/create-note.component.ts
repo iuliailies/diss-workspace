@@ -130,9 +130,6 @@ export class CreateNoteComponent implements CanComponentDeactivate {
 
   // Method to determine whether navigation can occur
   canDeactivate(): Observable<boolean> | boolean {
-    console.log('intra in can deactivate');
-    console.log('text notita: ' + this.textNoteContent);
-
     // If there are no unsaved changes, allow navigation immediately
     if (!this.contentUpdated && this.document.text === this.textNoteContent) {
       console.log('merge pe navigation imediat');
