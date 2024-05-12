@@ -19,6 +19,7 @@
   >
     {{ getUserInitials(comment) }}
   </div>
+  <span class="text date">{{ comment.created | date: 'medium' }}</span>
   <span class="text slimScroll scroll-hidden" *ngIf="commentIndexEdit !== i">{{
     replaceText(comment.text)
   }}</span>
@@ -26,7 +27,7 @@
     appContentEditable
     #commentText
     *ngIf="commentIndexEdit === i"
-    class="input"
+    class="input slimScroll scroll-hidden"
     >{{ replaceText(comment.text) }}</span
   >
 
