@@ -87,5 +87,5 @@
     [keywords]="[]"
     (keywordsChanged)="keywordsChanged($event)"
   ></app-keywords>
-  <div class="card" #noteContent contenteditable></div>
+  <div class="card" #noteContent contenteditable [innerHTML]="noteTemplate"></div>
 </div>

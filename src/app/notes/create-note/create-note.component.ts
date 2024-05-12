@@ -5,7 +5,7 @@ import {
 } from '../../data-types/notes.model';
 import { NoteService } from '../../services/note.service';
 import { Router } from '@angular/router';
-import { PATHS } from '../../app.constants';
+import { PATHS, noteTemplate } from '../../app.constants';
 import { NotificationType } from '../../data-types/notification.model';
 import { ErrorResponseModel } from '../../data-types/error-response.model';
 import { NotificationService } from '../../services/notification.service';
@@ -23,6 +23,7 @@ export class CreateNoteComponent implements CanComponentDeactivate {
   @ViewChild('noteContent') noteContent!: ElementRef;
 
   protected readonly PATHS = PATHS;
+  noteTemplate = noteTemplate;
   userId = parseInt(localStorage.getItem('userId') || '-1');
   userFirstname = localStorage.getItem('userFirstname') || '';
   userLastname = localStorage.getItem('userLastname') || '';
