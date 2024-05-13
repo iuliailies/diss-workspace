@@ -27,7 +27,6 @@ export class CommentsComponent implements OnInit {
 
   constructor(
     private commentsService: CommentService,
-    private dialogBox: MatDialog,
     private notificationService: NotificationService,
     private confirmationDialogService: ConfirmationDialogService,
   ) {}

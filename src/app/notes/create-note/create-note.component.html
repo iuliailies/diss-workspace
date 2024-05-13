@@ -44,7 +44,7 @@
         />
 
         <div *ngIf="fileName" class="container-file-title">
-          <p (click)="downloadDocument()" class="file-title">{{ fileName }}</p>
+          <p (click)="downloadDocument($event)" class="file-title">{{ fileName }}</p>
           <div class="container-delete-file-img" (click)="removeFile()">
             <img
               id="delete-file-img"

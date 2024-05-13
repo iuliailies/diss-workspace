@@ -44,7 +44,7 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-    // canActivate: [AuthGuardLoginService],
+    canActivate: [AuthGuardLoginService],
   },
 ];
 

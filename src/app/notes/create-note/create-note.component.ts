@@ -149,7 +149,8 @@ export class CreateNoteComponent implements CanComponentDeactivate {
     this.document.keywords = JSON.stringify(keywords).slice(1, -1);
   }
 
-  downloadDocument() {
+  downloadDocument(event: any) {
+    event.preventDefault();
     const blob = new Blob([this.file], {
       type: `application/${this.fileType}`,
     });
