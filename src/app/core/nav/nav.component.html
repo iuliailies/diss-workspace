@@ -41,7 +41,7 @@
       (click)="toggleUserDropdown()"
       [style.background-color]="userName | generateColor"
     >
-      {{ getUserInitials() }}
+      {{ getUserInitials() | uppercase }}
     </div>
   </div>
 </nav>

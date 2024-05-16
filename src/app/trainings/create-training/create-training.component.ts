@@ -249,10 +249,7 @@ export class CreateTrainingComponent implements CanComponentDeactivate {
   // Method to determine whether navigation can occur
   canDeactivate(): Observable<boolean> | boolean {
     // If there are no unsaved changes, allow navigation immediately
-    if (
-      (!this.contentUpdated && !this.createTrainingForm.touched) ||
-      this.saving
-    ) {
+    if ((!this.contentUpdated && !this.createTrainingForm.touched) || this.saving) {
       return true;
     }
 

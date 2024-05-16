@@ -10,6 +10,7 @@ import { CompanyDocService } from '../../services/company-doc.service';
 import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
 import { NotificationService } from '../../services/notification.service';
 import { UserType } from '../../data-types/user.model';
+import {SearchDocument} from "../../data-types/search.model";
 
 @Component({
   selector: 'app-index',
@@ -44,6 +45,25 @@ export class IndexComponent implements OnInit {
   fetchCompanyDocuments(): void {
     this.loading = true;
     this.companyDocumentService.getCompanyDocuments().subscribe((documents) => {
+      this.companyDocuments = documents;
+      this.loading = false;
+    });
+  }
+
+  triggerSearchCompanyDocuments(searchString: any) {
+    searchString = searchString.trim();
+    if (searchString !== null && searchString !== '')
+      this.searchCompanyDocuments(searchString);
+    else this.fetchCompanyDocuments();
+  }
+
+  searchCompanyDocuments(searchString: any): void {
+    this.loading = true;
+    const searchRequest: SearchDocument = {
+      searchKey: searchString,
+      userId: parseInt(this.userId || '-1'),
+    };
+    this.companyDocumentService.searchCompanyDocuments(searchRequest).subscribe((documents) => {
       this.companyDocuments = documents;
       this.loading = false;
     });

@@ -6,6 +6,7 @@ import {
   GetCompanyDocument,
   SaveCompanyDocument,
 } from '../data-types/company-doc.model';
+import {TrainingDocument} from "../data-types/training.model";
 
 @Injectable({
   providedIn: 'root',
@@ -46,6 +47,13 @@ export class CompanyDocService {
     return this.http.put<CompanyDocument>(
       `${this.requestURL}/update-document`,
       document,
+    );
+  }
+
+  searchCompanyDocuments(searchKey: any): Observable<any> {
+    return this.http.post<CompanyDocument[]>(
+      `${this.requestURL}/search-documents`,
+      searchKey,
     );
   }
 }

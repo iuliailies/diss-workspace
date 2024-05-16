@@ -17,7 +17,7 @@
     class="user-icon"
     [style.background-color]="getUserName(comment) | generateColor"
   >
-    {{ getUserInitials(comment) }}
+    {{ getUserInitials(comment) | uppercase }}
   </div>
   <span class="text date">{{ comment.created | date: 'medium' }}</span>
   <span class="text slimScroll scroll-hidden" *ngIf="commentIndexEdit !== i">{{
