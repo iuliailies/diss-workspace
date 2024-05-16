@@ -112,7 +112,9 @@
           <img [src]="PATHS.ICONS + 'comments.svg'" class="arrow" alt="" />
         </div>
       </div>
-      <app-comments *ngIf="commentsToggled"></app-comments>
+      <app-comments
+        [documentId]="documentId"
+        *ngIf="commentsToggled"></app-comments>
     </div>
   </div>
 </div>

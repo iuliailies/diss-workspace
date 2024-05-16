@@ -168,7 +168,7 @@ export class IndexComponent implements OnInit {
             this.fetchTodoTrainings();
             this.notificationService.notify({
               message: 'Training deleted successfully!',
-              type: NotificationType.error,
+              type: NotificationType.success,
             });
           },
           error: (error: any) => {

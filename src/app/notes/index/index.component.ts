@@ -83,7 +83,7 @@ export class IndexComponent implements OnInit {
             this.fetchDocuments();
             this.notificationService.notify({
               message: 'Document deleted successfully!',
-              type: NotificationType.error,
+              type: NotificationType.success,
             });
           },
           error: (error: any) => {

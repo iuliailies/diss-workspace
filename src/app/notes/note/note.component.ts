@@ -10,6 +10,7 @@ import { File } from '../../data-types/file.model';
 import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
 import { CanComponentDeactivate } from '../../core/unsaved-changes-guard.service';
 import { Observable } from 'rxjs';
+import {CommentService} from "../../services/comments.service";
 
 @Component({
   selector: 'app-note',
@@ -29,12 +30,14 @@ export class NoteComponent implements OnInit, CanComponentDeactivate {
   fileChanged = false;
   contentUpdated = false;
   commentsToggled = false;
+  notInEditMode = true;
 
   constructor(
     private noteService: NoteService,
     private notificationService: NotificationService,
     private confirmationDialogService: ConfirmationDialogService,
     private activatedRoute: ActivatedRoute,
+    private commentsService: CommentService
   ) {}
 
   ngOnInit(): void {
@@ -50,10 +53,14 @@ export class NoteComponent implements OnInit, CanComponentDeactivate {
     this.loading = true;
     this.activatedRoute.paramMap.subscribe((params) => {
       if (this.documentId) {
-        this.noteService.getDocument(this.documentId).subscribe((document) => {
-          this.document = document as EmployeeDocument;
-          this.initializeFields();
-          this.loading = false;
+        this.commentsService.getComments(this.documentId).subscribe((comments) => {
+          this.commentsToggled = comments.length > 0;
+          this.noteService.getDocument(this.documentId).subscribe((document) => {
+            this.document = document as EmployeeDocument;
+            this.notInEditMode = this.document.visibility !== false;
+            this.initializeFields();
+            this.loading = false;
+          });
         });
       }
     });

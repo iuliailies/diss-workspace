@@ -9,6 +9,7 @@ import { NotificationType } from '../../data-types/notification.model';
 import { CompanyDocService } from '../../services/company-doc.service';
 import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
 import { NotificationService } from '../../services/notification.service';
+import {CommentService} from "../../services/comments.service";
 
 @Component({
   selector: 'app-document',
@@ -19,6 +20,7 @@ export class DocumentComponent implements OnInit, CanComponentDeactivate {
   PATHS = PATHS;
   @ViewChild('documentContent') documentContent!: ElementRef;
 
+  documentId!: number;
   userId = localStorage.getItem('userId');
   loading = false;
   readOnly = false;
@@ -33,24 +35,32 @@ export class DocumentComponent implements OnInit, CanComponentDeactivate {
     private notificationService: NotificationService,
     private confirmationDialogService: ConfirmationDialogService,
     private activatedRoute: ActivatedRoute,
+    private commentsService: CommentService,
   ) {}
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe((params) => {
+      if (params.get('id') !== null) {
+        this.documentId = +params.get('id')!;
+      }
+    });
     this.fetchCompanyDocument();
   }
 
   fetchCompanyDocument() {
     this.loading = true;
     this.activatedRoute.paramMap.subscribe((params) => {
-      const documentId = params.get('id');
-      if (documentId) {
-        this.companyDocumentService
-          .getCompanyDocument(documentId)
-          .subscribe((document) => {
-            this.document = document as CompanyDocument;
-            this.initializeFields();
-            this.loading = false;
-          });
+      if (this.documentId) {
+        this.commentsService.getComments(this.documentId).subscribe((comments) => {
+          this.commentsToggled = comments.length > 0;
+          this.companyDocumentService
+            .getCompanyDocument(this.documentId)
+            .subscribe((document) => {
+              this.document = document as CompanyDocument;
+              this.initializeFields();
+              this.loading = false;
+            });
+        });
       }
     });
   }

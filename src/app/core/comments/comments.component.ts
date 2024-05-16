@@ -1,12 +1,12 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { CommentService } from '../../services/comments.service';
-import { MatDialog } from '@angular/material/dialog';
-import { NotificationService } from '../../services/notification.service';
-import { PATHS } from '../../app.constants';
-import { Comment, SaveComment } from '../../data-types/comments.model';
-import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
-import { NotificationType } from '../../data-types/notification.model';
-import { ErrorResponseModel } from '../../data-types/error-response.model';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {CommentService} from '../../services/comments.service';
+import {MatDialog} from '@angular/material/dialog';
+import {NotificationService} from '../../services/notification.service';
+import {PATHS} from '../../app.constants';
+import {Comment, SaveComment} from '../../data-types/comments.model';
+import {ConfirmationDialogService} from '../../services/confirmation-dialog.service';
+import {NotificationType} from '../../data-types/notification.model';
+import {ErrorResponseModel} from '../../data-types/error-response.model';
 
 @Component({
   selector: 'app-comments',
@@ -29,7 +29,8 @@ export class CommentsComponent implements OnInit {
     private commentsService: CommentService,
     private notificationService: NotificationService,
     private confirmationDialogService: ConfirmationDialogService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.fetchComments();
@@ -61,19 +62,7 @@ export class CommentsComponent implements OnInit {
         });
       },
       (error) => {
-        if (error.error instanceof ErrorEvent) {
-          this.notificationService.notify({
-            message: 'An error occurred! Please try again later!',
-            type: NotificationType.error,
-          });
-        } else {
-          const errResponse: ErrorResponseModel =
-            error.error as ErrorResponseModel;
-          this.notificationService.notify({
-            message: errResponse.errorMessage,
-            type: NotificationType.error,
-          });
-        }
+        this.handleError(error);
       },
     );
   }
@@ -94,19 +83,7 @@ export class CommentsComponent implements OnInit {
         this.commentIndexEdit = -1;
       },
       (error) => {
-        if (error.error instanceof ErrorEvent) {
-          this.notificationService.notify({
-            message: 'An error occurred! Please try again later!',
-            type: NotificationType.error,
-          });
-        } else {
-          const errResponse: ErrorResponseModel =
-            error.error as ErrorResponseModel;
-          this.notificationService.notify({
-            message: errResponse.errorMessage,
-            type: NotificationType.error,
-          });
-        }
+        this.handleError(error);
       },
     );
   }
@@ -128,23 +105,27 @@ export class CommentsComponent implements OnInit {
             });
           },
           error: (error: any) => {
-            if (error.error instanceof ErrorEvent) {
-              this.notificationService.notify({
-                message: 'An error occurred! Please try again later!',
-                type: NotificationType.error,
-              });
-            } else {
-              const errResponse: ErrorResponseModel =
-                error.error as ErrorResponseModel;
-              this.notificationService.notify({
-                message: errResponse.errorMessage,
-                type: NotificationType.error,
-              });
-            }
+            this.handleError(error);
           },
         });
       }
     });
+  }
+
+
+  handleError(error: any) {
+    if (error.error instanceof ErrorEvent) {
+      this.notificationService.notify({
+        message: 'An error occurred! Please try again later!',
+        type: NotificationType.error,
+      });
+    } else {
+      const errResponse: ErrorResponseModel = error.error as ErrorResponseModel;
+      this.notificationService.notify({
+        message: errResponse.errorMessage,
+        type: NotificationType.error,
+      });
+    }
   }
 
   isCommentEditable(comment: Comment): boolean {
