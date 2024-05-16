@@ -39,6 +39,9 @@ export class IndexComponent implements OnInit {
   userLevel = parseInt(localStorage.getItem('userLevel') || '-1');
   userId = parseInt(localStorage.getItem('userId') || '-1');
 
+  displayLeftArrow = false;
+  displayRightArrow = false;
+
   constructor(
     private noteService: NoteService,
     private userService: UserService,
@@ -97,6 +100,13 @@ export class IndexComponent implements OnInit {
             this.endIndex,
           );
           this.existBadges = this.badges.length > 0;
+          if(this.badges.length <= 10) {
+            this.displayLeftArrow = false;
+            this.displayRightArrow = false;
+          } else {
+            this.displayLeftArrow = false;
+            this.displayRightArrow = true;
+          }
           this.loading = false;
         },
         error: (error) => {
@@ -162,18 +172,41 @@ export class IndexComponent implements OnInit {
   }
 
   previous() {
+
+    if(this.startIndex - this.pageSize >= this.pageSize) {
+      this.displayLeftArrow = true;
+      this.displayRightArrow = true;
+    } else {
+      this.displayLeftArrow = false;
+      this.displayRightArrow = true;
+    }
+
     if (this.startIndex >= this.pageSize) {
       this.startIndex = this.startIndex - this.pageSize;
       this.endIndex = this.endIndex - this.pageSize;
       this.displayedBadges = this.badges.slice(this.startIndex, this.endIndex);
-    }
+    } else
+      this.displayLeftArrow = false;
+      this.displayRightArrow = true;
   }
 
   next() {
+
+    if(this.startIndex + this.pageSize * 2 <= this.badges.length) {
+      this.displayLeftArrow = true;
+      this.displayRightArrow = true;
+    } else {
+      this.displayLeftArrow = true;
+      this.displayRightArrow = false;
+    }
+
     if (this.startIndex + this.pageSize <= this.badges.length) {
       this.endIndex = this.endIndex + this.pageSize;
       this.startIndex = this.startIndex + this.pageSize;
       this.displayedBadges = this.badges.slice(this.startIndex, this.endIndex);
+    } else {
+      this.displayLeftArrow = true;
+      this.displayRightArrow = false;
     }
   }
 }

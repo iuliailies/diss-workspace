@@ -9,7 +9,7 @@
               userFirstname + ' ' + userLastname | generateColor
             "
           >
-            {{ getUserInitials() }}
+            {{ getUserInitials() | uppercase}}
           </div>
           <div class="user-details-container">
             <h1 class="name">{{ userFirstname + ' ' + userLastname }}</h1>
@@ -52,6 +52,7 @@
 <div class="container" *ngIf="!loading">
   <div class="badges-container card">
     <img
+      [class.hidden]="!displayLeftArrow"
       [src]="PATHS.ICONS + 'chevron-left.svg'"
       class="icon icon-left"
       alt=""
@@ -71,6 +72,7 @@
       </span>
     </ng-container>
     <img
+      [class.hidden]="!displayRightArrow"
       [src]="PATHS.ICONS + 'chevron-right.svg'"
       class="icon icon-right"
       alt=""
@@ -100,7 +102,7 @@
             userFirstname + ' ' + userLastname | generateColor
           "
         >
-          {{ getUserInitials() }}
+          {{ getUserInitials() | uppercase}}
         </div>
       </div>
       <div class="column is-4">
