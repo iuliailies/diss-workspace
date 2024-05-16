@@ -56,5 +56,13 @@
         />
       </div>
     </div>
+    <div *ngIf="documents.length == 0" id="container-not-found" class="columns">
+      <div class="column is-4"></div>
+      <div class="column is-3 not-found">
+        No documents found
+      </div>
+      <div class="column is-4"></div>
+      <div class="column is-1"></div>
+    </div>
   </div>
 </div>

@@ -90,6 +90,14 @@
         </div>
       </div>
     </div>
+    <div *ngIf="todoTrainings.length == 0" id="container-not-found" class="columns">
+      <div class="column is-4"></div>
+      <div class="column is-3 not-found">
+        No todo trainings found
+      </div>
+      <div class="column is-4"></div>
+      <div class="column is-1"></div>
+    </div>
   </div>
 </div>
 
@@ -145,6 +153,14 @@
           </div>
         </div>
       </div>
+    </div>
+    <div *ngIf="completedTrainings.length == 0" id="container-not-found" class="columns">
+      <div class="column is-4"></div>
+      <div class="column is-3 not-found">
+        No completed trainings found
+      </div>
+      <div class="column is-4"></div>
+      <div class="column is-1"></div>
     </div>
   </div>
 </div>

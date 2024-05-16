@@ -44,5 +44,13 @@
       <div class="column is-3">{{ user.points + 'xp' }}</div>
       <div class="column is-3"></div>
     </div>
+    <div *ngIf="users.length == 0" id="container-not-found" class="columns">
+      <div class="column is-4"></div>
+      <div class="column is-3 not-found">
+        No users found
+      </div>
+      <div class="column is-4"></div>
+      <div class="column is-1"></div>
+    </div>
   </div>
 </div>
