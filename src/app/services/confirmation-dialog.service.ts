@@ -22,7 +22,7 @@ export class ConfirmationDialogService {
 
   // Method to show a confirmation dialog and return the user's decision
   public confirmNavigation(
-    confirmationMessage: string = 'You have unsaved changes. Do you want to continue?',
+    confirmationMessage: string = 'You have unsaved changes. Are you sure you want to continue?',
   ): Observable<boolean> {
     // Show the confirmation dialog and handle the response with `switchMap`
     return this.confirm(confirmationMessage).pipe(
