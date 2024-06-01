@@ -14,6 +14,7 @@
         >
         <img
           loading="eager"
+          matTooltip="Make document private"
           [src]="PATHS.ICONS + 'lock-open.svg'"
           *ngIf="document.visibility"
           class="visibility-icon"
@@ -21,6 +22,7 @@
           alt=""
         />
         <img
+          matTooltip="Make document public"
           loading="eager"
           [src]="PATHS.ICONS + 'lock-closed.svg'"
           *ngIf="!document.visibility"
@@ -36,6 +38,7 @@
         />
 
         <img
+          matTooltip="Upload attachment"
           loading="eager"
           [src]="PATHS.ICONS + 'upload-solid.svg'"
           class="visibility-icon"
@@ -43,7 +46,7 @@
           alt=""
         />
 
-        <div *ngIf="fileName" class="container-file-title">
+        <div *ngIf="fileName" class="container-file-title" matTooltip="Download attachment">
           <p (click)="downloadDocument($event)" class="file-title">{{ fileName }}</p>
           <div class="container-delete-file-img" (click)="removeFile()">
             <img
@@ -53,6 +56,16 @@
             />
           </div>
         </div>
+
+        <img
+          matTooltip="Download attachment"
+          *ngIf="fileName"
+          loading="eager"
+          [src]="PATHS.ICONS + 'download-solid.svg'"
+          class="visibility-icon"
+          (click)="downloadDocument($event)"
+          alt=""
+        />
       </div>
       <div class="header-right">
         <div

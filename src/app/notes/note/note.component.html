@@ -21,8 +21,9 @@
 
           <img
             loading="eager"
+            matTooltip="{{ readOnly ? 'Document is public' : 'Make document private' }}"
             [src]="PATHS.ICONS + 'lock-open.svg'"
-            *ngIf="document.visibility"
+            *ngIf="document.visibility && !readOnly"
             class="visibility-icon"
             (click)="!readOnly ? changeVisibility() : null"
             alt=""
@@ -30,6 +31,7 @@
 
           <img
             loading="eager"
+            matTooltip="{{ readOnly ? 'Document is private' : 'Make document public' }}"
             [src]="PATHS.ICONS + 'lock-closed.svg'"
             *ngIf="!document.visibility"
             class="visibility-icon"
@@ -45,6 +47,7 @@
           />
 
           <img
+            matTooltip="Upload attachment"
             loading="eager"
             [src]="PATHS.ICONS + 'upload-solid.svg'"
             *ngIf="!readOnly"
@@ -53,16 +56,7 @@
             alt=""
           />
 
-          <img
-            *ngIf="readOnly && this.document.file"
-            loading="eager"
-            [src]="PATHS.ICONS + 'download-solid.svg'"
-            class="visibility-icon"
-            (click)="downloadDocument()"
-            alt=""
-          />
-
-          <div *ngIf="this.document.file" class="container-file-title">
+          <div *ngIf="this.document.file" class="container-file-title" matTooltip="Download attachment">
             <p
               (click)="!readOnly ? downloadDocument() : null"
               class="file-title"
@@ -81,6 +75,16 @@
               />
             </div>
           </div>
+
+          <img
+            matTooltip="Download attachment"
+            *ngIf="this.document.file"
+            loading="eager"
+            [src]="PATHS.ICONS + 'download-solid.svg'"
+            class="visibility-icon"
+            (click)="downloadDocument()"
+            alt=""
+          />
         </div>
 
         <div *ngIf="!readOnly" class="header-right">

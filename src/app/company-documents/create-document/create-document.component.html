@@ -22,6 +22,7 @@
         />
 
         <img
+          matTooltip="Upload attachment"
           loading="eager"
           [src]="PATHS.ICONS + 'upload-solid.svg'"
           class="visibility-icon"
@@ -29,7 +30,7 @@
           alt=""
         />
 
-        <div *ngIf="fileName" class="container-file-title">
+        <div *ngIf="fileName" class="container-file-title" matTooltip="Download attachment">
           <p (click)="downloadDocument()" class="file-title">{{ fileName }}</p>
           <div class="container-delete-file-img" (click)="removeFile()">
             <img
@@ -39,7 +40,19 @@
             />
           </div>
         </div>
+
+        <img
+          matTooltip="Download attachment"
+          *ngIf="fileName"
+          loading="eager"
+          [src]="PATHS.ICONS + 'download-solid.svg'"
+          class="visibility-icon"
+          (click)="downloadDocument()"
+          alt=""
+        />
+
       </div>
+
       <div class="header-right">
         <div
           class="button"

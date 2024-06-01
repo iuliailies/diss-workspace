@@ -18,6 +18,7 @@ import { GenerateColorPipe } from './pipes/generate-color.pipe';
 import { LevelColorPipe } from './pipes/level-color.pipe';
 import { CommentsComponent } from './comments/comments.component';
 import { DeleteConfirmationDialogBoxComponent } from './delete-confirmation-dialog-box/delete-confirmation-dialog-box.component';
+import {MatTooltip} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -44,14 +45,15 @@ import { DeleteConfirmationDialogBoxComponent } from './delete-confirmation-dial
     LevelColorPipe,
     CommentsComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    MatDialogContent,
-    MatDialogActions,
-    MatSnackBarLabel,
-    MatSnackBarAction,
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        FormsModule,
+        MatDialogContent,
+        MatDialogActions,
+        MatSnackBarLabel,
+        MatSnackBarAction,
+        MatTooltip,
+    ],
 })
 export class CoreModule {}

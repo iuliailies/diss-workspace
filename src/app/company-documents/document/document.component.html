@@ -30,6 +30,7 @@
 
           <img
             loading="eager"
+            matTooltip="Upload attachment"
             [src]="PATHS.ICONS + 'upload-solid.svg'"
             *ngIf="!readOnly"
             class="visibility-icon"
@@ -37,16 +38,7 @@
             alt=""
           />
 
-          <img
-            *ngIf="readOnly && this.document.file"
-            loading="eager"
-            [src]="PATHS.ICONS + 'download-solid.svg'"
-            class="visibility-icon"
-            (click)="downloadDocument()"
-            alt=""
-          />
-
-          <div *ngIf="this.document.file" class="container-file-title">
+          <div *ngIf="this.document.file" class="container-file-title" matTooltip="Download attachment">
             <p
               (click)="!readOnly ? downloadDocument() : null"
               class="file-title"
@@ -65,6 +57,16 @@
               />
             </div>
           </div>
+
+          <img
+            matTooltip="Download attachment"
+            *ngIf="this.document.file"
+            loading="eager"
+            [src]="PATHS.ICONS + 'download-solid.svg'"
+            class="visibility-icon"
+            (click)="downloadDocument()"
+            alt=""
+          />
         </div>
 
         <div *ngIf="!readOnly" class="header-right">
