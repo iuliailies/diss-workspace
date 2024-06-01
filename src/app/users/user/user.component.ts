@@ -152,6 +152,8 @@ export class UserComponent implements OnInit, CanComponentDeactivate {
                 this.deleteTriggered = false;
               },
             });
+        } else {
+          this.deleteTriggered = false;
         }
       });
   }
@@ -251,6 +253,7 @@ export class UserComponent implements OnInit, CanComponentDeactivate {
   }
 
   navigateToUserView(user: any): void {
+    this.createUserForm.markAsUntouched();
     this.router.navigate([`users/${user.id}`]);
   }
 
