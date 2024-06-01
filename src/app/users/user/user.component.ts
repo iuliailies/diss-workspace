@@ -21,6 +21,8 @@ export class UserComponent implements OnInit, CanComponentDeactivate {
   loading = false;
   createUserForm!: FormGroup;
 
+  deleteTriggered = false;
+
   protected readonly PATHS = PATHS;
 
   isInvalid = false;
@@ -41,6 +43,7 @@ export class UserComponent implements OnInit, CanComponentDeactivate {
   ngOnInit() {
     this.userTypes = Object.values(UserType);
     this.fetchUser();
+    this.deleteTriggered = false;
   }
 
   fetchUserTypes() {
@@ -123,6 +126,7 @@ export class UserComponent implements OnInit, CanComponentDeactivate {
   }
 
   deleteUser() {
+    this.deleteTriggered = true;
     this.confirmationDialogService
       .confirm('Are you sure you want to delete this user?<br> This action cannot be reverted!')
       .subscribe((response) => {
@@ -145,6 +149,7 @@ export class UserComponent implements OnInit, CanComponentDeactivate {
                   type: NotificationType.error,
                 });
                 this.loading = false;
+                this.deleteTriggered = false;
               },
             });
         }
@@ -256,7 +261,7 @@ export class UserComponent implements OnInit, CanComponentDeactivate {
   // Method to determine whether navigation can occur
   canDeactivate(): Observable<boolean> | boolean {
     // If there are no unsaved changes, allow navigation immediately
-    if (!this.createUserForm.touched) {
+    if (!this.createUserForm.touched || this.deleteTriggered) {
       return true;
     }
 
