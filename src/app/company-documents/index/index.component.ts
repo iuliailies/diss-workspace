@@ -72,7 +72,7 @@ export class IndexComponent implements OnInit {
   deleteCompanyDocument(event: any, document: GetCompanyDocument) {
     event.stopPropagation();
     const dialogResponse = this.confirmationDialogService.confirm(
-      `Are you sure you want to delete document: ${document.title} ?`,
+      `Are you sure you want to delete document: ${document.title} ? <br> This action cannot be reverted!`,
     );
 
     dialogResponse.subscribe((response) => {

@@ -1,0 +1,20 @@
+@import "variables"
+@import "colours"
+@import "typography"
+
+.buttons-container
+  display: flex
+  justify-content: flex-end
+  padding: 8px 22px
+
+  .button
+    &:not(&:last-child)
+      margin-right: 5px
+
+
+.confirmationContainer
+  border-radius: $border-radius-floating
+  .headline-container
+    font-family: $font-family
+    font-size: $font-size
+    color: $gray-primary

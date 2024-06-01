@@ -90,7 +90,7 @@ export class CommentsComponent implements OnInit {
 
   deleteComment(comment: Comment, index: number): void {
     const dialogResponse = this.confirmationDialogService.confirm(
-      `Are you sure you want to delete the comment?`,
+      `Are you sure you want to delete the comment? <br> This action cannot be reverted!`,
     );
 
     dialogResponse.subscribe((response) => {

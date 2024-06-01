@@ -17,6 +17,7 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
 import { GenerateColorPipe } from './pipes/generate-color.pipe';
 import { LevelColorPipe } from './pipes/level-color.pipe';
 import { CommentsComponent } from './comments/comments.component';
+import { DeleteConfirmationDialogBoxComponent } from './delete-confirmation-dialog-box/delete-confirmation-dialog-box.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { CommentsComponent } from './comments/comments.component';
     GenerateColorPipe,
     LevelColorPipe,
     CommentsComponent,
+    DeleteConfirmationDialogBoxComponent,
   ],
   exports: [
     NavComponent,
