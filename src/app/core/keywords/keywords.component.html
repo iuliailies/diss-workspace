@@ -10,27 +10,9 @@
     />
   </div>
 
-  <!--  <div class="info-container">-->
-  <!--    <img-->
-  <!--      matTooltip="In order to add a keyword, you need to press ENTER after typing it."-->
-  <!--      loading="eager"-->
-  <!--      [src]="PATHS.ICONS + 'info-svgrepo-com.svg'"-->
-  <!--      class="info-icon"-->
-  <!--      alt=""-->
-  <!--    />-->
-  <!--  </div>-->
-
   <div class="add-keyword-container" (click)="addKeyword()">
     <img [src]="PATHS.ICONS + 'plus.svg'" class="keyword-icon" alt=""/>
-    <!--    <div class="button keyword-button" (click)="addKeyword()">-->
-    <!--&lt;!&ndash;      <span>Add</span>&ndash;&gt;-->
-    <!--    </div>-->
   </div>
-
-<!--    <div class="button keyword-button" (click)="addKeyword()">-->
-<!--      <img [src]="PATHS.ICONS + 'plus.svg'" class="arrow" alt="" />-->
-<!--      <span>Add keyword</span>-->
-<!--    </div>-->
 
   <div class="keyword" *ngFor="let keyword of keywords; let i = index">
     <span class="text">{{ keyword }}</span>
