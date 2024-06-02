@@ -7,6 +7,7 @@
           <img [src]="PATHS.ICONS + 'chevron-right.svg'" alt="" />
 
           <span
+            matTooltip="Rename"
             appContentEditable
             #nameInput
             *ngIf="!readOnly"
