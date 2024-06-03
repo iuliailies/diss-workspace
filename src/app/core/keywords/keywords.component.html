@@ -10,7 +10,7 @@
     />
   </div>
 
-  <div class="add-keyword-container" (click)="addKeyword()">
+  <div *ngIf="!readOnly" class="add-keyword-container" (click)="addKeyword()">
     <img [src]="PATHS.ICONS + 'plus.svg'" class="keyword-icon" alt=""/>
   </div>
 
