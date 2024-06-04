@@ -14,6 +14,7 @@
             *ngIf="!readOnly"
             class="input"
             (blur)="changeCompanyDocumentName($event)"
+            matTooltip="Rename"
             >{{ !loading ? document.title : 'Loading...' }}</span
           >
 
